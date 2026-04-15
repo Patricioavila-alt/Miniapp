@@ -71,7 +71,7 @@ export default function PrescriptionDetail() {
   if (loading) {
     return (
       <View style={[styles.center, { paddingTop: insets.top }]}>
-        <ActivityIndicator size="large" color="#001689" />
+        <ActivityIndicator size="large" color="#CE0E2D" />
       </View>
     );
   }
@@ -141,7 +141,7 @@ export default function PrescriptionDetail() {
       {rx.medications?.map((med: any, i: number) => (
         <View key={i} style={styles.medCard}>
           <View style={styles.medIcon}>
-            <Ionicons name="medical" size={20} color="#001689" />
+            <Ionicons name="medical" size={20} color="#CE0E2D" />
           </View>
           <View style={styles.medInfo}>
             <Text style={styles.medName}>{med.name}</Text>
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
     padding: 16, marginBottom: 10, borderWidth: 1, borderColor: '#E6E6E6', gap: 12,
   },
   medIcon: {
-    width: 40, height: 40, borderRadius: 12, backgroundColor: '#E4F3FF',
+    width: 40, height: 40, borderRadius: 12, backgroundColor: '#FFF1F3',
     justifyContent: 'center', alignItems: 'center',
   },
   medInfo: { flex: 1 },

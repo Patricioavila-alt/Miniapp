@@ -132,7 +132,7 @@ export default function ScheduleAppointment() {
               />
             </View>
             {loading ? (
-              <ActivityIndicator size="large" color="#001689" style={{ marginTop: 40 }} />
+              <ActivityIndicator size="large" color="#CE0E2D" style={{ marginTop: 40 }} />
             ) : (
               doctors.map((doc) => (
                 <TouchableOpacity
@@ -252,7 +252,7 @@ export default function ScheduleAppointment() {
                 },
               ].map((r, i) => (
                 <View key={i} style={styles.confirmRow}>
-                  <Ionicons name={r.icon as any} size={18} color="#001689" />
+                  <Ionicons name={r.icon as any} size={18} color="#CE0E2D" />
                   <Text style={styles.confirmText}>{r.text}</Text>
                 </View>
               ))}
@@ -375,7 +375,7 @@ const styles = StyleSheet.create({
   headerTitle: { fontSize: 18, fontWeight: '700', color: '#232323' },
   progress: { flexDirection: 'row', justifyContent: 'center', gap: 8, marginBottom: 20 },
   dot: { width: 32, height: 4, borderRadius: 2, backgroundColor: '#E6E6E6' },
-  dotActive: { backgroundColor: '#001689' },
+  dotActive: { backgroundColor: '#CE0E2D' },
   scroll: { flex: 1, paddingHorizontal: 24 },
   // Step 1
   searchBox: {
@@ -388,7 +388,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row', alignItems: 'center', backgroundColor: '#FFFFFF',
     borderRadius: 16, padding: 16, marginBottom: 10, borderWidth: 2, borderColor: '#E6E6E6',
   },
-  docCardSelected: { borderColor: '#001689', backgroundColor: '#E4F3FF' },
+  docCardSelected: { borderColor: '#CE0E2D', backgroundColor: '#FFF1F3' },
   docAvatar: {
     width: 48, height: 48, borderRadius: 24, backgroundColor: '#FAFAFA',
     justifyContent: 'center', alignItems: 'center', marginRight: 12,
@@ -399,7 +399,7 @@ const styles = StyleSheet.create({
   docMeta: { flexDirection: 'row', alignItems: 'center', marginTop: 4, gap: 4 },
   docRating: { fontSize: 12, color: '#FFB300', fontWeight: '600' },
   docExp: { fontSize: 12, color: '#838383', marginLeft: 8 },
-  docPrice: { fontSize: 16, fontWeight: '700', color: '#001689' },
+  docPrice: { fontSize: 16, fontWeight: '700', color: '#CE0E2D' },
   // Step 2
   stepLabel: { fontSize: 16, fontWeight: '700', color: '#232323', marginBottom: 12 },
   daysRow: { gap: 10 },
@@ -407,7 +407,7 @@ const styles = StyleSheet.create({
     width: 64, paddingVertical: 12, borderRadius: 16, backgroundColor: '#FFFFFF',
     alignItems: 'center', borderWidth: 1, borderColor: '#E6E6E6',
   },
-  dayActive: { backgroundColor: '#001689', borderColor: '#001689' },
+  dayActive: { backgroundColor: '#CE0E2D', borderColor: '#CE0E2D' },
   dayName: { fontSize: 12, color: '#838383', fontWeight: '500' },
   dayNum: { fontSize: 20, fontWeight: '700', color: '#232323', marginVertical: 4 },
   dayMonth: { fontSize: 11, color: '#838383' },
@@ -417,7 +417,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20, paddingVertical: 12, borderRadius: 12,
     backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: '#E6E6E6',
   },
-  timeActive: { backgroundColor: '#001689', borderColor: '#001689' },
+  timeActive: { backgroundColor: '#CE0E2D', borderColor: '#CE0E2D' },
   timeText: { fontSize: 14, fontWeight: '600', color: '#232323' },
   timeTextW: { color: '#FFFFFF' },
   typeRow: { flexDirection: 'row', gap: 12 },
@@ -426,7 +426,7 @@ const styles = StyleSheet.create({
     gap: 8, paddingVertical: 14, borderRadius: 12, backgroundColor: '#FFFFFF',
     borderWidth: 1, borderColor: '#E6E6E6',
   },
-  typeBtnActive: { backgroundColor: '#001689', borderColor: '#001689' },
+  typeBtnActive: { backgroundColor: '#CE0E2D', borderColor: '#CE0E2D' },
   typeText: { fontSize: 14, fontWeight: '600', color: '#838383' },
   typeTextW: { color: '#FFFFFF' },
   // Step 3
@@ -453,7 +453,7 @@ const styles = StyleSheet.create({
     marginBottom: 16, borderWidth: 1, borderColor: '#E6E6E6',
   },
   priceLabel: { fontSize: 15, color: '#838383' },
-  priceValue: { fontSize: 20, fontWeight: '700', color: '#001689' },
+  priceValue: { fontSize: 20, fontWeight: '700', color: '#CE0E2D' },
   mockPayment: {
     flexDirection: 'row', alignItems: 'center', width: '100%',
     backgroundColor: '#FAFAFA', borderRadius: 12, padding: 16, gap: 10,
@@ -472,7 +472,7 @@ const styles = StyleSheet.create({
   successDoc: { fontSize: 16, fontWeight: '700', color: '#232323' },
   successDetail: { fontSize: 14, color: '#838383', marginTop: 4 },
   successBtn: {
-    backgroundColor: '#001689', borderRadius: 14, paddingVertical: 16,
+    backgroundColor: '#CE0E2D', borderRadius: 14, paddingVertical: 16,
     width: '100%', alignItems: 'center', marginBottom: 12,
   },
   successBtnText: { fontSize: 16, fontWeight: '700', color: '#FFFFFF' },
@@ -485,7 +485,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1, borderTopColor: '#E6E6E6',
   },
   ctaBtn: {
-    backgroundColor: '#001689', borderRadius: 14, paddingVertical: 16, alignItems: 'center',
+    backgroundColor: '#CE0E2D', borderRadius: 14, paddingVertical: 16, alignItems: 'center',
   },
   ctaDisabled: { backgroundColor: '#E6E6E6' },
   ctaText: { fontSize: 16, fontWeight: '700', color: '#FFFFFF' },

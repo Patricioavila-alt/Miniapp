@@ -32,7 +32,7 @@ export default function DocumentDetail() {
   if (loading) {
     return (
       <View style={[styles.center, { paddingTop: insets.top }]}>
-        <ActivityIndicator size="large" color="#001689" />
+        <ActivityIndicator size="large" color="#CE0E2D" />
       </View>
     );
   }
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   contentBody: { fontSize: 15, color: '#838383', lineHeight: 22 },
   downloadBtn: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
-    backgroundColor: '#001689', borderRadius: 14, paddingVertical: 16, gap: 8,
+    backgroundColor: '#CE0E2D', borderRadius: 14, paddingVertical: 16, gap: 8,
   },
   downloadBtnText: { fontSize: 15, fontWeight: '700', color: '#FFFFFF' },
 });

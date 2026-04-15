@@ -67,12 +67,12 @@ export default function AppointmentsScreen() {
       <ScrollView
         style={styles.list}
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#001689" />
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#CE0E2D" />
         }
         showsVerticalScrollIndicator={false}
       >
         {loading ? (
-          <ActivityIndicator size="large" color="#001689" style={{ marginTop: 40 }} />
+          <ActivityIndicator size="large" color="#CE0E2D" style={{ marginTop: 40 }} />
         ) : appointments.length === 0 ? (
           <View style={styles.emptyState}>
             <Ionicons name="calendar-outline" size={48} color="#E6E6E6" />
@@ -173,14 +173,14 @@ const styles = StyleSheet.create({
     borderWidth: 1, borderColor: '#E6E6E6',
   },
   tabBtn: { flex: 1, paddingVertical: 12, borderRadius: 10, alignItems: 'center' },
-  tabActive: { backgroundColor: '#001689' },
+  tabActive: { backgroundColor: '#CE0E2D' },
   tabText: { fontSize: 14, fontWeight: '600', color: '#838383' },
   tabTextActive: { color: '#FFFFFF' },
   list: { flex: 1, paddingHorizontal: 24 },
   emptyState: { alignItems: 'center', paddingTop: 60 },
   emptyText: { fontSize: 16, color: '#838383', marginTop: 12 },
   scheduleBtn: {
-    marginTop: 20, backgroundColor: '#001689', borderRadius: 12,
+    marginTop: 20, backgroundColor: '#CE0E2D', borderRadius: 12,
     paddingHorizontal: 24, paddingVertical: 12,
   },
   scheduleBtnText: { fontSize: 14, fontWeight: '700', color: '#FFFFFF' },
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
   statusCancelled: { color: '#CE0E2D' },
   joinBtn: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
-    backgroundColor: '#001689', borderRadius: 10,
+    backgroundColor: '#CE0E2D', borderRadius: 10,
     paddingVertical: 10, marginTop: 12, gap: 8,
   },
   joinBtnText: { fontSize: 14, fontWeight: '600', color: '#FFFFFF' },

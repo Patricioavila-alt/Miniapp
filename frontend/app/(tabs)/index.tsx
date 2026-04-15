@@ -11,7 +11,7 @@ const API_URL = process.env.EXPO_PUBLIC_BACKEND_URL;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const CARD_PAD = 24;
 
-const PROMO_COLORS = ['#001689', '#134EFF', '#0033E4'];
+const PROMO_COLORS = ['#CE0E2D', '#A50F27', '#8B1427'];
 
 export default function HomeScreen() {
   const insets = useSafeAreaInsets();
@@ -62,7 +62,7 @@ export default function HomeScreen() {
   if (loading) {
     return (
       <View style={[styles.loadingContainer, { paddingTop: insets.top }]}>
-        <ActivityIndicator size="large" color="#001689" />
+        <ActivityIndicator size="large" color="#CE0E2D" />
       </View>
     );
   }
@@ -75,7 +75,7 @@ export default function HomeScreen() {
       style={[styles.container, { paddingTop: insets.top }]}
       contentContainerStyle={styles.content}
       refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#001689" />
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#CE0E2D" />
       }
       showsVerticalScrollIndicator={false}
     >
@@ -86,7 +86,7 @@ export default function HomeScreen() {
           <Text style={styles.userName}>{data?.user_name || 'User'}</Text>
         </View>
         <TouchableOpacity testID="notification-bell" style={styles.notifButton}>
-          <Ionicons name="notifications-outline" size={24} color="#001689" />
+          <Ionicons name="notifications-outline" size={24} color="#CE0E2D" />
           <View style={styles.notifBadge} />
         </TouchableOpacity>
       </View>
@@ -103,9 +103,9 @@ export default function HomeScreen() {
               <Text style={styles.aptDoctorName}>{widget.data.doctor_name}</Text>
               <Text style={styles.aptSpecialty}>{widget.data.doctor_specialty}</Text>
               <View style={styles.aptDateRow}>
-                <Ionicons name="calendar-outline" size={14} color="#A8D2FF" />
+                <Ionicons name="calendar-outline" size={14} color="#FFC5CE" />
                 <Text style={styles.aptDateText}>{widget.data.date}</Text>
-                <Ionicons name="time-outline" size={14} color="#A8D2FF" style={{ marginLeft: 12 }} />
+                <Ionicons name="time-outline" size={14} color="#FFC5CE" style={{ marginLeft: 12 }} />
                 <Text style={styles.aptDateText}>{widget.data.time}</Text>
               </View>
             </View>
@@ -165,7 +165,7 @@ export default function HomeScreen() {
             onPress={() => handleQuickAction(action.id)}
           >
             <View style={styles.quickActionIcon}>
-              <Ionicons name={iconMap[action.icon] || 'ellipse'} size={24} color="#001689" />
+              <Ionicons name={iconMap[action.icon] || 'ellipse'} size={24} color="#CE0E2D" />
             </View>
             <Text style={styles.quickActionLabel}>{action.label}</Text>
           </TouchableOpacity>
@@ -243,11 +243,11 @@ const styles = StyleSheet.create({
   },
   // Appointment Widget
   appointmentWidget: {
-    backgroundColor: '#001689', borderRadius: 24, padding: 24, marginBottom: 28,
+    backgroundColor: '#8B1427', borderRadius: 24, padding: 24, marginBottom: 28,
   },
   widgetLabel: {
     fontSize: 11, fontWeight: '700', letterSpacing: 1.5,
-    color: '#A8D2FF', marginBottom: 16,
+    color: '#FFC5CE', marginBottom: 16,
   },
   aptRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 20 },
   avatarContainer: {
@@ -257,12 +257,12 @@ const styles = StyleSheet.create({
   },
   aptInfo: { flex: 1 },
   aptDoctorName: { fontSize: 18, fontWeight: '700', color: '#FFFFFF' },
-  aptSpecialty: { fontSize: 14, color: '#A8D2FF', marginTop: 2 },
+  aptSpecialty: { fontSize: 14, color: '#FFC5CE', marginTop: 2 },
   aptDateRow: { flexDirection: 'row', alignItems: 'center', marginTop: 8 },
-  aptDateText: { fontSize: 13, color: '#A8D2FF', marginLeft: 4 },
+  aptDateText: { fontSize: 13, color: '#FFC5CE', marginLeft: 4 },
   // Welcome Widget
   welcomeWidget: {
-    backgroundColor: '#001689', borderRadius: 24, padding: 24, marginBottom: 28,
+    backgroundColor: '#8B1427', borderRadius: 24, padding: 24, marginBottom: 28,
   },
   welcomeTitle: { fontSize: 22, fontWeight: '700', color: '#FFFFFF', marginBottom: 16 },
   searchContainer: {
@@ -276,14 +276,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
     backgroundColor: '#FFFFFF', borderRadius: 14, paddingVertical: 14, gap: 8,
   },
-  widgetCtaText: { fontSize: 15, fontWeight: '700', color: '#232323' },
+  widgetCtaText: { fontSize: 15, fontWeight: '700', color: '#8B1427' },
   // Quick Actions
   sectionHeader: {
     flexDirection: 'row', justifyContent: 'space-between',
     alignItems: 'center', marginBottom: 16,
   },
   sectionTitle: { fontSize: 18, fontWeight: '700', color: '#232323' },
-  seeAll: { fontSize: 14, color: '#001689', fontWeight: '600' },
+  seeAll: { fontSize: 14, color: '#CE0E2D', fontWeight: '600' },
   quickActionsRow: {
     flexDirection: 'row', justifyContent: 'space-between', marginBottom: 32,
   },

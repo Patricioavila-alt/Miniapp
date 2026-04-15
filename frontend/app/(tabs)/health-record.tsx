@@ -54,7 +54,7 @@ export default function HealthRecordScreen() {
   if (loading) {
     return (
       <View style={[styles.loadingContainer, { paddingTop: insets.top }]}>
-        <ActivityIndicator size="large" color="#001689" />
+        <ActivityIndicator size="large" color="#CE0E2D" />
       </View>
     );
   }
@@ -66,7 +66,7 @@ export default function HealthRecordScreen() {
       style={[styles.container, { paddingTop: insets.top }]}
       contentContainerStyle={styles.content}
       refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#001689" />
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#CE0E2D" />
       }
       showsVerticalScrollIndicator={false}
     >
@@ -165,8 +165,8 @@ export default function HealthRecordScreen() {
         onPress={() => toggle('prescriptions')}
       >
         <View style={styles.sectionRow}>
-          <View style={[styles.sectionIcon, { backgroundColor: '#E4F3FF' }]}>
-            <Ionicons name="medical-outline" size={20} color="#001689" />
+          <View style={[styles.sectionIcon, { backgroundColor: '#FFF1F3' }]}>
+            <Ionicons name="medical-outline" size={20} color="#CE0E2D" />
           </View>
           <View style={{ flex: 1 }}>
             <Text style={styles.sectionTitle}>Historial de Recetas</Text>
@@ -243,7 +243,7 @@ export default function HealthRecordScreen() {
               <Ionicons
                 name={doc.status === 'signed' ? 'checkmark-circle' : 'alert-circle'}
                 size={20}
-                color={doc.status === 'signed' ? '#4CAF50' : '#001689'}
+                color={doc.status === 'signed' ? '#4CAF50' : '#CE0E2D'}
               />
               <View style={styles.listItemInfo}>
                 <Text style={styles.listItemTitle}>{doc.title}</Text>
@@ -280,7 +280,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: { fontSize: 15, fontWeight: '600', color: '#232323', flex: 1 },
   sectionSub: { fontSize: 12, color: '#838383', marginTop: 2 },
-  pendingText: { fontSize: 12, color: '#001689', fontWeight: '600', marginTop: 2 },
+  pendingText: { fontSize: 12, color: '#CE0E2D', fontWeight: '600', marginTop: 2 },
   expandedContent: {
     backgroundColor: '#FFFFFF', borderRadius: 16, padding: 16,
     marginBottom: 8, marginTop: -4, borderWidth: 1, borderColor: '#E6E6E6',

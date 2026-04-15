@@ -53,7 +53,7 @@ export default function AppointmentDetail() {
   if (loading) {
     return (
       <View style={[styles.center, { paddingTop: insets.top }]}>
-        <ActivityIndicator size="large" color="#001689" />
+        <ActivityIndicator size="large" color="#CE0E2D" />
       </View>
     );
   }
@@ -133,7 +133,7 @@ export default function AppointmentDetail() {
         ].map((item, i) => (
           <View key={i} style={styles.detailItem}>
             <View style={styles.detailIcon}>
-              <Ionicons name={item.icon as any} size={20} color="#001689" />
+              <Ionicons name={item.icon as any} size={20} color="#CE0E2D" />
             </View>
             <View>
               <Text style={styles.detailLabel}>{item.label}</Text>
@@ -144,7 +144,7 @@ export default function AppointmentDetail() {
         {apt.notes ? (
           <View style={styles.detailItem}>
             <View style={styles.detailIcon}>
-              <Ionicons name="document-text-outline" size={20} color="#001689" />
+              <Ionicons name="document-text-outline" size={20} color="#CE0E2D" />
             </View>
             <View style={{ flex: 1 }}>
               <Text style={styles.detailLabel}>Notes</Text>
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#FAFAFA',
   },
   errorText: { fontSize: 16, color: '#838383' },
-  linkText: { fontSize: 14, color: '#001689', fontWeight: '600', marginTop: 16 },
+  linkText: { fontSize: 14, color: '#CE0E2D', fontWeight: '600', marginTop: 16 },
   header: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
     marginTop: 8, marginBottom: 24,
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: '#F1F1F1', gap: 12,
   },
   detailIcon: {
-    width: 40, height: 40, borderRadius: 12, backgroundColor: '#E4F3FF',
+    width: 40, height: 40, borderRadius: 12, backgroundColor: '#FFF1F3',
     justifyContent: 'center', alignItems: 'center',
   },
   detailLabel: { fontSize: 12, color: '#838383' },
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
   actions: { gap: 12 },
   primaryBtn: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
-    backgroundColor: '#001689', borderRadius: 14, paddingVertical: 16, gap: 8,
+    backgroundColor: '#CE0E2D', borderRadius: 14, paddingVertical: 16, gap: 8,
   },
   primaryBtnText: { fontSize: 16, fontWeight: '700', color: '#FFFFFF' },
   cancelBtn: { alignItems: 'center', paddingVertical: 14 },

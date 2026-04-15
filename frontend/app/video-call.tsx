@@ -118,7 +118,7 @@ export default function VideoCallScreen() {
           style={styles.ctrlBtn}
           onPress={() => setIsChatOpen(!isChatOpen)}
         >
-          <Ionicons name="chatbubble" size={24} color={isChatOpen ? '#001689' : '#FFFFFF'} />
+          <Ionicons name="chatbubble" size={24} color={isChatOpen ? '#CE0E2D' : '#FFFFFF'} />
           <Text style={styles.ctrlLabel}>Chat</Text>
         </TouchableOpacity>
 
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: 12,
     padding: 12, marginBottom: 12,
   },
-  chatSender: { fontSize: 12, color: '#001689', fontWeight: '600', marginBottom: 4 },
+  chatSender: { fontSize: 12, color: '#CE0E2D', fontWeight: '600', marginBottom: 4 },
   chatText: { fontSize: 14, color: '#FFFFFF' },
   chatInputRow: {
     backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: 12,

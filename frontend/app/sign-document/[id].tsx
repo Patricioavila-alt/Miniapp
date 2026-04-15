@@ -57,7 +57,7 @@ export default function SignDocumentScreen() {
   if (loading) {
     return (
       <View style={[styles.center, { paddingTop: insets.top }]}>
-        <ActivityIndicator size="large" color="#001689" />
+        <ActivityIndicator size="large" color="#CE0E2D" />
       </View>
     );
   }
@@ -91,12 +91,12 @@ export default function SignDocumentScreen() {
         <Ionicons
           name={doc.status === 'signed' ? 'checkmark-circle' : 'time'}
           size={18}
-          color={doc.status === 'signed' ? '#4CAF50' : '#001689'}
+          color={doc.status === 'signed' ? '#4CAF50' : '#CE0E2D'}
         />
         <Text
           style={[
             styles.statusText,
-            { color: doc.status === 'signed' ? '#4CAF50' : '#001689' },
+            { color: doc.status === 'signed' ? '#4CAF50' : '#CE0E2D' },
           ]}
         >
           {doc.status === 'signed' ? 'Firmado' : 'Pendiente de Firma'}
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     gap: 6, paddingHorizontal: 14, paddingVertical: 8, borderRadius: 20, marginBottom: 16,
   },
   badgeSigned: { backgroundColor: '#E8F5E9' },
-  badgePending: { backgroundColor: '#E4F3FF' },
+  badgePending: { backgroundColor: '#FFF1F3' },
   statusText: { fontSize: 13, fontWeight: '600' },
   docTitle: { fontSize: 22, fontWeight: '700', color: '#232323', marginBottom: 4 },
   docDate: { fontSize: 14, color: '#838383', marginBottom: 24 },
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   contentBody: { fontSize: 15, color: '#838383', lineHeight: 22 },
   signBtn: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
-    backgroundColor: '#001689', borderRadius: 14, paddingVertical: 16, gap: 8,
+    backgroundColor: '#CE0E2D', borderRadius: 14, paddingVertical: 16, gap: 8,
   },
   signBtnText: { fontSize: 16, fontWeight: '700', color: '#FFFFFF' },
   signedBox: { alignItems: 'center', paddingVertical: 32 },

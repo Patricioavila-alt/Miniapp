@@ -60,7 +60,7 @@ export default function AccountScreen() {
   if (loading) {
     return (
       <View style={[styles.loadingContainer, { paddingTop: insets.top }]}>
-        <ActivityIndicator size="large" color="#001689" />
+        <ActivityIndicator size="large" color="#CE0E2D" />
       </View>
     );
   }
@@ -169,7 +169,7 @@ export default function AccountScreen() {
             { icon: 'information-circle-outline', label: 'Acerca de Mi Salud FdA', testId: 'menu-about' },
           ].map((item, i) => (
             <TouchableOpacity key={i} testID={item.testId} style={styles.menuItem}>
-              <Ionicons name={item.icon as any} size={22} color="#001689" />
+              <Ionicons name={item.icon as any} size={22} color="#CE0E2D" />
               <Text style={styles.menuLabel}>{item.label}</Text>
               <Ionicons name="chevron-forward" size={18} color="#E6E6E6" />
             </TouchableOpacity>
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     padding: 24, marginBottom: 20, borderWidth: 1, borderColor: '#E6E6E6',
   },
   avatarCircle: {
-    width: 72, height: 72, borderRadius: 36, backgroundColor: '#001689',
+    width: 72, height: 72, borderRadius: 36, backgroundColor: '#CE0E2D',
     justifyContent: 'center', alignItems: 'center', marginBottom: 12,
   },
   avatarText: { fontSize: 24, fontWeight: '700', color: '#FFFFFF' },
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
     alignItems: 'center', marginBottom: 12,
   },
   infoTitle: { fontSize: 16, fontWeight: '700', color: '#232323' },
-  editBtn: { fontSize: 14, fontWeight: '600', color: '#001689' },
+  editBtn: { fontSize: 14, fontWeight: '600', color: '#CE0E2D' },
   inputGroup: { marginBottom: 12 },
   inputLabel: { fontSize: 12, color: '#838383', marginBottom: 4, fontWeight: '500' },
   input: {
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     fontSize: 14, color: '#232323', borderWidth: 1, borderColor: '#E6E6E6',
   },
   saveBtn: {
-    backgroundColor: '#001689', borderRadius: 12,
+    backgroundColor: '#CE0E2D', borderRadius: 12,
     paddingVertical: 14, alignItems: 'center', marginTop: 8,
   },
   saveBtnText: { fontSize: 15, fontWeight: '700', color: '#FFFFFF' },
