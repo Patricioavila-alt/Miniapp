@@ -1,0 +1,113 @@
+{
+  "project_name": "Mi Salud FdA",
+  "theme": "light",
+  "archetype": "Organic & Earthy",
+  "colors": {
+    "background": "#F9F8F6",
+    "surface": "#FFFFFF",
+    "primary": "#E07A5F",
+    "primary_light": "#F2B8A7",
+    "secondary": "#2A433A",
+    "accent": "#819E8E",
+    "text_primary": "#1F2321",
+    "text_secondary": "#5C6B64",
+    "border": "#E5E1DA",
+    "success": "#4CAF50",
+    "error": "#E53935",
+    "card_background": "#FFFFFF"
+  },
+  "typography": {
+    "font_family_heading": "Outfit, sans-serif",
+    "font_family_body": "Manrope, sans-serif",
+    "h1": "text-4xl font-bold tracking-tight text-[#2A433A]",
+    "h2": "text-2xl font-semibold tracking-tight text-[#2A433A]",
+    "h3": "text-xl font-semibold text-[#1F2321]",
+    "body": "text-base text-[#5C6B64] leading-relaxed",
+    "label": "text-sm font-medium tracking-wide uppercase text-[#819E8E]"
+  },
+  "layout_and_spacing": {
+    "screen_padding": "px-6 pt-10 pb-6",
+    "card_padding": "p-6",
+    "gap": "gap-6",
+    "border_radius": {
+      "sm": "rounded-lg",
+      "md": "rounded-xl",
+      "lg": "rounded-2xl",
+      "xl": "rounded-[32px]"
+    },
+    "shadows": {
+      "soft": "shadow-[0_4px_20px_rgba(42,67,58,0.06)]",
+      "floating": "shadow-[0_8px_32px_rgba(42,67,58,0.1)]"
+    }
+  },
+  "components": {
+    "bottom_tab_bar": {
+      "background": "#FFFFFF",
+      "active_tint": "#E07A5F",
+      "inactive_tint": "#819E8E",
+      "style": "Border-top with subtle shadow, slightly taller for modern feel, icon + label."
+    },
+    "contextual_widget": {
+      "background": "#2A433A",
+      "text_color": "#FFFFFF",
+      "style": "Large rounded card (rounded-3xl), generous padding (p-8). Used for 'Next Appointment' or 'Welcome Back'."
+    },
+    "quick_action_button": {
+      "background": "#F9F8F6",
+      "style": "Square or squircle (rounded-2xl) card, icon on top, text below. Drop soft shadow. Text should be small, centered."
+    },
+    "appointment_card": {
+      "background": "#FFFFFF",
+      "border": "1px solid #E5E1DA",
+      "style": "Row layout with Doctor Avatar (rounded-full), Name, Speciality, Time/Date badge. Primary action button 'Join Video' or 'Reschedule'."
+    },
+    "promo_banner": {
+      "style": "Horizontal scrollable card, Image background with subtle dark overlay to keep text legible. rounded-2xl."
+    }
+  },
+  "media": {
+    "doctor_avatars": [
+      {
+        "url": "https://images.unsplash.com/photo-1673865641073-4479f93a7776?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTF8MHwxfHNlYXJjaHwxfHxmcmllbmRseSUyMGZlbWFsZSUyMGRvY3RvcnxlbnwwfHx8fDE3NzYyNjM5MzR8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Female Doctor Profile"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1758691461516-7e716e0ca135?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2ODl8MHwxfHNlYXJjaHwyfHxzbWlsaW5nJTIwZG9jdG9yJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzc2MjYzOTIyfDA&ixlib=rb-4.1.0&q=85",
+        "description": "Male Doctor Profile"
+      }
+    ],
+    "welcome_screens": [
+      {
+        "url": "https://images.unsplash.com/photo-1620862242704-93e77e90a83e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzN8MHwxfHNlYXJjaHwyfHxoYXBweSUyMHBhdGllbnQlMjB1c2luZyUyMHBob25lfGVufDB8fHx8MTc3NjI2MzkyMnww&ixlib=rb-4.1.0&q=85",
+        "description": "Happy Patient using app"
+      }
+    ],
+    "promo_banners": [
+      {
+        "url": "https://images.unsplash.com/photo-1657925426569-ad97ff77fe4b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njl8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMG9yZ2FuaWMlMjBzaGFwZSUyMGJhY2tncm91bmR8ZW58MHx8fHwxNzc2MjYzOTM5fDA&ixlib=rb-4.1.0&q=85",
+        "description": "Abstract organic pattern for banner background"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1687184144779-51a366352458?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODF8MHwxfHNlYXJjaHwzfHx3ZWxsbmVzcyUyMGhlYWx0aHklMjBsaWZlc3R5bGV8ZW58MHx8fHwxNzc2MjYzOTIyfDA&ixlib=rb-4.1.0&q=85",
+        "description": "Wellness theme banner image"
+      }
+    ],
+    "video_consultation": [
+      {
+        "url": "https://images.unsplash.com/photo-1758691462848-31a39258dbd8?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njd8MHwxfHNlYXJjaHwyfHxwYXRpZW50JTIwcGhvbmUlMjBjYWxsfGVufDB8fHx8MTc3NjI2MzkzNHww&ixlib=rb-4.1.0&q=85",
+        "description": "Doctor on phone/video consultation"
+      }
+    ]
+  },
+  "instructions_to_main_agent": [
+    "Since this is a React Native Expo application, strictly use React Native primitives (View, Text, ScrollView, TouchableOpacity, Image) or NativeWind for styling. Do NOT use HTML elements like div, span, or section.",
+    "Navigation must be implemented using React Navigation (e.g., @react-navigation/bottom-tabs and @react-navigation/native-stack).",
+    "Implement bottom tabs: Home | My Appointments | Health Record | My Account.",
+    "For the QR Code feature in 'Digital Prescription', use a library like 'react-native-qrcode-svg' instead of an image if possible. Otherwise, construct a dummy UI with a mocked square barcode.",
+    "Include 'testID' attributes (the React Native equivalent of data-testid) for all interactive elements to support testing.",
+    "The UI should look calm, organic, and trustworthy. Use generous paddings (`p-6` on containers) and the specified warm color palette.",
+    "The Home dashboard should have dynamic widgets. E.g., if there's an upcoming appointment, show the dark green (#2A433A) contextual widget at the top.",
+    "No real authentication is needed, build a mock flow or just a simulated splash/welcome screen that automatically navigates to the Home tab.",
+    "Ensure 'Outfit' and 'Manrope' fonts are loaded via Expo Font, or fallback to system sans-serif if you cannot load custom fonts."
+  ]
+}
