@@ -93,7 +93,7 @@ export default function ScheduleAppointment() {
           onPress={() => (step > 1 && step < 4 ? setStep(step - 1) : router.back())}
           style={styles.backBtn}
         >
-          <Ionicons name="arrow-back" size={24} color="#2A433A" />
+          <Ionicons name="arrow-back" size={24} color="#232323" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>
           {step === 1
@@ -121,18 +121,18 @@ export default function ScheduleAppointment() {
         {step === 1 && (
           <>
             <View style={styles.searchBox}>
-              <Ionicons name="search" size={18} color="#819E8E" />
+              <Ionicons name="search" size={18} color="#CACACA" />
               <TextInput
                 testID="doctor-search-input"
                 style={styles.searchInput}
                 placeholder="Search by name or specialty..."
-                placeholderTextColor="#819E8E"
+                placeholderTextColor="#CACACA"
                 value={search}
                 onChangeText={handleSearch}
               />
             </View>
             {loading ? (
-              <ActivityIndicator size="large" color="#E07A5F" style={{ marginTop: 40 }} />
+              <ActivityIndicator size="large" color="#001689" style={{ marginTop: 40 }} />
             ) : (
               doctors.map((doc) => (
                 <TouchableOpacity
@@ -145,7 +145,7 @@ export default function ScheduleAppointment() {
                   onPress={() => setSelectedDoctor(doc)}
                 >
                   <View style={styles.docAvatar}>
-                    <Ionicons name="person" size={24} color="#819E8E" />
+                    <Ionicons name="person" size={24} color="#CACACA" />
                   </View>
                   <View style={styles.docInfo}>
                     <Text style={styles.docName}>{doc.name}</Text>
@@ -220,7 +220,7 @@ export default function ScheduleAppointment() {
                   <Ionicons
                     name={t === 'video' ? 'videocam' : 'location'}
                     size={20}
-                    color={aptType === t ? '#FFFFFF' : '#5C6B64'}
+                    color={aptType === t ? '#FFFFFF' : '#838383'}
                   />
                   <Text style={[styles.typeText, aptType === t && styles.typeTextW]}>
                     {t === 'video' ? 'Video Call' : 'In-Person'}
@@ -236,7 +236,7 @@ export default function ScheduleAppointment() {
           <View style={styles.confirmSection}>
             <View style={styles.confirmCard}>
               <View style={styles.confirmAvatar}>
-                <Ionicons name="person" size={32} color="#819E8E" />
+                <Ionicons name="person" size={32} color="#CACACA" />
               </View>
               <Text style={styles.confirmDocName}>{selectedDoctor.name}</Text>
               <Text style={styles.confirmSpec}>{selectedDoctor.specialty}</Text>
@@ -252,7 +252,7 @@ export default function ScheduleAppointment() {
                 },
               ].map((r, i) => (
                 <View key={i} style={styles.confirmRow}>
-                  <Ionicons name={r.icon as any} size={18} color="#E07A5F" />
+                  <Ionicons name={r.icon as any} size={18} color="#001689" />
                   <Text style={styles.confirmText}>{r.text}</Text>
                 </View>
               ))}
@@ -264,7 +264,7 @@ export default function ScheduleAppointment() {
             </View>
 
             <View style={styles.mockPayment}>
-              <Ionicons name="card-outline" size={20} color="#5C6B64" />
+              <Ionicons name="card-outline" size={20} color="#838383" />
               <Text style={styles.mockPayText}>**** **** **** 4242</Text>
               <Text style={styles.mockPayLabel}>Mock Payment</Text>
             </View>
@@ -363,130 +363,130 @@ export default function ScheduleAppointment() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F9F8F6' },
+  container: { flex: 1, backgroundColor: '#FAFAFA' },
   header: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
     paddingHorizontal: 24, marginTop: 8, marginBottom: 16,
   },
   backBtn: {
     width: 40, height: 40, borderRadius: 20, backgroundColor: '#FFFFFF',
-    justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: '#E5E1DA',
+    justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: '#E6E6E6',
   },
-  headerTitle: { fontSize: 18, fontWeight: '700', color: '#2A433A' },
+  headerTitle: { fontSize: 18, fontWeight: '700', color: '#232323' },
   progress: { flexDirection: 'row', justifyContent: 'center', gap: 8, marginBottom: 20 },
-  dot: { width: 32, height: 4, borderRadius: 2, backgroundColor: '#E5E1DA' },
-  dotActive: { backgroundColor: '#E07A5F' },
+  dot: { width: 32, height: 4, borderRadius: 2, backgroundColor: '#E6E6E6' },
+  dotActive: { backgroundColor: '#001689' },
   scroll: { flex: 1, paddingHorizontal: 24 },
   // Step 1
   searchBox: {
     flexDirection: 'row', alignItems: 'center', backgroundColor: '#FFFFFF',
     borderRadius: 12, paddingHorizontal: 14, paddingVertical: 12,
-    marginBottom: 16, borderWidth: 1, borderColor: '#E5E1DA',
+    marginBottom: 16, borderWidth: 1, borderColor: '#E6E6E6',
   },
-  searchInput: { flex: 1, fontSize: 14, color: '#1F2321', marginLeft: 10 },
+  searchInput: { flex: 1, fontSize: 14, color: '#232323', marginLeft: 10 },
   docCard: {
     flexDirection: 'row', alignItems: 'center', backgroundColor: '#FFFFFF',
-    borderRadius: 16, padding: 16, marginBottom: 10, borderWidth: 2, borderColor: '#E5E1DA',
+    borderRadius: 16, padding: 16, marginBottom: 10, borderWidth: 2, borderColor: '#E6E6E6',
   },
-  docCardSelected: { borderColor: '#E07A5F', backgroundColor: '#FFF9F7' },
+  docCardSelected: { borderColor: '#001689', backgroundColor: '#E4F3FF' },
   docAvatar: {
-    width: 48, height: 48, borderRadius: 24, backgroundColor: '#F9F8F6',
+    width: 48, height: 48, borderRadius: 24, backgroundColor: '#FAFAFA',
     justifyContent: 'center', alignItems: 'center', marginRight: 12,
   },
   docInfo: { flex: 1 },
-  docName: { fontSize: 15, fontWeight: '700', color: '#1F2321' },
-  docSpec: { fontSize: 13, color: '#5C6B64', marginTop: 2 },
+  docName: { fontSize: 15, fontWeight: '700', color: '#232323' },
+  docSpec: { fontSize: 13, color: '#838383', marginTop: 2 },
   docMeta: { flexDirection: 'row', alignItems: 'center', marginTop: 4, gap: 4 },
   docRating: { fontSize: 12, color: '#FFB300', fontWeight: '600' },
-  docExp: { fontSize: 12, color: '#819E8E', marginLeft: 8 },
-  docPrice: { fontSize: 16, fontWeight: '700', color: '#E07A5F' },
+  docExp: { fontSize: 12, color: '#838383', marginLeft: 8 },
+  docPrice: { fontSize: 16, fontWeight: '700', color: '#001689' },
   // Step 2
-  stepLabel: { fontSize: 16, fontWeight: '700', color: '#1F2321', marginBottom: 12 },
+  stepLabel: { fontSize: 16, fontWeight: '700', color: '#232323', marginBottom: 12 },
   daysRow: { gap: 10 },
   dayCard: {
     width: 64, paddingVertical: 12, borderRadius: 16, backgroundColor: '#FFFFFF',
-    alignItems: 'center', borderWidth: 1, borderColor: '#E5E1DA',
+    alignItems: 'center', borderWidth: 1, borderColor: '#E6E6E6',
   },
-  dayActive: { backgroundColor: '#E07A5F', borderColor: '#E07A5F' },
-  dayName: { fontSize: 12, color: '#5C6B64', fontWeight: '500' },
-  dayNum: { fontSize: 20, fontWeight: '700', color: '#1F2321', marginVertical: 4 },
-  dayMonth: { fontSize: 11, color: '#5C6B64' },
+  dayActive: { backgroundColor: '#001689', borderColor: '#001689' },
+  dayName: { fontSize: 12, color: '#838383', fontWeight: '500' },
+  dayNum: { fontSize: 20, fontWeight: '700', color: '#232323', marginVertical: 4 },
+  dayMonth: { fontSize: 11, color: '#838383' },
   dayTextW: { color: '#FFFFFF' },
   timesGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
   timeSlot: {
     paddingHorizontal: 20, paddingVertical: 12, borderRadius: 12,
-    backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: '#E5E1DA',
+    backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: '#E6E6E6',
   },
-  timeActive: { backgroundColor: '#E07A5F', borderColor: '#E07A5F' },
-  timeText: { fontSize: 14, fontWeight: '600', color: '#1F2321' },
+  timeActive: { backgroundColor: '#001689', borderColor: '#001689' },
+  timeText: { fontSize: 14, fontWeight: '600', color: '#232323' },
   timeTextW: { color: '#FFFFFF' },
   typeRow: { flexDirection: 'row', gap: 12 },
   typeBtn: {
     flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
     gap: 8, paddingVertical: 14, borderRadius: 12, backgroundColor: '#FFFFFF',
-    borderWidth: 1, borderColor: '#E5E1DA',
+    borderWidth: 1, borderColor: '#E6E6E6',
   },
-  typeBtnActive: { backgroundColor: '#2A433A', borderColor: '#2A433A' },
-  typeText: { fontSize: 14, fontWeight: '600', color: '#5C6B64' },
+  typeBtnActive: { backgroundColor: '#001689', borderColor: '#001689' },
+  typeText: { fontSize: 14, fontWeight: '600', color: '#838383' },
   typeTextW: { color: '#FFFFFF' },
   // Step 3
   confirmSection: { alignItems: 'center' },
   confirmCard: {
     alignItems: 'center', backgroundColor: '#FFFFFF', borderRadius: 20,
-    padding: 24, width: '100%', marginBottom: 16, borderWidth: 1, borderColor: '#E5E1DA',
+    padding: 24, width: '100%', marginBottom: 16, borderWidth: 1, borderColor: '#E6E6E6',
   },
   confirmAvatar: {
-    width: 64, height: 64, borderRadius: 32, backgroundColor: '#F9F8F6',
+    width: 64, height: 64, borderRadius: 32, backgroundColor: '#FAFAFA',
     justifyContent: 'center', alignItems: 'center', marginBottom: 12,
   },
-  confirmDocName: { fontSize: 18, fontWeight: '700', color: '#1F2321' },
-  confirmSpec: { fontSize: 14, color: '#5C6B64', marginTop: 4 },
+  confirmDocName: { fontSize: 18, fontWeight: '700', color: '#232323' },
+  confirmSpec: { fontSize: 14, color: '#838383', marginTop: 4 },
   confirmDetails: {
     width: '100%', backgroundColor: '#FFFFFF', borderRadius: 16,
-    padding: 16, marginBottom: 16, borderWidth: 1, borderColor: '#E5E1DA', gap: 12,
+    padding: 16, marginBottom: 16, borderWidth: 1, borderColor: '#E6E6E6', gap: 12,
   },
   confirmRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
-  confirmText: { fontSize: 15, fontWeight: '600', color: '#1F2321' },
+  confirmText: { fontSize: 15, fontWeight: '600', color: '#232323' },
   priceRow: {
     flexDirection: 'row', justifyContent: 'space-between', width: '100%',
     backgroundColor: '#FFFFFF', borderRadius: 16, padding: 16,
-    marginBottom: 16, borderWidth: 1, borderColor: '#E5E1DA',
+    marginBottom: 16, borderWidth: 1, borderColor: '#E6E6E6',
   },
-  priceLabel: { fontSize: 15, color: '#5C6B64' },
-  priceValue: { fontSize: 20, fontWeight: '700', color: '#E07A5F' },
+  priceLabel: { fontSize: 15, color: '#838383' },
+  priceValue: { fontSize: 20, fontWeight: '700', color: '#001689' },
   mockPayment: {
     flexDirection: 'row', alignItems: 'center', width: '100%',
-    backgroundColor: '#F9F8F6', borderRadius: 12, padding: 16, gap: 10,
+    backgroundColor: '#FAFAFA', borderRadius: 12, padding: 16, gap: 10,
   },
-  mockPayText: { flex: 1, fontSize: 14, color: '#1F2321', fontWeight: '500' },
-  mockPayLabel: { fontSize: 11, color: '#819E8E', fontWeight: '600' },
+  mockPayText: { flex: 1, fontSize: 14, color: '#232323', fontWeight: '500' },
+  mockPayLabel: { fontSize: 11, color: '#838383', fontWeight: '600' },
   // Step 4
   successSection: { alignItems: 'center', paddingTop: 40 },
-  successTitle: { fontSize: 24, fontWeight: '700', color: '#2A433A', marginTop: 20, marginBottom: 8 },
-  successSub: { fontSize: 15, color: '#5C6B64', textAlign: 'center', marginBottom: 32 },
+  successTitle: { fontSize: 24, fontWeight: '700', color: '#232323', marginTop: 20, marginBottom: 8 },
+  successSub: { fontSize: 15, color: '#838383', textAlign: 'center', marginBottom: 32 },
   successCard: {
     backgroundColor: '#FFFFFF', borderRadius: 16, padding: 20,
     width: '100%', alignItems: 'center', marginBottom: 32,
-    borderWidth: 1, borderColor: '#E5E1DA',
+    borderWidth: 1, borderColor: '#E6E6E6',
   },
-  successDoc: { fontSize: 16, fontWeight: '700', color: '#1F2321' },
-  successDetail: { fontSize: 14, color: '#5C6B64', marginTop: 4 },
+  successDoc: { fontSize: 16, fontWeight: '700', color: '#232323' },
+  successDetail: { fontSize: 14, color: '#838383', marginTop: 4 },
   successBtn: {
-    backgroundColor: '#E07A5F', borderRadius: 14, paddingVertical: 16,
+    backgroundColor: '#001689', borderRadius: 14, paddingVertical: 16,
     width: '100%', alignItems: 'center', marginBottom: 12,
   },
   successBtnText: { fontSize: 16, fontWeight: '700', color: '#FFFFFF' },
   successBtnSec: { paddingVertical: 14, width: '100%', alignItems: 'center' },
-  successBtnSecText: { fontSize: 15, fontWeight: '600', color: '#2A433A' },
+  successBtnSecText: { fontSize: 15, fontWeight: '600', color: '#232323' },
   // Bottom CTA
   bottomCta: {
     position: 'absolute', bottom: 0, left: 0, right: 0,
-    paddingHorizontal: 24, paddingTop: 12, backgroundColor: '#F9F8F6',
-    borderTopWidth: 1, borderTopColor: '#E5E1DA',
+    paddingHorizontal: 24, paddingTop: 12, backgroundColor: '#FAFAFA',
+    borderTopWidth: 1, borderTopColor: '#E6E6E6',
   },
   ctaBtn: {
-    backgroundColor: '#E07A5F', borderRadius: 14, paddingVertical: 16, alignItems: 'center',
+    backgroundColor: '#001689', borderRadius: 14, paddingVertical: 16, alignItems: 'center',
   },
-  ctaDisabled: { backgroundColor: '#E5E1DA' },
+  ctaDisabled: { backgroundColor: '#E6E6E6' },
   ctaText: { fontSize: 16, fontWeight: '700', color: '#FFFFFF' },
 });

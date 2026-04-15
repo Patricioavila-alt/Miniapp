@@ -60,7 +60,7 @@ export default function AccountScreen() {
   if (loading) {
     return (
       <View style={[styles.loadingContainer, { paddingTop: insets.top }]}>
-        <ActivityIndicator size="large" color="#E07A5F" />
+        <ActivityIndicator size="large" color="#001689" />
       </View>
     );
   }
@@ -125,7 +125,7 @@ export default function AccountScreen() {
                     style={styles.input}
                     value={editData[field.key] || ''}
                     onChangeText={(v) => setEditData({ ...editData, [field.key]: v })}
-                    placeholderTextColor="#819E8E"
+                    placeholderTextColor="#CACACA"
                   />
                 </View>
               ))}
@@ -169,9 +169,9 @@ export default function AccountScreen() {
             { icon: 'information-circle-outline', label: 'About Mi Salud FdA', testId: 'menu-about' },
           ].map((item, i) => (
             <TouchableOpacity key={i} testID={item.testId} style={styles.menuItem}>
-              <Ionicons name={item.icon as any} size={22} color="#2A433A" />
+              <Ionicons name={item.icon as any} size={22} color="#001689" />
               <Text style={styles.menuLabel}>{item.label}</Text>
-              <Ionicons name="chevron-forward" size={18} color="#E5E1DA" />
+              <Ionicons name="chevron-forward" size={18} color="#E6E6E6" />
             </TouchableOpacity>
           ))}
         </View>
@@ -183,59 +183,59 @@ export default function AccountScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F9F8F6' },
+  container: { flex: 1, backgroundColor: '#FAFAFA' },
   content: { paddingHorizontal: 24, paddingBottom: 32 },
   loadingContainer: {
-    flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#F9F8F6',
+    flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#FAFAFA',
   },
-  title: { fontSize: 28, fontWeight: '700', color: '#2A433A', marginTop: 16, marginBottom: 20 },
+  title: { fontSize: 28, fontWeight: '700', color: '#232323', marginTop: 16, marginBottom: 20 },
   profileCard: {
     alignItems: 'center', backgroundColor: '#FFFFFF', borderRadius: 20,
-    padding: 24, marginBottom: 20, borderWidth: 1, borderColor: '#E5E1DA',
+    padding: 24, marginBottom: 20, borderWidth: 1, borderColor: '#E6E6E6',
   },
   avatarCircle: {
-    width: 72, height: 72, borderRadius: 36, backgroundColor: '#2A433A',
+    width: 72, height: 72, borderRadius: 36, backgroundColor: '#001689',
     justifyContent: 'center', alignItems: 'center', marginBottom: 12,
   },
   avatarText: { fontSize: 24, fontWeight: '700', color: '#FFFFFF' },
-  profileName: { fontSize: 20, fontWeight: '700', color: '#1F2321' },
-  profileEmail: { fontSize: 14, color: '#5C6B64', marginTop: 4 },
+  profileName: { fontSize: 20, fontWeight: '700', color: '#232323' },
+  profileEmail: { fontSize: 14, color: '#838383', marginTop: 4 },
   infoSection: {
     backgroundColor: '#FFFFFF', borderRadius: 16, padding: 16,
-    marginBottom: 20, borderWidth: 1, borderColor: '#E5E1DA',
+    marginBottom: 20, borderWidth: 1, borderColor: '#E6E6E6',
   },
   infoHeader: {
     flexDirection: 'row', justifyContent: 'space-between',
     alignItems: 'center', marginBottom: 12,
   },
-  infoTitle: { fontSize: 16, fontWeight: '700', color: '#1F2321' },
-  editBtn: { fontSize: 14, fontWeight: '600', color: '#E07A5F' },
+  infoTitle: { fontSize: 16, fontWeight: '700', color: '#232323' },
+  editBtn: { fontSize: 14, fontWeight: '600', color: '#001689' },
   inputGroup: { marginBottom: 12 },
-  inputLabel: { fontSize: 12, color: '#5C6B64', marginBottom: 4, fontWeight: '500' },
+  inputLabel: { fontSize: 12, color: '#838383', marginBottom: 4, fontWeight: '500' },
   input: {
-    backgroundColor: '#F9F8F6', borderRadius: 10,
+    backgroundColor: '#FAFAFA', borderRadius: 10,
     paddingHorizontal: 14, paddingVertical: 12,
-    fontSize: 14, color: '#1F2321', borderWidth: 1, borderColor: '#E5E1DA',
+    fontSize: 14, color: '#232323', borderWidth: 1, borderColor: '#E6E6E6',
   },
   saveBtn: {
-    backgroundColor: '#E07A5F', borderRadius: 12,
+    backgroundColor: '#001689', borderRadius: 12,
     paddingVertical: 14, alignItems: 'center', marginTop: 8,
   },
   saveBtnText: { fontSize: 15, fontWeight: '700', color: '#FFFFFF' },
   detailRow: {
     flexDirection: 'row', justifyContent: 'space-between',
-    paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: '#F5F3F0',
+    paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: '#F1F1F1',
   },
-  detailLabel: { fontSize: 14, color: '#5C6B64' },
-  detailValue: { fontSize: 14, fontWeight: '600', color: '#1F2321' },
+  detailLabel: { fontSize: 14, color: '#838383' },
+  detailValue: { fontSize: 14, fontWeight: '600', color: '#232323' },
   menuSection: {
     backgroundColor: '#FFFFFF', borderRadius: 16, overflow: 'hidden',
-    marginBottom: 20, borderWidth: 1, borderColor: '#E5E1DA',
+    marginBottom: 20, borderWidth: 1, borderColor: '#E6E6E6',
   },
   menuItem: {
     flexDirection: 'row', alignItems: 'center',
     paddingHorizontal: 16, paddingVertical: 14,
-    borderBottomWidth: 1, borderBottomColor: '#F5F3F0', gap: 12,
+    borderBottomWidth: 1, borderBottomColor: '#F1F1F1', gap: 12,
   },
-  menuLabel: { flex: 1, fontSize: 15, color: '#1F2321' },
+  menuLabel: { flex: 1, fontSize: 15, color: '#232323' },
 });

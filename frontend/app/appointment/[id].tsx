@@ -53,7 +53,7 @@ export default function AppointmentDetail() {
   if (loading) {
     return (
       <View style={[styles.center, { paddingTop: insets.top }]}>
-        <ActivityIndicator size="large" color="#E07A5F" />
+        <ActivityIndicator size="large" color="#001689" />
       </View>
     );
   }
@@ -79,7 +79,7 @@ export default function AppointmentDetail() {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity testID="back-btn" onPress={() => router.back()} style={styles.backBtn}>
-          <Ionicons name="arrow-back" size={24} color="#2A433A" />
+          <Ionicons name="arrow-back" size={24} color="#232323" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Appointment Details</Text>
         <View style={{ width: 40 }} />
@@ -88,7 +88,7 @@ export default function AppointmentDetail() {
       {/* Doctor Card */}
       <View style={styles.doctorCard}>
         <View style={styles.avatarCircle}>
-          <Ionicons name="person" size={32} color="#819E8E" />
+          <Ionicons name="person" size={32} color="#CACACA" />
         </View>
         <Text style={styles.doctorName}>{apt.doctor_name}</Text>
         <Text style={styles.specialty}>{apt.doctor_specialty}</Text>
@@ -111,7 +111,7 @@ export default function AppointmentDetail() {
                     ? '#4CAF50'
                     : apt.status === 'completed'
                     ? '#1976D2'
-                    : '#E53935',
+                    : '#CE0E2D',
               },
             ]}
           >
@@ -133,7 +133,7 @@ export default function AppointmentDetail() {
         ].map((item, i) => (
           <View key={i} style={styles.detailItem}>
             <View style={styles.detailIcon}>
-              <Ionicons name={item.icon as any} size={20} color="#E07A5F" />
+              <Ionicons name={item.icon as any} size={20} color="#001689" />
             </View>
             <View>
               <Text style={styles.detailLabel}>{item.label}</Text>
@@ -144,7 +144,7 @@ export default function AppointmentDetail() {
         {apt.notes ? (
           <View style={styles.detailItem}>
             <View style={styles.detailIcon}>
-              <Ionicons name="document-text-outline" size={20} color="#E07A5F" />
+              <Ionicons name="document-text-outline" size={20} color="#001689" />
             </View>
             <View style={{ flex: 1 }}>
               <Text style={styles.detailLabel}>Notes</Text>
@@ -179,32 +179,32 @@ export default function AppointmentDetail() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F9F8F6' },
+  container: { flex: 1, backgroundColor: '#FAFAFA' },
   content: { paddingHorizontal: 24, paddingBottom: 32 },
   center: {
-    flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#F9F8F6',
+    flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#FAFAFA',
   },
-  errorText: { fontSize: 16, color: '#5C6B64' },
-  linkText: { fontSize: 14, color: '#E07A5F', fontWeight: '600', marginTop: 16 },
+  errorText: { fontSize: 16, color: '#838383' },
+  linkText: { fontSize: 14, color: '#001689', fontWeight: '600', marginTop: 16 },
   header: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
     marginTop: 8, marginBottom: 24,
   },
   backBtn: {
     width: 40, height: 40, borderRadius: 20, backgroundColor: '#FFFFFF',
-    justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: '#E5E1DA',
+    justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: '#E6E6E6',
   },
-  headerTitle: { fontSize: 18, fontWeight: '700', color: '#2A433A' },
+  headerTitle: { fontSize: 18, fontWeight: '700', color: '#232323' },
   doctorCard: {
     alignItems: 'center', backgroundColor: '#FFFFFF', borderRadius: 20,
-    padding: 24, marginBottom: 16, borderWidth: 1, borderColor: '#E5E1DA',
+    padding: 24, marginBottom: 16, borderWidth: 1, borderColor: '#E6E6E6',
   },
   avatarCircle: {
-    width: 72, height: 72, borderRadius: 36, backgroundColor: '#F9F8F6',
+    width: 72, height: 72, borderRadius: 36, backgroundColor: '#FAFAFA',
     justifyContent: 'center', alignItems: 'center', marginBottom: 12,
   },
-  doctorName: { fontSize: 20, fontWeight: '700', color: '#1F2321' },
-  specialty: { fontSize: 14, color: '#5C6B64', marginTop: 4 },
+  doctorName: { fontSize: 20, fontWeight: '700', color: '#232323' },
+  specialty: { fontSize: 14, color: '#838383', marginTop: 4 },
   pill: { marginTop: 12, paddingHorizontal: 16, paddingVertical: 6, borderRadius: 20 },
   pillUpcoming: { backgroundColor: '#E8F5E9' },
   pillCompleted: { backgroundColor: '#E3F2FD' },
@@ -212,24 +212,24 @@ const styles = StyleSheet.create({
   pillText: { fontSize: 13, fontWeight: '600' },
   detailsCard: {
     backgroundColor: '#FFFFFF', borderRadius: 16, padding: 16,
-    marginBottom: 20, borderWidth: 1, borderColor: '#E5E1DA',
+    marginBottom: 20, borderWidth: 1, borderColor: '#E6E6E6',
   },
   detailItem: {
     flexDirection: 'row', alignItems: 'center',
-    paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: '#F5F3F0', gap: 12,
+    paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: '#F1F1F1', gap: 12,
   },
   detailIcon: {
-    width: 40, height: 40, borderRadius: 12, backgroundColor: '#FFF3E0',
+    width: 40, height: 40, borderRadius: 12, backgroundColor: '#E4F3FF',
     justifyContent: 'center', alignItems: 'center',
   },
-  detailLabel: { fontSize: 12, color: '#5C6B64' },
-  detailValue: { fontSize: 15, fontWeight: '600', color: '#1F2321', marginTop: 2 },
+  detailLabel: { fontSize: 12, color: '#838383' },
+  detailValue: { fontSize: 15, fontWeight: '600', color: '#232323', marginTop: 2 },
   actions: { gap: 12 },
   primaryBtn: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
-    backgroundColor: '#E07A5F', borderRadius: 14, paddingVertical: 16, gap: 8,
+    backgroundColor: '#001689', borderRadius: 14, paddingVertical: 16, gap: 8,
   },
   primaryBtnText: { fontSize: 16, fontWeight: '700', color: '#FFFFFF' },
   cancelBtn: { alignItems: 'center', paddingVertical: 14 },
-  cancelBtnText: { fontSize: 15, fontWeight: '600', color: '#E53935' },
+  cancelBtnText: { fontSize: 15, fontWeight: '600', color: '#CE0E2D' },
 });

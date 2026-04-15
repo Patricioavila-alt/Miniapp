@@ -95,7 +95,7 @@ export default function VideoCallScreen() {
           <Ionicons
             name={isMuted ? 'mic-off' : 'mic'}
             size={24}
-            color={isMuted ? '#E53935' : '#FFFFFF'}
+            color={isMuted ? '#CE0E2D' : '#FFFFFF'}
           />
           <Text style={styles.ctrlLabel}>{isMuted ? 'Unmute' : 'Mute'}</Text>
         </TouchableOpacity>
@@ -108,7 +108,7 @@ export default function VideoCallScreen() {
           <Ionicons
             name={isVideoOff ? 'videocam-off' : 'videocam'}
             size={24}
-            color={isVideoOff ? '#E53935' : '#FFFFFF'}
+            color={isVideoOff ? '#CE0E2D' : '#FFFFFF'}
           />
           <Text style={styles.ctrlLabel}>{isVideoOff ? 'Turn On' : 'Camera'}</Text>
         </TouchableOpacity>
@@ -118,7 +118,7 @@ export default function VideoCallScreen() {
           style={styles.ctrlBtn}
           onPress={() => setIsChatOpen(!isChatOpen)}
         >
-          <Ionicons name="chatbubble" size={24} color={isChatOpen ? '#E07A5F' : '#FFFFFF'} />
+          <Ionicons name="chatbubble" size={24} color={isChatOpen ? '#001689' : '#FFFFFF'} />
           <Text style={styles.ctrlLabel}>Chat</Text>
         </TouchableOpacity>
 
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: 12,
     padding: 12, marginBottom: 12,
   },
-  chatSender: { fontSize: 12, color: '#E07A5F', fontWeight: '600', marginBottom: 4 },
+  chatSender: { fontSize: 12, color: '#001689', fontWeight: '600', marginBottom: 4 },
   chatText: { fontSize: 14, color: '#FFFFFF' },
   chatInputRow: {
     backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: 12,
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
   ctrlBtn: { alignItems: 'center', gap: 4, padding: 8 },
   ctrlLabel: { fontSize: 10, color: 'rgba(255,255,255,0.6)', fontWeight: '500' },
   endCallBtn: {
-    width: 56, height: 56, borderRadius: 28, backgroundColor: '#E53935',
+    width: 56, height: 56, borderRadius: 28, backgroundColor: '#CE0E2D',
     justifyContent: 'center', alignItems: 'center',
   },
 });

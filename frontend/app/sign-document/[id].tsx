@@ -57,14 +57,14 @@ export default function SignDocumentScreen() {
   if (loading) {
     return (
       <View style={[styles.center, { paddingTop: insets.top }]}>
-        <ActivityIndicator size="large" color="#E07A5F" />
+        <ActivityIndicator size="large" color="#001689" />
       </View>
     );
   }
   if (!doc) {
     return (
       <View style={[styles.center, { paddingTop: insets.top }]}>
-        <Text style={{ color: '#5C6B64' }}>Document not found</Text>
+        <Text style={{ color: '#838383' }}>Document not found</Text>
       </View>
     );
   }
@@ -76,7 +76,7 @@ export default function SignDocumentScreen() {
     >
       <View style={styles.header}>
         <TouchableOpacity testID="back-btn" onPress={() => router.back()} style={styles.backBtn}>
-          <Ionicons name="arrow-back" size={24} color="#2A433A" />
+          <Ionicons name="arrow-back" size={24} color="#232323" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Document</Text>
         <View style={{ width: 40 }} />
@@ -91,12 +91,12 @@ export default function SignDocumentScreen() {
         <Ionicons
           name={doc.status === 'signed' ? 'checkmark-circle' : 'time'}
           size={18}
-          color={doc.status === 'signed' ? '#4CAF50' : '#E07A5F'}
+          color={doc.status === 'signed' ? '#4CAF50' : '#001689'}
         />
         <Text
           style={[
             styles.statusText,
-            { color: doc.status === 'signed' ? '#4CAF50' : '#E07A5F' },
+            { color: doc.status === 'signed' ? '#4CAF50' : '#001689' },
           ]}
         >
           {doc.status === 'signed' ? 'Signed' : 'Pending Signature'}
@@ -141,35 +141,35 @@ export default function SignDocumentScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F9F8F6' },
+  container: { flex: 1, backgroundColor: '#FAFAFA' },
   content: { paddingHorizontal: 24, paddingBottom: 32 },
-  center: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#F9F8F6' },
+  center: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#FAFAFA' },
   header: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
     marginTop: 8, marginBottom: 24,
   },
   backBtn: {
     width: 40, height: 40, borderRadius: 20, backgroundColor: '#FFFFFF',
-    justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: '#E5E1DA',
+    justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: '#E6E6E6',
   },
-  headerTitle: { fontSize: 18, fontWeight: '700', color: '#2A433A' },
+  headerTitle: { fontSize: 18, fontWeight: '700', color: '#232323' },
   statusBadge: {
     flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-start',
     gap: 6, paddingHorizontal: 14, paddingVertical: 8, borderRadius: 20, marginBottom: 16,
   },
   badgeSigned: { backgroundColor: '#E8F5E9' },
-  badgePending: { backgroundColor: '#FFF3E0' },
+  badgePending: { backgroundColor: '#E4F3FF' },
   statusText: { fontSize: 13, fontWeight: '600' },
-  docTitle: { fontSize: 22, fontWeight: '700', color: '#1F2321', marginBottom: 4 },
-  docDate: { fontSize: 14, color: '#5C6B64', marginBottom: 24 },
+  docTitle: { fontSize: 22, fontWeight: '700', color: '#232323', marginBottom: 4 },
+  docDate: { fontSize: 14, color: '#838383', marginBottom: 24 },
   contentCard: {
     backgroundColor: '#FFFFFF', borderRadius: 16, padding: 20,
-    marginBottom: 24, borderWidth: 1, borderColor: '#E5E1DA',
+    marginBottom: 24, borderWidth: 1, borderColor: '#E6E6E6',
   },
-  contentBody: { fontSize: 15, color: '#5C6B64', lineHeight: 22 },
+  contentBody: { fontSize: 15, color: '#838383', lineHeight: 22 },
   signBtn: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
-    backgroundColor: '#E07A5F', borderRadius: 14, paddingVertical: 16, gap: 8,
+    backgroundColor: '#001689', borderRadius: 14, paddingVertical: 16, gap: 8,
   },
   signBtnText: { fontSize: 16, fontWeight: '700', color: '#FFFFFF' },
   signedBox: { alignItems: 'center', paddingVertical: 32 },

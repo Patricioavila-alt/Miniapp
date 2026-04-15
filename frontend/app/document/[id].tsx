@@ -32,14 +32,14 @@ export default function DocumentDetail() {
   if (loading) {
     return (
       <View style={[styles.center, { paddingTop: insets.top }]}>
-        <ActivityIndicator size="large" color="#E07A5F" />
+        <ActivityIndicator size="large" color="#001689" />
       </View>
     );
   }
   if (!doc) {
     return (
       <View style={[styles.center, { paddingTop: insets.top }]}>
-        <Text style={{ color: '#5C6B64' }}>Document not found</Text>
+        <Text style={{ color: '#838383' }}>Document not found</Text>
       </View>
     );
   }
@@ -59,7 +59,7 @@ export default function DocumentDetail() {
     >
       <View style={styles.header}>
         <TouchableOpacity testID="back-btn" onPress={() => router.back()} style={styles.backBtn}>
-          <Ionicons name="arrow-back" size={24} color="#2A433A" />
+          <Ionicons name="arrow-back" size={24} color="#232323" />
         </TouchableOpacity>
         <Text style={styles.headerTitle} numberOfLines={1}>
           {typeLabel}
@@ -91,34 +91,34 @@ export default function DocumentDetail() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F9F8F6' },
+  container: { flex: 1, backgroundColor: '#FAFAFA' },
   content: { paddingHorizontal: 24, paddingBottom: 32 },
-  center: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#F9F8F6' },
+  center: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#FAFAFA' },
   header: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
     marginTop: 8, marginBottom: 24,
   },
   backBtn: {
     width: 40, height: 40, borderRadius: 20, backgroundColor: '#FFFFFF',
-    justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: '#E5E1DA',
+    justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: '#E6E6E6',
   },
-  headerTitle: { fontSize: 18, fontWeight: '700', color: '#2A433A', flex: 1, textAlign: 'center' },
+  headerTitle: { fontSize: 18, fontWeight: '700', color: '#232323', flex: 1, textAlign: 'center' },
   docHeader: { alignItems: 'center', marginBottom: 24 },
   docIconBig: {
     width: 64, height: 64, borderRadius: 20, backgroundColor: '#E3F2FD',
     justifyContent: 'center', alignItems: 'center', marginBottom: 16,
   },
-  docTitle: { fontSize: 20, fontWeight: '700', color: '#1F2321', textAlign: 'center' },
-  docMeta: { fontSize: 14, color: '#5C6B64', marginTop: 4 },
+  docTitle: { fontSize: 20, fontWeight: '700', color: '#232323', textAlign: 'center' },
+  docMeta: { fontSize: 14, color: '#838383', marginTop: 4 },
   contentCard: {
     backgroundColor: '#FFFFFF', borderRadius: 16, padding: 20,
-    marginBottom: 24, borderWidth: 1, borderColor: '#E5E1DA',
+    marginBottom: 24, borderWidth: 1, borderColor: '#E6E6E6',
   },
-  contentLabel: { fontSize: 16, fontWeight: '700', color: '#1F2321', marginBottom: 12 },
-  contentBody: { fontSize: 15, color: '#5C6B64', lineHeight: 22 },
+  contentLabel: { fontSize: 16, fontWeight: '700', color: '#232323', marginBottom: 12 },
+  contentBody: { fontSize: 15, color: '#838383', lineHeight: 22 },
   downloadBtn: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
-    backgroundColor: '#2A433A', borderRadius: 14, paddingVertical: 16, gap: 8,
+    backgroundColor: '#001689', borderRadius: 14, paddingVertical: 16, gap: 8,
   },
   downloadBtnText: { fontSize: 15, fontWeight: '700', color: '#FFFFFF' },
 });

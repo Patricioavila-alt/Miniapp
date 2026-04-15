@@ -43,8 +43,8 @@ const MockQR = ({ data }: { data: string }) => {
 const qrS = StyleSheet.create({
   box: { padding: 8, backgroundColor: '#FFFFFF', borderRadius: 12 },
   row: { flexDirection: 'row' },
-  cell: { width: 12, height: 12, margin: 1, backgroundColor: '#F9F8F6', borderRadius: 1 },
-  filled: { backgroundColor: '#1F2321' },
+  cell: { width: 12, height: 12, margin: 1, backgroundColor: '#FAFAFA', borderRadius: 1 },
+  filled: { backgroundColor: '#232323' },
 });
 
 export default function PrescriptionDetail() {
@@ -71,14 +71,14 @@ export default function PrescriptionDetail() {
   if (loading) {
     return (
       <View style={[styles.center, { paddingTop: insets.top }]}>
-        <ActivityIndicator size="large" color="#E07A5F" />
+        <ActivityIndicator size="large" color="#001689" />
       </View>
     );
   }
   if (!rx) {
     return (
       <View style={[styles.center, { paddingTop: insets.top }]}>
-        <Text style={{ color: '#5C6B64', fontSize: 16 }}>Prescription not found</Text>
+        <Text style={{ color: '#838383', fontSize: 16 }}>Prescription not found</Text>
       </View>
     );
   }
@@ -90,7 +90,7 @@ export default function PrescriptionDetail() {
     >
       <View style={styles.header}>
         <TouchableOpacity testID="back-btn" onPress={() => router.back()} style={styles.backBtn}>
-          <Ionicons name="arrow-back" size={24} color="#2A433A" />
+          <Ionicons name="arrow-back" size={24} color="#232323" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Prescription</Text>
         <View style={{ width: 40 }} />
@@ -141,7 +141,7 @@ export default function PrescriptionDetail() {
       {rx.medications?.map((med: any, i: number) => (
         <View key={i} style={styles.medCard}>
           <View style={styles.medIcon}>
-            <Ionicons name="medical" size={20} color="#E07A5F" />
+            <Ionicons name="medical" size={20} color="#001689" />
           </View>
           <View style={styles.medInfo}>
             <Text style={styles.medName}>{med.name}</Text>
@@ -175,18 +175,18 @@ export default function PrescriptionDetail() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F9F8F6' },
+  container: { flex: 1, backgroundColor: '#FAFAFA' },
   content: { paddingHorizontal: 24, paddingBottom: 32 },
-  center: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#F9F8F6' },
+  center: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#FAFAFA' },
   header: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
     marginTop: 8, marginBottom: 24,
   },
   backBtn: {
     width: 40, height: 40, borderRadius: 20, backgroundColor: '#FFFFFF',
-    justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: '#E5E1DA',
+    justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: '#E6E6E6',
   },
-  headerTitle: { fontSize: 18, fontWeight: '700', color: '#2A433A' },
+  headerTitle: { fontSize: 18, fontWeight: '700', color: '#232323' },
   statusBanner: {
     flexDirection: 'row', alignItems: 'center', gap: 8,
     padding: 14, borderRadius: 12, marginBottom: 16,
@@ -196,39 +196,39 @@ const styles = StyleSheet.create({
   statusText: { fontSize: 14, fontWeight: '600' },
   infoCard: {
     backgroundColor: '#FFFFFF', borderRadius: 16, padding: 16,
-    marginBottom: 20, borderWidth: 1, borderColor: '#E5E1DA',
+    marginBottom: 20, borderWidth: 1, borderColor: '#E6E6E6',
   },
   infoRow: {
     flexDirection: 'row', justifyContent: 'space-between',
-    paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: '#F5F3F0',
+    paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: '#F1F1F1',
   },
-  infoLabel: { fontSize: 13, color: '#5C6B64' },
+  infoLabel: { fontSize: 13, color: '#838383' },
   infoValue: {
-    fontSize: 13, fontWeight: '600', color: '#1F2321',
+    fontSize: 13, fontWeight: '600', color: '#232323',
     maxWidth: '60%', textAlign: 'right',
   },
-  sectionTitle: { fontSize: 16, fontWeight: '700', color: '#1F2321', marginBottom: 12, marginTop: 4 },
+  sectionTitle: { fontSize: 16, fontWeight: '700', color: '#232323', marginBottom: 12, marginTop: 4 },
   medCard: {
     flexDirection: 'row', backgroundColor: '#FFFFFF', borderRadius: 14,
-    padding: 16, marginBottom: 10, borderWidth: 1, borderColor: '#E5E1DA', gap: 12,
+    padding: 16, marginBottom: 10, borderWidth: 1, borderColor: '#E6E6E6', gap: 12,
   },
   medIcon: {
-    width: 40, height: 40, borderRadius: 12, backgroundColor: '#FFF3E0',
+    width: 40, height: 40, borderRadius: 12, backgroundColor: '#E4F3FF',
     justifyContent: 'center', alignItems: 'center',
   },
   medInfo: { flex: 1 },
-  medName: { fontSize: 15, fontWeight: '700', color: '#1F2321' },
-  medDosage: { fontSize: 13, color: '#5C6B64', marginTop: 2 },
-  medDuration: { fontSize: 12, color: '#819E8E', marginTop: 2, fontWeight: '500' },
+  medName: { fontSize: 15, fontWeight: '700', color: '#232323' },
+  medDosage: { fontSize: 13, color: '#838383', marginTop: 2 },
+  medDuration: { fontSize: 12, color: '#838383', marginTop: 2, fontWeight: '500' },
   notesCard: {
     backgroundColor: '#FFFFFF', borderRadius: 14, padding: 16,
-    marginBottom: 20, borderWidth: 1, borderColor: '#E5E1DA',
+    marginBottom: 20, borderWidth: 1, borderColor: '#E6E6E6',
   },
-  notesText: { fontSize: 14, color: '#5C6B64', lineHeight: 20 },
+  notesText: { fontSize: 14, color: '#838383', lineHeight: 20 },
   qrContainer: {
     alignItems: 'center', backgroundColor: '#FFFFFF', borderRadius: 20,
-    padding: 24, borderWidth: 1, borderColor: '#E5E1DA',
+    padding: 24, borderWidth: 1, borderColor: '#E6E6E6',
   },
-  qrLabel: { fontSize: 14, color: '#5C6B64', marginTop: 12 },
-  qrData: { fontSize: 12, color: '#819E8E', marginTop: 4, fontWeight: '500' },
+  qrLabel: { fontSize: 14, color: '#838383', marginTop: 12 },
+  qrData: { fontSize: 12, color: '#838383', marginTop: 4, fontWeight: '500' },
 });

@@ -54,7 +54,7 @@ export default function HealthRecordScreen() {
   if (loading) {
     return (
       <View style={[styles.loadingContainer, { paddingTop: insets.top }]}>
-        <ActivityIndicator size="large" color="#E07A5F" />
+        <ActivityIndicator size="large" color="#001689" />
       </View>
     );
   }
@@ -66,7 +66,7 @@ export default function HealthRecordScreen() {
       style={[styles.container, { paddingTop: insets.top }]}
       contentContainerStyle={styles.content}
       refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#E07A5F" />
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#001689" />
       }
       showsVerticalScrollIndicator={false}
     >
@@ -86,7 +86,7 @@ export default function HealthRecordScreen() {
           <Ionicons
             name={expanded === 'personal' ? 'chevron-up' : 'chevron-down'}
             size={20}
-            color="#5C6B64"
+            color="#838383"
           />
         </View>
       </TouchableOpacity>
@@ -128,7 +128,7 @@ export default function HealthRecordScreen() {
           <Ionicons
             name={expanded === 'documents' ? 'chevron-up' : 'chevron-down'}
             size={20}
-            color="#5C6B64"
+            color="#838383"
           />
         </View>
       </TouchableOpacity>
@@ -152,7 +152,7 @@ export default function HealthRecordScreen() {
                   {doc.doctor_name} • {doc.date}
                 </Text>
               </View>
-              <Ionicons name="chevron-forward" size={18} color="#E5E1DA" />
+              <Ionicons name="chevron-forward" size={18} color="#E6E6E6" />
             </TouchableOpacity>
           ))}
         </View>
@@ -165,8 +165,8 @@ export default function HealthRecordScreen() {
         onPress={() => toggle('prescriptions')}
       >
         <View style={styles.sectionRow}>
-          <View style={[styles.sectionIcon, { backgroundColor: '#FFF3E0' }]}>
-            <Ionicons name="medical-outline" size={20} color="#E07A5F" />
+          <View style={[styles.sectionIcon, { backgroundColor: '#E4F3FF' }]}>
+            <Ionicons name="medical-outline" size={20} color="#001689" />
           </View>
           <View style={{ flex: 1 }}>
             <Text style={styles.sectionTitle}>Prescription History</Text>
@@ -177,7 +177,7 @@ export default function HealthRecordScreen() {
           <Ionicons
             name={expanded === 'prescriptions' ? 'chevron-up' : 'chevron-down'}
             size={20}
-            color="#5C6B64"
+            color="#838383"
           />
         </View>
       </TouchableOpacity>
@@ -193,7 +193,7 @@ export default function HealthRecordScreen() {
               <View
                 style={[
                   styles.statusDot,
-                  { backgroundColor: rx.status === 'active' ? '#4CAF50' : '#E5E1DA' },
+                  { backgroundColor: rx.status === 'active' ? '#4CAF50' : '#E6E6E6' },
                 ]}
               />
               <View style={styles.listItemInfo}>
@@ -202,7 +202,7 @@ export default function HealthRecordScreen() {
                   {rx.doctor_name} • {rx.date}
                 </Text>
               </View>
-              <Ionicons name="chevron-forward" size={18} color="#E5E1DA" />
+              <Ionicons name="chevron-forward" size={18} color="#E6E6E6" />
             </TouchableOpacity>
           ))}
         </View>
@@ -216,7 +216,7 @@ export default function HealthRecordScreen() {
       >
         <View style={styles.sectionRow}>
           <View style={[styles.sectionIcon, { backgroundColor: '#FCE4EC' }]}>
-            <Ionicons name="create-outline" size={20} color="#E53935" />
+            <Ionicons name="create-outline" size={20} color="#CE0E2D" />
           </View>
           <View style={{ flex: 1 }}>
             <Text style={styles.sectionTitle}>Documents for Signature</Text>
@@ -227,7 +227,7 @@ export default function HealthRecordScreen() {
           <Ionicons
             name={expanded === 'signature' ? 'chevron-up' : 'chevron-down'}
             size={20}
-            color="#5C6B64"
+            color="#838383"
           />
         </View>
       </TouchableOpacity>
@@ -243,7 +243,7 @@ export default function HealthRecordScreen() {
               <Ionicons
                 name={doc.status === 'signed' ? 'checkmark-circle' : 'alert-circle'}
                 size={20}
-                color={doc.status === 'signed' ? '#4CAF50' : '#E07A5F'}
+                color={doc.status === 'signed' ? '#4CAF50' : '#001689'}
               />
               <View style={styles.listItemInfo}>
                 <Text style={styles.listItemTitle}>{doc.title}</Text>
@@ -251,7 +251,7 @@ export default function HealthRecordScreen() {
                   {doc.status === 'signed' ? 'Signed' : 'Pending signature'} • {doc.date}
                 </Text>
               </View>
-              <Ionicons name="chevron-forward" size={18} color="#E5E1DA" />
+              <Ionicons name="chevron-forward" size={18} color="#E6E6E6" />
             </TouchableOpacity>
           ))}
         </View>
@@ -263,44 +263,44 @@ export default function HealthRecordScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F9F8F6' },
+  container: { flex: 1, backgroundColor: '#FAFAFA' },
   content: { paddingHorizontal: 24, paddingBottom: 32 },
   loadingContainer: {
-    flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#F9F8F6',
+    flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#FAFAFA',
   },
-  title: { fontSize: 28, fontWeight: '700', color: '#2A433A', marginTop: 16, marginBottom: 20 },
+  title: { fontSize: 28, fontWeight: '700', color: '#232323', marginTop: 16, marginBottom: 20 },
   sectionCard: {
     backgroundColor: '#FFFFFF', borderRadius: 16, padding: 16,
-    marginBottom: 8, borderWidth: 1, borderColor: '#E5E1DA',
+    marginBottom: 8, borderWidth: 1, borderColor: '#E6E6E6',
   },
   sectionRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   sectionIcon: {
     width: 40, height: 40, borderRadius: 12,
     justifyContent: 'center', alignItems: 'center',
   },
-  sectionTitle: { fontSize: 15, fontWeight: '600', color: '#1F2321', flex: 1 },
-  sectionSub: { fontSize: 12, color: '#5C6B64', marginTop: 2 },
-  pendingText: { fontSize: 12, color: '#E07A5F', fontWeight: '600', marginTop: 2 },
+  sectionTitle: { fontSize: 15, fontWeight: '600', color: '#232323', flex: 1 },
+  sectionSub: { fontSize: 12, color: '#838383', marginTop: 2 },
+  pendingText: { fontSize: 12, color: '#001689', fontWeight: '600', marginTop: 2 },
   expandedContent: {
     backgroundColor: '#FFFFFF', borderRadius: 16, padding: 16,
-    marginBottom: 8, marginTop: -4, borderWidth: 1, borderColor: '#E5E1DA',
+    marginBottom: 8, marginTop: -4, borderWidth: 1, borderColor: '#E6E6E6',
     borderTopWidth: 0, borderTopLeftRadius: 0, borderTopRightRadius: 0,
   },
   infoRow: {
     flexDirection: 'row', justifyContent: 'space-between',
-    paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: '#F5F3F0',
+    paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: '#F1F1F1',
   },
-  infoLabel: { fontSize: 13, color: '#5C6B64' },
+  infoLabel: { fontSize: 13, color: '#838383' },
   infoValue: {
-    fontSize: 13, fontWeight: '600', color: '#1F2321',
+    fontSize: 13, fontWeight: '600', color: '#232323',
     maxWidth: '60%', textAlign: 'right',
   },
   listItem: {
     flexDirection: 'row', alignItems: 'center',
-    paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: '#F5F3F0', gap: 12,
+    paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: '#F1F1F1', gap: 12,
   },
   listItemInfo: { flex: 1 },
-  listItemTitle: { fontSize: 14, fontWeight: '600', color: '#1F2321' },
-  listItemSub: { fontSize: 12, color: '#5C6B64', marginTop: 2 },
+  listItemTitle: { fontSize: 14, fontWeight: '600', color: '#232323' },
+  listItemSub: { fontSize: 12, color: '#838383', marginTop: 2 },
   statusDot: { width: 10, height: 10, borderRadius: 5 },
 });

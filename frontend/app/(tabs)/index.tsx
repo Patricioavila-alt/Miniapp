@@ -11,7 +11,7 @@ const API_URL = process.env.EXPO_PUBLIC_BACKEND_URL;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const CARD_PAD = 24;
 
-const PROMO_COLORS = ['#2A433A', '#5C3D2E', '#1A365D'];
+const PROMO_COLORS = ['#001689', '#134EFF', '#0033E4'];
 
 export default function HomeScreen() {
   const insets = useSafeAreaInsets();
@@ -62,7 +62,7 @@ export default function HomeScreen() {
   if (loading) {
     return (
       <View style={[styles.loadingContainer, { paddingTop: insets.top }]}>
-        <ActivityIndicator size="large" color="#E07A5F" />
+        <ActivityIndicator size="large" color="#001689" />
       </View>
     );
   }
@@ -75,7 +75,7 @@ export default function HomeScreen() {
       style={[styles.container, { paddingTop: insets.top }]}
       contentContainerStyle={styles.content}
       refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#E07A5F" />
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#001689" />
       }
       showsVerticalScrollIndicator={false}
     >
@@ -86,7 +86,7 @@ export default function HomeScreen() {
           <Text style={styles.userName}>{data?.user_name || 'User'}</Text>
         </View>
         <TouchableOpacity testID="notification-bell" style={styles.notifButton}>
-          <Ionicons name="notifications-outline" size={24} color="#2A433A" />
+          <Ionicons name="notifications-outline" size={24} color="#001689" />
           <View style={styles.notifBadge} />
         </TouchableOpacity>
       </View>
@@ -97,15 +97,15 @@ export default function HomeScreen() {
           <Text style={styles.widgetLabel}>NEXT APPOINTMENT</Text>
           <View style={styles.aptRow}>
             <View style={styles.avatarContainer}>
-              <Ionicons name="person" size={28} color="#819E8E" />
+              <Ionicons name="person" size={28} color="#CACACA" />
             </View>
             <View style={styles.aptInfo}>
               <Text style={styles.aptDoctorName}>{widget.data.doctor_name}</Text>
               <Text style={styles.aptSpecialty}>{widget.data.doctor_specialty}</Text>
               <View style={styles.aptDateRow}>
-                <Ionicons name="calendar-outline" size={14} color="#F2B8A7" />
+                <Ionicons name="calendar-outline" size={14} color="#A8D2FF" />
                 <Text style={styles.aptDateText}>{widget.data.date}</Text>
-                <Ionicons name="time-outline" size={14} color="#F2B8A7" style={{ marginLeft: 12 }} />
+                <Ionicons name="time-outline" size={14} color="#A8D2FF" style={{ marginLeft: 12 }} />
                 <Text style={styles.aptDateText}>{widget.data.time}</Text>
               </View>
             </View>
@@ -118,7 +118,7 @@ export default function HomeScreen() {
             <Ionicons
               name={widget.data.type === 'video' ? 'videocam' : 'eye'}
               size={18}
-              color="#2A433A"
+              color="#232323"
             />
             <Text style={styles.widgetCtaText}>
               {widget.data.type === 'video' ? 'Join Video Call' : 'View Details'}
@@ -131,12 +131,12 @@ export default function HomeScreen() {
             {widget?.data?.title || 'Welcome to Mi Salud FdA'}
           </Text>
           <View style={styles.searchContainer}>
-            <Ionicons name="search" size={18} color="#819E8E" />
+            <Ionicons name="search" size={18} color="#CACACA" />
             <TextInput
               testID="home-search-input"
               style={styles.searchInput}
               placeholder={widget?.data?.search_placeholder || 'Search doctors and services...'}
-              placeholderTextColor="#819E8E"
+              placeholderTextColor="#CACACA"
             />
           </View>
           <TouchableOpacity
@@ -147,7 +147,7 @@ export default function HomeScreen() {
             <Text style={styles.widgetCtaText}>
               {widget?.data?.cta_text || 'Schedule a Consultation'}
             </Text>
-            <Ionicons name="arrow-forward" size={18} color="#2A433A" />
+            <Ionicons name="arrow-forward" size={18} color="#232323" />
           </TouchableOpacity>
         </View>
       )}
@@ -165,7 +165,7 @@ export default function HomeScreen() {
             onPress={() => handleQuickAction(action.id)}
           >
             <View style={styles.quickActionIcon}>
-              <Ionicons name={iconMap[action.icon] || 'ellipse'} size={24} color="#E07A5F" />
+              <Ionicons name={iconMap[action.icon] || 'ellipse'} size={24} color="#001689" />
             </View>
             <Text style={styles.quickActionLabel}>{action.label}</Text>
           </TouchableOpacity>
@@ -219,34 +219,35 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F9F8F6' },
+  container: { flex: 1, backgroundColor: '#FAFAFA' },
   content: { paddingHorizontal: CARD_PAD, paddingBottom: 32 },
   loadingContainer: {
-    flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#F9F8F6',
+    flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#FAFAFA',
   },
   header: {
     flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
     marginTop: 16, marginBottom: 24,
   },
-  greeting: { fontSize: 16, color: '#5C6B64' },
-  userName: { fontSize: 28, fontWeight: '700', color: '#2A433A', marginTop: 2 },
+  greeting: { fontSize: 16, color: '#838383' },
+  userName: { fontSize: 28, fontWeight: '700', color: '#232323', marginTop: 2 },
+  // Greeting
   notifButton: {
     width: 44, height: 44, borderRadius: 22, backgroundColor: '#FFFFFF',
     justifyContent: 'center', alignItems: 'center',
-    elevation: 2, shadowColor: '#2A433A',
+    elevation: 2, shadowColor: '#232323',
     shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.08, shadowRadius: 8,
   },
   notifBadge: {
     position: 'absolute', top: 10, right: 12,
-    width: 8, height: 8, borderRadius: 4, backgroundColor: '#E07A5F',
+    width: 8, height: 8, borderRadius: 4, backgroundColor: '#CE0E2D',
   },
   // Appointment Widget
   appointmentWidget: {
-    backgroundColor: '#2A433A', borderRadius: 24, padding: 24, marginBottom: 28,
+    backgroundColor: '#001689', borderRadius: 24, padding: 24, marginBottom: 28,
   },
   widgetLabel: {
     fontSize: 11, fontWeight: '700', letterSpacing: 1.5,
-    color: '#819E8E', marginBottom: 16,
+    color: '#A8D2FF', marginBottom: 16,
   },
   aptRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 20 },
   avatarContainer: {
@@ -256,12 +257,12 @@ const styles = StyleSheet.create({
   },
   aptInfo: { flex: 1 },
   aptDoctorName: { fontSize: 18, fontWeight: '700', color: '#FFFFFF' },
-  aptSpecialty: { fontSize: 14, color: '#F2B8A7', marginTop: 2 },
+  aptSpecialty: { fontSize: 14, color: '#A8D2FF', marginTop: 2 },
   aptDateRow: { flexDirection: 'row', alignItems: 'center', marginTop: 8 },
-  aptDateText: { fontSize: 13, color: '#F2B8A7', marginLeft: 4 },
+  aptDateText: { fontSize: 13, color: '#A8D2FF', marginLeft: 4 },
   // Welcome Widget
   welcomeWidget: {
-    backgroundColor: '#2A433A', borderRadius: 24, padding: 24, marginBottom: 28,
+    backgroundColor: '#001689', borderRadius: 24, padding: 24, marginBottom: 28,
   },
   welcomeTitle: { fontSize: 22, fontWeight: '700', color: '#FFFFFF', marginBottom: 16 },
   searchContainer: {
@@ -273,16 +274,16 @@ const styles = StyleSheet.create({
   // CTA
   widgetCta: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
-    backgroundColor: '#F2B8A7', borderRadius: 14, paddingVertical: 14, gap: 8,
+    backgroundColor: '#FFFFFF', borderRadius: 14, paddingVertical: 14, gap: 8,
   },
-  widgetCtaText: { fontSize: 15, fontWeight: '700', color: '#2A433A' },
+  widgetCtaText: { fontSize: 15, fontWeight: '700', color: '#232323' },
   // Quick Actions
   sectionHeader: {
     flexDirection: 'row', justifyContent: 'space-between',
     alignItems: 'center', marginBottom: 16,
   },
-  sectionTitle: { fontSize: 18, fontWeight: '700', color: '#1F2321' },
-  seeAll: { fontSize: 14, color: '#E07A5F', fontWeight: '600' },
+  sectionTitle: { fontSize: 18, fontWeight: '700', color: '#232323' },
+  seeAll: { fontSize: 14, color: '#001689', fontWeight: '600' },
   quickActionsRow: {
     flexDirection: 'row', justifyContent: 'space-between', marginBottom: 32,
   },
@@ -292,11 +293,11 @@ const styles = StyleSheet.create({
   quickActionIcon: {
     width: 60, height: 60, borderRadius: 20, backgroundColor: '#FFFFFF',
     justifyContent: 'center', alignItems: 'center', marginBottom: 8,
-    elevation: 2, shadowColor: '#2A433A',
+    elevation: 2, shadowColor: '#232323',
     shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.06, shadowRadius: 8,
   },
   quickActionLabel: {
-    fontSize: 11, color: '#5C6B64', textAlign: 'center',
+    fontSize: 11, color: '#838383', textAlign: 'center',
     fontWeight: '500', lineHeight: 15,
   },
   // Promotions
