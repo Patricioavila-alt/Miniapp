@@ -32,18 +32,18 @@ export default function AppointmentDetail() {
   }, [id]);
 
   const handleCancel = () => {
-    Alert.alert('Cancel Appointment', 'Are you sure you want to cancel?', [
+    Alert.alert('Cancelar Cita', '¿Estás seguro de que quieres cancelar?', [
       { text: 'No', style: 'cancel' },
       {
-        text: 'Yes, Cancel',
+        text: 'Sí, Cancelar',
         style: 'destructive',
         onPress: async () => {
           try {
             await fetch(`${API_URL}/api/appointments/${id}`, { method: 'DELETE' });
-            Alert.alert('Cancelled', 'Your appointment has been cancelled.');
+            Alert.alert('Cancelada', 'Tu cita ha sido cancelada.');
             router.back();
           } catch (e) {
-            Alert.alert('Error', 'Failed to cancel appointment');
+            Alert.alert('Error', 'Error al cancelar la cita');
           }
         },
       },
@@ -61,9 +61,9 @@ export default function AppointmentDetail() {
   if (!apt) {
     return (
       <View style={[styles.center, { paddingTop: insets.top }]}>
-        <Text style={styles.errorText}>Appointment not found</Text>
+        <Text style={styles.errorText}>Cita no encontrada</Text>
         <TouchableOpacity onPress={() => router.back()}>
-          <Text style={styles.linkText}>Go Back</Text>
+          <Text style={styles.linkText}>Regresar</Text>
         </TouchableOpacity>
       </View>
     );
@@ -81,7 +81,7 @@ export default function AppointmentDetail() {
         <TouchableOpacity testID="back-btn" onPress={() => router.back()} style={styles.backBtn}>
           <Ionicons name="arrow-back" size={24} color="#232323" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Appointment Details</Text>
+        <Text style={styles.headerTitle}>Detalles de la Cita</Text>
         <View style={{ width: 40 }} />
       </View>
 
@@ -123,11 +123,11 @@ export default function AppointmentDetail() {
       {/* Details */}
       <View style={styles.detailsCard}>
         {[
-          { icon: 'calendar-outline', label: 'Date', value: apt.date },
-          { icon: 'time-outline', label: 'Time', value: apt.time },
+          { icon: 'calendar-outline', label: 'Fecha', value: apt.date },
+          { icon: 'time-outline', label: 'Hora', value: apt.time },
           {
             icon: apt.type === 'video' ? 'videocam-outline' : 'location-outline',
-            label: 'Type',
+            label: 'Tipo',
             value: apt.type === 'video' ? 'Video Consultation' : 'In-Person Visit',
           },
         ].map((item, i) => (
@@ -164,11 +164,11 @@ export default function AppointmentDetail() {
               onPress={() => router.push(`/video-call?appointmentId=${apt.id}`)}
             >
               <Ionicons name="videocam" size={20} color="#FFFFFF" />
-              <Text style={styles.primaryBtnText}>Join Video Call</Text>
+              <Text style={styles.primaryBtnText}>Unirse a Videollamada</Text>
             </TouchableOpacity>
           )}
           <TouchableOpacity testID="cancel-apt-btn" style={styles.cancelBtn} onPress={handleCancel}>
-            <Text style={styles.cancelBtnText}>Cancel Appointment</Text>
+            <Text style={styles.cancelBtnText}>Cancelar Cita</Text>
           </TouchableOpacity>
         </View>
       )}

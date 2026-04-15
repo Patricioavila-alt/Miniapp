@@ -70,7 +70,7 @@ export default function HealthRecordScreen() {
       }
       showsVerticalScrollIndicator={false}
     >
-      <Text style={styles.title}>Health Record</Text>
+      <Text style={styles.title}>Expediente Clínico</Text>
 
       {/* Personal Information */}
       <TouchableOpacity
@@ -82,7 +82,7 @@ export default function HealthRecordScreen() {
           <View style={[styles.sectionIcon, { backgroundColor: '#E8F5E9' }]}>
             <Ionicons name="person-outline" size={20} color="#4CAF50" />
           </View>
-          <Text style={styles.sectionTitle}>My Personal Information</Text>
+          <Text style={styles.sectionTitle}>Mi Información Personal</Text>
           <Ionicons
             name={expanded === 'personal' ? 'chevron-up' : 'chevron-down'}
             size={20}
@@ -93,13 +93,13 @@ export default function HealthRecordScreen() {
       {expanded === 'personal' && profile && (
         <View style={styles.expandedContent}>
           {[
-            { label: 'Full Name', value: profile.full_name },
-            { label: 'Email', value: profile.email },
-            { label: 'Phone', value: profile.phone },
-            { label: 'Date of Birth', value: profile.date_of_birth },
-            { label: 'Gender', value: profile.gender },
-            { label: 'Blood Type', value: profile.blood_type },
-            { label: 'Allergies', value: profile.allergies?.join(', ') || 'None' },
+            { label: 'Nombre Completo', value: profile.full_name },
+            { label: 'Correo', value: profile.email },
+            { label: 'Teléfono', value: profile.phone },
+            { label: 'Fecha de Nacimiento', value: profile.date_of_birth },
+            { label: 'Género', value: profile.gender },
+            { label: 'Tipo de Sangre', value: profile.blood_type },
+            { label: 'Alergias', value: profile.allergies?.join(', ') || 'Ninguna' },
           ].map((item, i) => (
             <View key={i} style={styles.infoRow}>
               <Text style={styles.infoLabel}>{item.label}</Text>
@@ -120,9 +120,9 @@ export default function HealthRecordScreen() {
             <Ionicons name="document-text-outline" size={20} color="#1976D2" />
           </View>
           <View style={{ flex: 1 }}>
-            <Text style={styles.sectionTitle}>Clinical Documents</Text>
+            <Text style={styles.sectionTitle}>Documentos Clínicos</Text>
             <Text style={styles.sectionSub}>
-              {documents.length} document{documents.length !== 1 ? 's' : ''}
+              {documents.length} documento{documents.length !== 1 ? 's' : ''}
             </Text>
           </View>
           <Ionicons
@@ -169,9 +169,9 @@ export default function HealthRecordScreen() {
             <Ionicons name="medical-outline" size={20} color="#001689" />
           </View>
           <View style={{ flex: 1 }}>
-            <Text style={styles.sectionTitle}>Prescription History</Text>
+            <Text style={styles.sectionTitle}>Historial de Recetas</Text>
             <Text style={styles.sectionSub}>
-              {prescriptions.length} prescription{prescriptions.length !== 1 ? 's' : ''}
+              {prescriptions.length} receta{prescriptions.length !== 1 ? 's' : ''}
             </Text>
           </View>
           <Ionicons
@@ -219,9 +219,9 @@ export default function HealthRecordScreen() {
             <Ionicons name="create-outline" size={20} color="#CE0E2D" />
           </View>
           <View style={{ flex: 1 }}>
-            <Text style={styles.sectionTitle}>Documents for Signature</Text>
+            <Text style={styles.sectionTitle}>Documentos por Firmar</Text>
             {pendingCount > 0 && (
-              <Text style={styles.pendingText}>{pendingCount} pending</Text>
+              <Text style={styles.pendingText}>{pendingCount} pendiente{pendingCount !== 1 ? 's' : ''}</Text>
             )}
           </View>
           <Ionicons
@@ -248,7 +248,7 @@ export default function HealthRecordScreen() {
               <View style={styles.listItemInfo}>
                 <Text style={styles.listItemTitle}>{doc.title}</Text>
                 <Text style={styles.listItemSub}>
-                  {doc.status === 'signed' ? 'Signed' : 'Pending signature'} • {doc.date}
+                  {doc.status === 'signed' ? 'Firmado' : 'Pendiente de firma'} • {doc.date}
                 </Text>
               </View>
               <Ionicons name="chevron-forward" size={18} color="#E6E6E6" />

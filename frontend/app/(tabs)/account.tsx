@@ -49,9 +49,9 @@ export default function AccountScreen() {
       const json = await res.json();
       setProfile(json);
       setEditing(false);
-      Alert.alert('Success', 'Profile updated successfully');
+      Alert.alert('Éxito', 'Perfil actualizado exitosamente');
     } catch (e) {
-      Alert.alert('Error', 'Failed to update profile');
+      Alert.alert('Error', 'Error al actualizar perfil');
     } finally {
       setSaving(false);
     }
@@ -83,7 +83,7 @@ export default function AccountScreen() {
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={styles.title}>My Account</Text>
+        <Text style={styles.title}>Mi Cuenta</Text>
 
         {/* Profile Card */}
         <View style={styles.profileCard}>
@@ -97,7 +97,7 @@ export default function AccountScreen() {
         {/* Info Section */}
         <View style={styles.infoSection}>
           <View style={styles.infoHeader}>
-            <Text style={styles.infoTitle}>Personal Details</Text>
+            <Text style={styles.infoTitle}>Datos Personales</Text>
             <TouchableOpacity
               testID="edit-profile-btn"
               onPress={() => {
@@ -105,18 +105,18 @@ export default function AccountScreen() {
                 setEditing(!editing);
               }}
             >
-              <Text style={styles.editBtn}>{editing ? 'Cancel' : 'Edit'}</Text>
+              <Text style={styles.editBtn}>{editing ? 'Cancelar' : 'Editar'}</Text>
             </TouchableOpacity>
           </View>
 
           {editing ? (
             <>
               {[
-                { key: 'full_name', label: 'Full Name' },
-                { key: 'phone', label: 'Phone' },
-                { key: 'date_of_birth', label: 'Date of Birth' },
-                { key: 'gender', label: 'Gender' },
-                { key: 'blood_type', label: 'Blood Type' },
+                { key: 'full_name', label: 'Nombre Completo' },
+                { key: 'phone', label: 'Teléfono' },
+                { key: 'date_of_birth', label: 'Fecha de Nacimiento' },
+                { key: 'gender', label: 'Género' },
+                { key: 'blood_type', label: 'Tipo de Sangre' },
               ].map((field) => (
                 <View key={field.key} style={styles.inputGroup}>
                   <Text style={styles.inputLabel}>{field.label}</Text>
@@ -138,18 +138,18 @@ export default function AccountScreen() {
                 {saving ? (
                   <ActivityIndicator color="#FFFFFF" />
                 ) : (
-                  <Text style={styles.saveBtnText}>Save Changes</Text>
+                  <Text style={styles.saveBtnText}>Guardar Cambios</Text>
                 )}
               </TouchableOpacity>
             </>
           ) : (
             <>
               {[
-                { label: 'Phone', value: profile?.phone },
-                { label: 'Date of Birth', value: profile?.date_of_birth },
-                { label: 'Gender', value: profile?.gender },
-                { label: 'Blood Type', value: profile?.blood_type },
-                { label: 'Allergies', value: profile?.allergies?.join(', ') || 'None' },
+                { label: 'Teléfono', value: profile?.phone },
+                { label: 'Fecha de Nacimiento', value: profile?.date_of_birth },
+                { label: 'Género', value: profile?.gender },
+                { label: 'Tipo de Sangre', value: profile?.blood_type },
+                { label: 'Alergias', value: profile?.allergies?.join(', ') || 'Ninguna' },
               ].map((item, i) => (
                 <View key={i} style={styles.detailRow}>
                   <Text style={styles.detailLabel}>{item.label}</Text>
@@ -163,10 +163,10 @@ export default function AccountScreen() {
         {/* Menu Items */}
         <View style={styles.menuSection}>
           {[
-            { icon: 'notifications-outline', label: 'Notifications', testId: 'menu-notifications' },
-            { icon: 'shield-outline', label: 'Privacy & Security', testId: 'menu-privacy' },
-            { icon: 'help-circle-outline', label: 'Help & Support', testId: 'menu-help' },
-            { icon: 'information-circle-outline', label: 'About Mi Salud FdA', testId: 'menu-about' },
+            { icon: 'notifications-outline', label: 'Notificaciones', testId: 'menu-notifications' },
+            { icon: 'shield-outline', label: 'Privacidad y Seguridad', testId: 'menu-privacy' },
+            { icon: 'help-circle-outline', label: 'Ayuda y Soporte', testId: 'menu-help' },
+            { icon: 'information-circle-outline', label: 'Acerca de Mi Salud FdA', testId: 'menu-about' },
           ].map((item, i) => (
             <TouchableOpacity key={i} testID={item.testId} style={styles.menuItem}>
               <Ionicons name={item.icon as any} size={22} color="#001689" />

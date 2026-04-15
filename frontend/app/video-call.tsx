@@ -37,9 +37,9 @@ export default function VideoCallScreen() {
   };
 
   const handleEnd = () => {
-    Alert.alert('End Call', 'Are you sure you want to end this call?', [
-      { text: 'Cancel', style: 'cancel' },
-      { text: 'End Call', style: 'destructive', onPress: () => router.back() },
+    Alert.alert('Terminar Llamada', '¿Estás seguro de terminar la llamada?', [
+      { text: 'Cancelar', style: 'cancel' },
+      { text: 'Terminar Llamada', style: 'destructive', onPress: () => router.back() },
     ]);
   };
 
@@ -50,7 +50,7 @@ export default function VideoCallScreen() {
         <View style={styles.remotePlaceholder}>
           <Ionicons name="person" size={64} color="rgba(255,255,255,0.3)" />
           <Text style={styles.doctorLabel}>{apt?.doctor_name || 'Doctor'}</Text>
-          <Text style={styles.connText}>Connected</Text>
+          <Text style={styles.connText}>Conectado</Text>
         </View>
 
         {/* Self view */}
@@ -76,10 +76,10 @@ export default function VideoCallScreen() {
             <Text style={styles.chatTitle}>Chat</Text>
             <View style={styles.chatMsg}>
               <Text style={styles.chatSender}>{apt?.doctor_name || 'Doctor'}</Text>
-              <Text style={styles.chatText}>Hello! How can I help you today?</Text>
+              <Text style={styles.chatText}>¡Hola! ¿Cómo puedo ayudarte hoy?</Text>
             </View>
             <View style={styles.chatInputRow}>
-              <Text style={styles.chatPlaceholder}>Type a message...</Text>
+              <Text style={styles.chatPlaceholder}>Escribe un mensaje...</Text>
             </View>
           </View>
         )}
@@ -97,7 +97,7 @@ export default function VideoCallScreen() {
             size={24}
             color={isMuted ? '#CE0E2D' : '#FFFFFF'}
           />
-          <Text style={styles.ctrlLabel}>{isMuted ? 'Unmute' : 'Mute'}</Text>
+          <Text style={styles.ctrlLabel}>{isMuted ? 'Activar' : 'Silenciar'}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -110,7 +110,7 @@ export default function VideoCallScreen() {
             size={24}
             color={isVideoOff ? '#CE0E2D' : '#FFFFFF'}
           />
-          <Text style={styles.ctrlLabel}>{isVideoOff ? 'Turn On' : 'Camera'}</Text>
+          <Text style={styles.ctrlLabel}>{isVideoOff ? 'Encender' : 'Cámara'}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -124,7 +124,7 @@ export default function VideoCallScreen() {
 
         <TouchableOpacity testID="share-file" style={styles.ctrlBtn}>
           <Ionicons name="attach" size={24} color="#FFFFFF" />
-          <Text style={styles.ctrlLabel}>Files</Text>
+          <Text style={styles.ctrlLabel}>Archivos</Text>
         </TouchableOpacity>
 
         <TouchableOpacity testID="end-call-btn" style={styles.endCallBtn} onPress={handleEnd}>

@@ -46,10 +46,10 @@ export default function DocumentDetail() {
 
   const typeLabel =
     doc.type === 'lab_result'
-      ? 'Lab Result'
+      ? 'Resultado de Laboratorio'
       : doc.type === 'consultation_summary'
-      ? 'Consultation Summary'
-      : 'Document';
+      ? 'Resumen de Consulta'
+      : 'Documento';
   const typeIcon = doc.type === 'lab_result' ? 'flask' : 'clipboard';
 
   return (
@@ -78,13 +78,13 @@ export default function DocumentDetail() {
       </View>
 
       <View style={styles.contentCard}>
-        <Text style={styles.contentLabel}>Summary</Text>
+        <Text style={styles.contentLabel}>Resumen</Text>
         <Text style={styles.contentBody}>{doc.summary}</Text>
       </View>
 
       <TouchableOpacity testID="download-btn" style={styles.downloadBtn}>
         <Ionicons name="download-outline" size={20} color="#FFFFFF" />
-        <Text style={styles.downloadBtnText}>Download Document</Text>
+        <Text style={styles.downloadBtnText}>Descargar Documento</Text>
       </TouchableOpacity>
     </ScrollView>
   );

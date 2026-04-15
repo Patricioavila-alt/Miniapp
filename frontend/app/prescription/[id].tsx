@@ -92,7 +92,7 @@ export default function PrescriptionDetail() {
         <TouchableOpacity testID="back-btn" onPress={() => router.back()} style={styles.backBtn}>
           <Ionicons name="arrow-back" size={24} color="#232323" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Prescription</Text>
+        <Text style={styles.headerTitle}>Receta</Text>
         <View style={{ width: 40 }} />
       </View>
 
@@ -114,7 +114,7 @@ export default function PrescriptionDetail() {
             { color: rx.status === 'active' ? '#4CAF50' : '#1976D2' },
           ]}
         >
-          {rx.status === 'active' ? 'Active Prescription' : 'Completed'}
+          {rx.status === 'active' ? 'Receta Activa' : 'Completada'}
         </Text>
       </View>
 
@@ -122,9 +122,9 @@ export default function PrescriptionDetail() {
       <View style={styles.infoCard}>
         {[
           { label: 'Doctor', value: rx.doctor_name },
-          { label: 'Specialty', value: rx.doctor_specialty },
-          { label: 'Date', value: rx.date },
-          { label: 'Diagnosis', value: rx.diagnosis },
+          { label: 'Especialidad', value: rx.doctor_specialty },
+          { label: 'Fecha', value: rx.date },
+          { label: 'Diagnóstico', value: rx.diagnosis },
         ].map((r, i) => (
           <View
             key={i}
@@ -137,7 +137,7 @@ export default function PrescriptionDetail() {
       </View>
 
       {/* Medications */}
-      <Text style={styles.sectionTitle}>Medications</Text>
+      <Text style={styles.sectionTitle}>Medicamentos</Text>
       {rx.medications?.map((med: any, i: number) => (
         <View key={i} style={styles.medCard}>
           <View style={styles.medIcon}>
@@ -146,7 +146,7 @@ export default function PrescriptionDetail() {
           <View style={styles.medInfo}>
             <Text style={styles.medName}>{med.name}</Text>
             <Text style={styles.medDosage}>{med.dosage}</Text>
-            <Text style={styles.medDuration}>Duration: {med.duration}</Text>
+            <Text style={styles.medDuration}>Duración: {med.duration}</Text>
           </View>
         </View>
       ))}
@@ -154,7 +154,7 @@ export default function PrescriptionDetail() {
       {/* Notes */}
       {rx.notes ? (
         <>
-          <Text style={styles.sectionTitle}>Notes</Text>
+          <Text style={styles.sectionTitle}>Notas</Text>
           <View style={styles.notesCard}>
             <Text style={styles.notesText}>{rx.notes}</Text>
           </View>
@@ -162,10 +162,10 @@ export default function PrescriptionDetail() {
       ) : null}
 
       {/* QR Code */}
-      <Text style={styles.sectionTitle}>Digital Prescription QR</Text>
+      <Text style={styles.sectionTitle}>QR de Receta Digital</Text>
       <View style={styles.qrContainer}>
         <MockQR data={rx.qr_code_data || rx.id} />
-        <Text style={styles.qrLabel}>Scan to verify prescription</Text>
+        <Text style={styles.qrLabel}>Escanear para verificar receta</Text>
         <Text style={styles.qrData}>{rx.qr_code_data}</Text>
       </View>
 

@@ -42,7 +42,7 @@ export default function AppointmentsScreen() {
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
-      <Text style={styles.title}>My Appointments</Text>
+      <Text style={styles.title}>Mis Citas</Text>
 
       {/* Tab Buttons */}
       <View style={styles.tabs}>
@@ -52,7 +52,7 @@ export default function AppointmentsScreen() {
           onPress={() => setTab('upcoming')}
         >
           <Text style={[styles.tabText, tab === 'upcoming' && styles.tabTextActive]}>
-            Upcoming
+            Próximas
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -60,7 +60,7 @@ export default function AppointmentsScreen() {
           style={[styles.tabBtn, tab === 'past' && styles.tabActive]}
           onPress={() => setTab('past')}
         >
-          <Text style={[styles.tabText, tab === 'past' && styles.tabTextActive]}>Past</Text>
+          <Text style={[styles.tabText, tab === 'past' && styles.tabTextActive]}>Anteriores</Text>
         </TouchableOpacity>
       </View>
 
@@ -76,7 +76,7 @@ export default function AppointmentsScreen() {
         ) : appointments.length === 0 ? (
           <View style={styles.emptyState}>
             <Ionicons name="calendar-outline" size={48} color="#E6E6E6" />
-            <Text style={styles.emptyText}>No {tab} appointments</Text>
+            <Text style={styles.emptyText}>Sin citas {tab === 'upcoming' ? 'próximas' : 'anteriores'}</Text>
             {tab === 'upcoming' && (
               <TouchableOpacity
                 testID="schedule-btn"
@@ -135,10 +135,10 @@ export default function AppointmentsScreen() {
                     ]}
                   >
                     {apt.status === 'upcoming'
-                      ? 'Upcoming'
+                      ? 'Próxima'
                       : apt.status === 'completed'
-                      ? 'Completed'
-                      : 'Cancelled'}
+                      ? 'Completada'
+                      : 'Cancelada'}
                   </Text>
                 </View>
               </View>
@@ -149,7 +149,7 @@ export default function AppointmentsScreen() {
                   onPress={() => router.push(`/video-call?appointmentId=${apt.id}`)}
                 >
                   <Ionicons name="videocam" size={16} color="#FFFFFF" />
-                  <Text style={styles.joinBtnText}>Join Video Call</Text>
+                  <Text style={styles.joinBtnText}>Unirse a Videollamada</Text>
                 </TouchableOpacity>
               )}
             </TouchableOpacity>

@@ -76,7 +76,7 @@ export default function ScheduleAppointment() {
       setCreatedApt(json);
       setStep(4);
     } catch (e) {
-      Alert.alert('Error', 'Failed to book appointment');
+      Alert.alert('Error', 'Error al agendar la cita');
     } finally {
       setBooking(false);
     }
@@ -97,12 +97,12 @@ export default function ScheduleAppointment() {
         </TouchableOpacity>
         <Text style={styles.headerTitle}>
           {step === 1
-            ? 'Select Doctor'
+            ? 'Seleccionar Doctor'
             : step === 2
-            ? 'Select Time'
+            ? 'Seleccionar Horario'
             : step === 3
-            ? 'Confirm Booking'
-            : 'Booked!'}
+            ? 'Confirmar Cita'
+            : '¡Agendada!'}
         </Text>
         <View style={{ width: 40 }} />
       </View>
@@ -125,7 +125,7 @@ export default function ScheduleAppointment() {
               <TextInput
                 testID="doctor-search-input"
                 style={styles.searchInput}
-                placeholder="Search by name or specialty..."
+                placeholder="Buscar por nombre o especialidad..."
                 placeholderTextColor="#CACACA"
                 value={search}
                 onChangeText={handleSearch}
@@ -153,7 +153,7 @@ export default function ScheduleAppointment() {
                     <View style={styles.docMeta}>
                       <Ionicons name="star" size={12} color="#FFB300" />
                       <Text style={styles.docRating}>{doc.rating}</Text>
-                      <Text style={styles.docExp}>{doc.experience_years}yr exp</Text>
+                      <Text style={styles.docExp}>{doc.experience_years} años exp</Text>
                     </View>
                   </View>
                   <Text style={styles.docPrice}>${doc.consultation_fee}</Text>
@@ -166,7 +166,7 @@ export default function ScheduleAppointment() {
         {/* Step 2: Date & Time */}
         {step === 2 && selectedDoctor && (
           <>
-            <Text style={styles.stepLabel}>Select a Date</Text>
+            <Text style={styles.stepLabel}>Selecciona una Fecha</Text>
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
@@ -192,7 +192,7 @@ export default function ScheduleAppointment() {
               ))}
             </ScrollView>
 
-            <Text style={[styles.stepLabel, { marginTop: 24 }]}>Available Times</Text>
+            <Text style={[styles.stepLabel, { marginTop: 24 }]}>Horarios Disponibles</Text>
             <View style={styles.timesGrid}>
               {selectedDoctor.available_slots?.map((slot: string) => (
                 <TouchableOpacity
@@ -208,7 +208,7 @@ export default function ScheduleAppointment() {
               ))}
             </View>
 
-            <Text style={[styles.stepLabel, { marginTop: 24 }]}>Consultation Type</Text>
+            <Text style={[styles.stepLabel, { marginTop: 24 }]}>Tipo de Consulta</Text>
             <View style={styles.typeRow}>
               {(['video', 'in-person'] as const).map((t) => (
                 <TouchableOpacity
@@ -248,7 +248,7 @@ export default function ScheduleAppointment() {
                 { icon: 'time-outline', text: selectedTime },
                 {
                   icon: aptType === 'video' ? 'videocam-outline' : 'location-outline',
-                  text: aptType === 'video' ? 'Video Consultation' : 'In-Person Visit',
+                  text: aptType === 'video' ? 'Videoconsulta' : 'Consulta Presencial',
                 },
               ].map((r, i) => (
                 <View key={i} style={styles.confirmRow}>
@@ -259,14 +259,14 @@ export default function ScheduleAppointment() {
             </View>
 
             <View style={styles.priceRow}>
-              <Text style={styles.priceLabel}>Consultation Fee</Text>
+              <Text style={styles.priceLabel}>Costo de Consulta</Text>
               <Text style={styles.priceValue}>${selectedDoctor.consultation_fee}</Text>
             </View>
 
             <View style={styles.mockPayment}>
               <Ionicons name="card-outline" size={20} color="#838383" />
               <Text style={styles.mockPayText}>**** **** **** 4242</Text>
-              <Text style={styles.mockPayLabel}>Mock Payment</Text>
+              <Text style={styles.mockPayLabel}>Pago Simulado</Text>
             </View>
           </View>
         )}
@@ -275,9 +275,9 @@ export default function ScheduleAppointment() {
         {step === 4 && (
           <View style={styles.successSection}>
             <Ionicons name="checkmark-circle" size={80} color="#4CAF50" />
-            <Text style={styles.successTitle}>Appointment Booked!</Text>
+            <Text style={styles.successTitle}>¡Cita Agendada!</Text>
             <Text style={styles.successSub}>
-              Your appointment has been successfully scheduled.
+              Tu cita ha sido agendada exitosamente.
             </Text>
             {createdApt && (
               <View style={styles.successCard}>
@@ -286,7 +286,7 @@ export default function ScheduleAppointment() {
                   {createdApt.date} at {createdApt.time}
                 </Text>
                 <Text style={styles.successDetail}>
-                  {createdApt.type === 'video' ? 'Video Consultation' : 'In-Person Visit'}
+                  {createdApt.type === 'video' ? 'Videoconsulta' : 'Consulta Presencial'}
                 </Text>
               </View>
             )}
@@ -299,14 +299,14 @@ export default function ScheduleAppointment() {
                   : router.replace('/(tabs)/appointments')
               }
             >
-              <Text style={styles.successBtnText}>View Appointment</Text>
+              <Text style={styles.successBtnText}>Ver Cita</Text>
             </TouchableOpacity>
             <TouchableOpacity
               testID="go-home-btn"
               style={styles.successBtnSec}
               onPress={() => router.replace('/(tabs)')}
             >
-              <Text style={styles.successBtnSecText}>Go Home</Text>
+              <Text style={styles.successBtnSecText}>Ir al Inicio</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -324,7 +324,7 @@ export default function ScheduleAppointment() {
               disabled={!selectedDoctor}
               onPress={() => setStep(2)}
             >
-              <Text style={styles.ctaText}>Continue</Text>
+              <Text style={styles.ctaText}>Continuar</Text>
             </TouchableOpacity>
           )}
           {step === 2 && (
@@ -337,7 +337,7 @@ export default function ScheduleAppointment() {
               disabled={!selectedDate || !selectedTime}
               onPress={() => setStep(3)}
             >
-              <Text style={styles.ctaText}>Continue</Text>
+              <Text style={styles.ctaText}>Continuar</Text>
             </TouchableOpacity>
           )}
           {step === 3 && (
@@ -351,7 +351,7 @@ export default function ScheduleAppointment() {
                 <ActivityIndicator color="#FFFFFF" />
               ) : (
                 <Text style={styles.ctaText}>
-                  Confirm & Pay ${selectedDoctor?.consultation_fee}
+                  Confirmar y Pagar ${selectedDoctor?.consultation_fee}
                 </Text>
               )}
             </TouchableOpacity>

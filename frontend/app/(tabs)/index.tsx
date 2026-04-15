@@ -82,7 +82,7 @@ export default function HomeScreen() {
       {/* Header */}
       <View style={styles.header}>
         <View>
-          <Text style={styles.greeting}>Hello,</Text>
+          <Text style={styles.greeting}>Hola,</Text>
           <Text style={styles.userName}>{data?.user_name || 'User'}</Text>
         </View>
         <TouchableOpacity testID="notification-bell" style={styles.notifButton}>
@@ -94,7 +94,7 @@ export default function HomeScreen() {
       {/* Smart Widget */}
       {isAppointment ? (
         <View testID="appointment-widget" style={styles.appointmentWidget}>
-          <Text style={styles.widgetLabel}>NEXT APPOINTMENT</Text>
+          <Text style={styles.widgetLabel}>PRÓXIMA CITA</Text>
           <View style={styles.aptRow}>
             <View style={styles.avatarContainer}>
               <Ionicons name="person" size={28} color="#CACACA" />
@@ -121,21 +121,21 @@ export default function HomeScreen() {
               color="#232323"
             />
             <Text style={styles.widgetCtaText}>
-              {widget.data.type === 'video' ? 'Join Video Call' : 'View Details'}
+              {widget.data.type === 'video' ? 'Unirse a Videollamada' : 'Ver Detalles'}
             </Text>
           </TouchableOpacity>
         </View>
       ) : (
         <View testID="welcome-widget" style={styles.welcomeWidget}>
           <Text style={styles.welcomeTitle}>
-            {widget?.data?.title || 'Welcome to Mi Salud FdA'}
+            {widget?.data?.title || 'Bienvenido a Mi Salud FdA'}
           </Text>
           <View style={styles.searchContainer}>
             <Ionicons name="search" size={18} color="#CACACA" />
             <TextInput
               testID="home-search-input"
               style={styles.searchInput}
-              placeholder={widget?.data?.search_placeholder || 'Search doctors and services...'}
+              placeholder={widget?.data?.search_placeholder || 'Buscar doctores y servicios...'}
               placeholderTextColor="#CACACA"
             />
           </View>
@@ -145,7 +145,7 @@ export default function HomeScreen() {
             onPress={() => router.push('/appointment/schedule')}
           >
             <Text style={styles.widgetCtaText}>
-              {widget?.data?.cta_text || 'Schedule a Consultation'}
+              {widget?.data?.cta_text || 'Agendar una Consulta'}
             </Text>
             <Ionicons name="arrow-forward" size={18} color="#232323" />
           </TouchableOpacity>
@@ -154,7 +154,7 @@ export default function HomeScreen() {
 
       {/* Quick Actions */}
       <View style={styles.sectionHeader}>
-        <Text style={styles.sectionTitle}>Quick Actions</Text>
+        <Text style={styles.sectionTitle}>Acciones Rápidas</Text>
       </View>
       <View style={styles.quickActionsRow}>
         {data?.quick_actions?.map((action: any) => (
@@ -174,9 +174,9 @@ export default function HomeScreen() {
 
       {/* Promotions Carousel */}
       <View style={styles.sectionHeader}>
-        <Text style={styles.sectionTitle}>For You</Text>
+        <Text style={styles.sectionTitle}>Para Ti</Text>
         <TouchableOpacity testID="see-all-promos">
-          <Text style={styles.seeAll}>See All</Text>
+          <Text style={styles.seeAll}>Ver Todo</Text>
         </TouchableOpacity>
       </View>
       <ScrollView

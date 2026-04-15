@@ -34,18 +34,18 @@ export default function SignDocumentScreen() {
   }, [id]);
 
   const handleSign = () => {
-    Alert.alert('Sign Document', 'Are you sure you want to sign this document?', [
-      { text: 'Cancel', style: 'cancel' },
+    Alert.alert('Firmar Documento', '¿Estás seguro de que quieres firmar este documento?', [
+      { text: 'Cancelar', style: 'cancel' },
       {
-        text: 'Sign',
+        text: 'Firmar',
         onPress: async () => {
           setSigning(true);
           try {
             await fetch(`${API_URL}/api/signature-documents/${id}/sign`, { method: 'POST' });
             setDoc({ ...doc, status: 'signed' });
-            Alert.alert('Success', 'Document signed successfully');
+            Alert.alert('Éxito', 'Documento firmado exitosamente');
           } catch (e) {
-            Alert.alert('Error', 'Failed to sign document');
+            Alert.alert('Error', 'Error al firmar el documento');
           } finally {
             setSigning(false);
           }
@@ -78,7 +78,7 @@ export default function SignDocumentScreen() {
         <TouchableOpacity testID="back-btn" onPress={() => router.back()} style={styles.backBtn}>
           <Ionicons name="arrow-back" size={24} color="#232323" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Document</Text>
+        <Text style={styles.headerTitle}>Documento</Text>
         <View style={{ width: 40 }} />
       </View>
 
@@ -99,7 +99,7 @@ export default function SignDocumentScreen() {
             { color: doc.status === 'signed' ? '#4CAF50' : '#001689' },
           ]}
         >
-          {doc.status === 'signed' ? 'Signed' : 'Pending Signature'}
+          {doc.status === 'signed' ? 'Firmado' : 'Pendiente de Firma'}
         </Text>
       </View>
 
@@ -122,7 +122,7 @@ export default function SignDocumentScreen() {
           ) : (
             <>
               <Ionicons name="create" size={20} color="#FFFFFF" />
-              <Text style={styles.signBtnText}>Sign Document</Text>
+              <Text style={styles.signBtnText}>Firmar Documento</Text>
             </>
           )}
         </TouchableOpacity>
@@ -131,7 +131,7 @@ export default function SignDocumentScreen() {
       {doc.status === 'signed' && (
         <View style={styles.signedBox}>
           <Ionicons name="checkmark-circle" size={48} color="#4CAF50" />
-          <Text style={styles.signedText}>This document has been signed</Text>
+          <Text style={styles.signedText}>Este documento ha sido firmado</Text>
         </View>
       )}
 

@@ -16,7 +16,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: 'Inicio',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="home" size={size} color={color} />
           ),
@@ -25,7 +25,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="appointments"
         options={{
-          title: 'Appointments',
+          title: 'Citas',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="calendar" size={size} color={color} />
           ),
@@ -34,7 +34,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="health-record"
         options={{
-          title: 'Health Record',
+          title: 'Expediente',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="document-text" size={size} color={color} />
           ),
@@ -43,7 +43,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="account"
         options={{
-          title: 'My Account',
+          title: 'Mi Cuenta',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person" size={size} color={color} />
           ),
