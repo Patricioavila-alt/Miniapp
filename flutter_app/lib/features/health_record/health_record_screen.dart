@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/theme/app_theme.dart';
+import '../../core/routes/app_routes.dart';
 import '../../core/models/models.dart';
 import '../../shared/widgets/skeleton_loader.dart';
 import '../account/providers/account_provider.dart';
@@ -22,10 +23,10 @@ class _HealthRecordScreenState extends State<HealthRecordScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() {
-      context.read<AccountProvider>().fetchProfile();
-      context.read<HealthRecordProvider>().fetchAll();
-    });
+    Future.microtask(() => Future.wait([
+      context.read<AccountProvider>().fetchProfile(),
+      context.read<HealthRecordProvider>().fetchAll(),
+    ]));
   }
 
   @override
@@ -36,13 +37,14 @@ class _HealthRecordScreenState extends State<HealthRecordScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.black, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new_rounded,
+              color: Colors.black, size: 20),
           onPressed: () => context.pop(),
         ),
         title: const Text(
           'Mi expediente clínico',
           style: TextStyle(
-            color: Color(0xFF1A1A1A),
+            color: AppTheme.textPrimary,
             fontSize: 17,
             fontWeight: FontWeight.w600,
           ),
@@ -63,7 +65,8 @@ class _HealthRecordScreenState extends State<HealthRecordScreen> {
 
                 // ── 1. Fila de Perfil ───────────────────────────────────────
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
                   child: Row(
                     children: [
                       _AvatarRing(url: profile.avatarUrl),
@@ -73,7 +76,7 @@ class _HealthRecordScreenState extends State<HealthRecordScreen> {
                         style: const TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.w700,
-                          color: Color(0xFF1A1A1A),
+                          color: AppTheme.textPrimary,
                         ),
                       ),
                     ],
@@ -97,14 +100,16 @@ class _HealthRecordScreenState extends State<HealthRecordScreen> {
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w700,
-                              color: Color(0xFF1A1A1A),
+                              color: AppTheme.textPrimary,
                             ),
                           ),
                         ),
                         ...activity.map((item) => _ActivityListItem(
-                          item: item,
-                          onTap: () {},
-                        )),
+                              item: item,
+                              onTap: () => ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Detalle de actividad próximamente.')),
+                              ),
+                            )),
                         const _ThinDivider(),
                       ],
                     );
@@ -112,14 +117,14 @@ class _HealthRecordScreenState extends State<HealthRecordScreen> {
                 ),
 
                 // ── 3. Sección "Mi información" — Carrusel ──────────────────
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 24, 20, 16),
-                  child: const Text(
-                    'Mi información',
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(20, 24, 20, 16),
+                  child: Text(
+                    'Mi información de salud',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFF1A1A1A),
+                      color: AppTheme.textPrimary,
                     ),
                   ),
                 ),
@@ -132,7 +137,7 @@ class _HealthRecordScreenState extends State<HealthRecordScreen> {
                 _MenuListItem(
                   icon: Icons.receipt_long_rounded,
                   label: 'Recetas médicas',
-                  onTap: () => context.push('/health-record/prescriptions'),
+                  onTap: () => context.push(AppRoutes.prescriptions),
                 ),
                 _MenuListItem(
                   icon: Icons.vaccines_rounded,
@@ -149,8 +154,8 @@ class _HealthRecordScreenState extends State<HealthRecordScreen> {
                 ),
                 _MenuListItem(
                   icon: Icons.biotech_rounded,
-                  label: 'Resultados de pruebas',
-                  onTap: () => context.push('/health-record/documents-list'),
+                  label: 'Resultados de laboratorio',
+                  onTap: () => context.push(AppRoutes.documentsList),
                 ),
                 _MenuListItem(
                   icon: Icons.medical_services_rounded,
@@ -158,7 +163,7 @@ class _HealthRecordScreenState extends State<HealthRecordScreen> {
                   onTap: () {
                     // Cargamos citas si no están cargadas y navegamos
                     context.read<AppointmentsProvider>().fetchAppointments();
-                    context.push('/appointments');
+                    context.push(AppRoutes.appointments);
                   },
                   showDivider: false,
                 ),
@@ -193,7 +198,8 @@ class _AvatarRing extends StatelessWidget {
       child: ClipOval(
         child: Container(
           color: AppTheme.primaryLight,
-          child: const Icon(Icons.person_rounded, color: AppTheme.primary, size: 36),
+          child: const Icon(Icons.person_rounded,
+              color: AppTheme.primary, size: 36),
         ),
       ),
     );
@@ -221,7 +227,7 @@ class _VitalsCarousel extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: const Color(0xFFEEEEEE)),
+              border: Border.all(color: AppTheme.border),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.03),
@@ -244,7 +250,7 @@ class _VitalsCarousel extends StatelessWidget {
                         vital.label,
                         style: const TextStyle(
                           fontSize: 11,
-                          color: Color(0xFF888888),
+                          color: AppTheme.textSecondary,
                           fontWeight: FontWeight.w500,
                         ),
                         maxLines: 1,
@@ -264,7 +270,7 @@ class _VitalsCarousel extends StatelessWidget {
                         vital.date,
                         style: const TextStyle(
                           fontSize: 9,
-                          color: Color(0xFFAAAAAA),
+                          color: AppTheme.accent,
                         ),
                       ),
                     ],
@@ -287,13 +293,26 @@ class _VitalIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     IconData iconData;
     switch (iconKey) {
-      case 'blood_drop': iconData = Icons.opacity_rounded; break;
-      case 'vitals':     iconData = Icons.favorite_rounded; break;
-      case 'science':    iconData = Icons.science_rounded; break;
-      case 'monitor_weight': iconData = Icons.monitor_weight_rounded; break;
-      case 'height':     iconData = Icons.height_rounded; break;
-      case 'blood_type': iconData = Icons.bloodtype_rounded; break;
-      default:           iconData = Icons.info_outline_rounded;
+      case 'blood_drop':
+        iconData = Icons.opacity_rounded;
+        break;
+      case 'vitals':
+        iconData = Icons.favorite_rounded;
+        break;
+      case 'science':
+        iconData = Icons.science_rounded;
+        break;
+      case 'monitor_weight':
+        iconData = Icons.monitor_weight_rounded;
+        break;
+      case 'height':
+        iconData = Icons.height_rounded;
+        break;
+      case 'blood_type':
+        iconData = Icons.bloodtype_rounded;
+        break;
+      default:
+        iconData = Icons.info_outline_rounded;
     }
 
     return Container(
@@ -328,17 +347,19 @@ class _MenuListItem extends StatelessWidget {
     return Column(
       children: [
         ListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
           leading: Icon(icon, color: const Color(0xFF444444), size: 24),
           title: Text(
             label,
             style: const TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w500,
-              color: Color(0xFF1A1A1A),
+              color: AppTheme.textPrimary,
             ),
           ),
-          trailing: const Icon(Icons.chevron_right_rounded, color: Color(0xFFAAAAAA)),
+          trailing:
+              const Icon(Icons.chevron_right_rounded, color: AppTheme.accent),
           onTap: onTap,
         ),
         if (showDivider)
@@ -362,7 +383,7 @@ class _ThinDivider extends StatelessWidget {
   const _ThinDivider();
   @override
   Widget build(BuildContext context) =>
-      const Divider(height: 1, thickness: 0.5, color: Color(0xFFEEEEEE));
+      const Divider(height: 1, thickness: 0.5, color: AppTheme.border);
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -423,7 +444,7 @@ class _ActivityListItem extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFF1A1A1A),
+                    color: AppTheme.textPrimary,
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -431,8 +452,7 @@ class _ActivityListItem extends StatelessWidget {
               const SizedBox(width: 8),
               // Badge de estado
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 decoration: BoxDecoration(
                   color: badgeColor.withOpacity(0.12),
                   borderRadius: BorderRadius.circular(20),
@@ -455,8 +475,8 @@ class _ActivityListItem extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   item.subtitle!,
-                  style: const TextStyle(
-                      fontSize: 12, color: Color(0xFF888888)),
+                  style:
+                      const TextStyle(fontSize: 12, color: AppTheme.textSecondary),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -464,8 +484,7 @@ class _ActivityListItem extends StatelessWidget {
               const SizedBox(height: 2),
               Text(
                 item.date,
-                style:
-                    const TextStyle(fontSize: 11, color: Color(0xFFAAAAAA)),
+                style: const TextStyle(fontSize: 11, color: AppTheme.accent),
               ),
             ],
           ),
@@ -481,4 +500,3 @@ class _ActivityListItem extends StatelessWidget {
     );
   }
 }
-

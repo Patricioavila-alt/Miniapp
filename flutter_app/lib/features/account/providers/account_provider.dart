@@ -29,36 +29,47 @@ class AccountProvider extends ChangeNotifier {
   UserProfile? _profile;
   bool _isLoading = false;
   String? _error;
+  bool _disposed = false;
 
   UserProfile? get profile => _profile;
   bool get isLoading => _isLoading;
   String? get error => _error;
 
+  @override
+  void dispose() {
+    _disposed = true;
+    super.dispose();
+  }
+
+  void _notify() {
+    if (!_disposed) notifyListeners();
+  }
+
   Future<void> fetchProfile() async {
     _isLoading = true;
     _error = null;
-    notifyListeners();
+    _notify();
     try {
       _profile = await ApiService.getProfile();
-    } catch (_) {
-      // Backend no disponible → cargar datos de demostración
+    } catch (e, st) {
+      debugPrint('[AccountProvider] fetchProfile: $e\n$st');
       _profile = _mockProfile;
     } finally {
       _isLoading = false;
-      notifyListeners();
+      _notify();
     }
   }
 
   Future<void> updateProfile(Map<String, dynamic> fields) async {
     _isLoading = true;
-    notifyListeners();
+    _notify();
     try {
       _profile = await ApiService.updateProfile(fields);
     } catch (e) {
       _error = e.toString();
     } finally {
       _isLoading = false;
-      notifyListeners();
+      _notify();
     }
   }
 }

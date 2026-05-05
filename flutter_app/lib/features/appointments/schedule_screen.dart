@@ -29,22 +29,27 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   Future<void> _loadDoctors() async {
     try {
       final docs = await ApiService.getDoctors();
-      setState(() { _doctors = docs; _isLoading = false; });
+      setState(() {
+        _doctors = docs;
+        _isLoading = false;
+      });
     } catch (_) {
       setState(() => _isLoading = false);
     }
   }
 
   Future<void> _schedule() async {
-    if (_selectedDoctor == null || _selectedDate == null || _selectedTime == null) return;
+    if (_selectedDoctor == null ||
+        _selectedDate == null ||
+        _selectedTime == null) return;
     setState(() => _isSaving = true);
     try {
-      await ApiService.createAppointment(
-        doctorId: _selectedDoctor!.id,
-        date: _selectedDate!,
-        time: _selectedTime!,
-        type: _type,
-      );
+      await ApiService.createAppointment({
+        'doctorId': _selectedDoctor!.id,
+        'date': _selectedDate!,
+        'time': _selectedTime!,
+        'type': _type,
+      });
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('¡Cita agendada exitosamente!')),
@@ -74,7 +79,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         ),
       ),
       body: _isLoading
-          ? const Center(child: CircularProgressIndicator(color: AppTheme.primary))
+          ? const Center(
+              child: CircularProgressIndicator(color: AppTheme.primary))
           : SingleChildScrollView(
               padding: AppTheme.screenPadding,
               child: Column(
@@ -83,13 +89,13 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                   Text('Selecciona un Doctor', style: AppTheme.heading3()),
                   const SizedBox(height: 16),
                   ..._doctors.map((doc) => _DoctorTile(
-                    doctor: doc,
-                    isSelected: _selectedDoctor?.id == doc.id,
-                    onTap: () => setState(() {
-                      _selectedDoctor = doc;
-                      _selectedTime = null;
-                    }),
-                  )),
+                        doctor: doc,
+                        isSelected: _selectedDoctor?.id == doc.id,
+                        onTap: () => setState(() {
+                          _selectedDoctor = doc;
+                          _selectedTime = null;
+                        }),
+                      )),
                   if (_selectedDoctor != null) ...[
                     const SizedBox(height: AppTheme.gap),
                     Text('Tipo de Consulta', style: AppTheme.heading3()),
@@ -122,18 +128,26 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                         return GestureDetector(
                           onTap: () => setState(() => _selectedTime = slot),
                           child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 10),
                             decoration: BoxDecoration(
-                              color: selected ? AppTheme.primary : AppTheme.surface,
-                              borderRadius: BorderRadius.circular(AppTheme.radiusSm),
+                              color: selected
+                                  ? AppTheme.primary
+                                  : AppTheme.surface,
+                              borderRadius:
+                                  BorderRadius.circular(AppTheme.radiusSm),
                               border: Border.all(
-                                color: selected ? AppTheme.primary : AppTheme.border,
+                                color: selected
+                                    ? AppTheme.primary
+                                    : AppTheme.border,
                               ),
                             ),
                             child: Text(
                               slot,
                               style: AppTheme.bodyBold().copyWith(
-                                color: selected ? Colors.white : AppTheme.textPrimary,
+                                color: selected
+                                    ? Colors.white
+                                    : AppTheme.textPrimary,
                               ),
                             ),
                           ),
@@ -144,11 +158,15 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: (_selectedTime != null && !_isSaving) ? _schedule : null,
+                        onPressed: (_selectedTime != null && !_isSaving)
+                            ? _schedule
+                            : null,
                         child: _isSaving
                             ? const SizedBox(
-                                width: 20, height: 20,
-                                child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator(
+                                    color: Colors.white, strokeWidth: 2))
                             : const Text('Confirmar Cita'),
                       ),
                     ),
@@ -165,7 +183,8 @@ class _DoctorTile extends StatelessWidget {
   final bool isSelected;
   final VoidCallback onTap;
 
-  const _DoctorTile({required this.doctor, required this.isSelected, required this.onTap});
+  const _DoctorTile(
+      {required this.doctor, required this.isSelected, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -175,16 +194,23 @@ class _DoctorTile extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 10),
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: isSelected ? AppTheme.primary.withOpacity(0.08) : AppTheme.surface,
+          color: isSelected
+              ? AppTheme.primary.withOpacity(0.08)
+              : AppTheme.surface,
           borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-          border: Border.all(color: isSelected ? AppTheme.primary : AppTheme.border, width: isSelected ? 2 : 1),
+          border: Border.all(
+              color: isSelected ? AppTheme.primary : AppTheme.border,
+              width: isSelected ? 2 : 1),
         ),
         child: Row(
           children: [
             Container(
-              width: 48, height: 48,
-              decoration: BoxDecoration(color: AppTheme.primaryLight, shape: BoxShape.circle),
-              child: const Icon(Icons.person_rounded, color: AppTheme.primary, size: 26),
+              width: 48,
+              height: 48,
+              decoration: const BoxDecoration(
+                  color: AppTheme.primaryLight, shape: BoxShape.circle),
+              child: const Icon(Icons.person_rounded,
+                  color: AppTheme.primary, size: 26),
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -216,7 +242,11 @@ class _TypeChip extends StatelessWidget {
   final bool selected;
   final VoidCallback onTap;
 
-  const _TypeChip({required this.label, required this.icon, required this.selected, required this.onTap});
+  const _TypeChip(
+      {required this.label,
+      required this.icon,
+      required this.selected,
+      required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -227,14 +257,18 @@ class _TypeChip extends StatelessWidget {
         decoration: BoxDecoration(
           color: selected ? AppTheme.primary : AppTheme.surface,
           borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-          border: Border.all(color: selected ? AppTheme.primary : AppTheme.border),
+          border:
+              Border.all(color: selected ? AppTheme.primary : AppTheme.border),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: 16, color: selected ? Colors.white : AppTheme.accent),
+            Icon(icon,
+                size: 16, color: selected ? Colors.white : AppTheme.accent),
             const SizedBox(width: 6),
-            Text(label, style: AppTheme.bodyBold().copyWith(color: selected ? Colors.white : AppTheme.textPrimary)),
+            Text(label,
+                style: AppTheme.bodyBold().copyWith(
+                    color: selected ? Colors.white : AppTheme.textPrimary)),
           ],
         ),
       ),

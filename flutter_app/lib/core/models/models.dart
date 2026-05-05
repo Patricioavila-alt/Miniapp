@@ -1,5 +1,44 @@
 // ─── Modelos Dart — Mi Salud FdA ─────────────────────────────────────────────
-// Mapean 1:1 con las respuestas del backend FastAPI
+
+List<String> _parseStringList(dynamic value) {
+  if (value is! List) return [];
+  return value.whereType<String>().toList();
+}
+
+// ─── UserListItem (pantalla de selección de usuario) ─────────────────────────
+class UserListItem {
+  final String id;
+  final String fullName;
+  final String description;
+  final String bloodType;
+  final String gender;
+  final String dateOfBirth;
+
+  UserListItem({
+    required this.id,
+    required this.fullName,
+    required this.description,
+    required this.bloodType,
+    required this.gender,
+    required this.dateOfBirth,
+  });
+
+  factory UserListItem.fromJson(Map<String, dynamic> json) => UserListItem(
+    id: json['id'] ?? '',
+    fullName: json['full_name'] ?? '',
+    description: json['description'] ?? '',
+    bloodType: json['blood_type'] ?? '',
+    gender: json['gender'] ?? '',
+    dateOfBirth: json['date_of_birth'] ?? '',
+  );
+
+  String get initials {
+    final parts = fullName.trim().split(' ').where((p) => p.isNotEmpty).toList();
+    if (parts.length >= 2) return '${parts[0][0]}${parts[1][0]}'.toUpperCase();
+    if (parts.isNotEmpty) return parts[0][0].toUpperCase();
+    return '?';
+  }
+}
 
 // ─── Doctor ──────────────────────────────────────────────────────────────────
 class Doctor {
@@ -28,10 +67,109 @@ class Doctor {
     name: json['name'] ?? '',
     specialty: json['specialty'] ?? '',
     avatarUrl: json['avatar_url'] ?? '',
-    rating: (json['rating'] as num).toDouble(),
+    rating: (json['rating'] as num? ?? 0).toDouble(),
     experienceYears: json['experience_years'] ?? 0,
-    consultationFee: (json['consultation_fee'] as num).toDouble(),
-    availableSlots: List<String>.from(json['available_slots'] ?? []),
+    consultationFee: (json['consultation_fee'] as num? ?? 0).toDouble(),
+    availableSlots: _parseStringList(json['available_slots']),
+  );
+}
+
+// ─── Branch (sucursal) ────────────────────────────────────────────────────────
+class Branch {
+  final String id;
+  final String name;
+  final String address;
+  final String city;
+  final String state;
+  final String zipCode;
+  final double latitude;
+  final double longitude;
+  final String phone;
+  final String schedule;
+  final List<String> services;
+
+  Branch({
+    required this.id,
+    required this.name,
+    required this.address,
+    required this.city,
+    required this.state,
+    required this.zipCode,
+    required this.latitude,
+    required this.longitude,
+    required this.phone,
+    required this.schedule,
+    required this.services,
+  });
+
+  factory Branch.fromJson(Map<String, dynamic> json) => Branch(
+    id: json['id'] ?? '',
+    name: json['name'] ?? '',
+    address: json['address'] ?? '',
+    city: json['city'] ?? '',
+    state: json['state'] ?? '',
+    zipCode: json['zip_code'] ?? '',
+    latitude: (json['latitude'] as num? ?? 0).toDouble(),
+    longitude: (json['longitude'] as num? ?? 0).toDouble(),
+    phone: json['phone'] ?? '',
+    schedule: json['schedule'] ?? '',
+    services: _parseStringList(json['services']),
+  );
+}
+
+// ─── VaccineType ──────────────────────────────────────────────────────────────
+class VaccineType {
+  final String id;
+  final String name;
+  final String description;
+  final int doses;
+  final double price;
+  final String ageRange;
+
+  VaccineType({
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.doses,
+    required this.price,
+    required this.ageRange,
+  });
+
+  factory VaccineType.fromJson(Map<String, dynamic> json) => VaccineType(
+    id: json['id'] ?? '',
+    name: json['name'] ?? '',
+    description: json['description'] ?? '',
+    doses: json['doses'] ?? 1,
+    price: (json['price'] as num? ?? 0).toDouble(),
+    ageRange: json['age_range'] ?? '',
+  );
+}
+
+// ─── TestType ─────────────────────────────────────────────────────────────────
+class TestType {
+  final String id;
+  final String name;
+  final String description;
+  final String preparation;
+  final String resultTime;
+  final double price;
+
+  TestType({
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.preparation,
+    required this.resultTime,
+    required this.price,
+  });
+
+  factory TestType.fromJson(Map<String, dynamic> json) => TestType(
+    id: json['id'] ?? '',
+    name: json['name'] ?? '',
+    description: json['description'] ?? '',
+    preparation: json['preparation'] ?? '',
+    resultTime: json['result_time'] ?? '',
+    price: (json['price'] as num? ?? 0).toDouble(),
   );
 }
 
@@ -42,11 +180,17 @@ class Appointment {
   final String doctorName;
   final String doctorSpecialty;
   final String doctorAvatar;
+  final String? branchId;
+  final String? branchName;
+  final String? vaccineTypeId;
+  final String? testTypeId;
   final String date;
   final String time;
-  final String status; // upcoming | completed | cancelled
-  final String type;   // video | in-person
+  final String status;
+  final String type;
+  final String paymentStatus;
   final String notes;
+  final double? price;
 
   Appointment({
     required this.id,
@@ -54,11 +198,17 @@ class Appointment {
     required this.doctorName,
     required this.doctorSpecialty,
     required this.doctorAvatar,
+    this.branchId,
+    this.branchName,
+    this.vaccineTypeId,
+    this.testTypeId,
     required this.date,
     required this.time,
     required this.status,
     required this.type,
+    required this.paymentStatus,
     required this.notes,
+    this.price,
   });
 
   factory Appointment.fromJson(Map<String, dynamic> json) => Appointment(
@@ -67,15 +217,24 @@ class Appointment {
     doctorName: json['doctor_name'] ?? '',
     doctorSpecialty: json['doctor_specialty'] ?? '',
     doctorAvatar: json['doctor_avatar'] ?? '',
+    branchId: json['branch_id'],
+    branchName: json['branch_name'],
+    vaccineTypeId: json['vaccine_type_id'],
+    testTypeId: json['test_type_id'],
     date: json['date'] ?? '',
     time: json['time'] ?? '',
     status: json['status'] ?? '',
     type: json['type'] ?? 'video',
+    paymentStatus: json['payment_status'] ?? 'pending',
     notes: json['notes'] ?? '',
+    price: (json['price'] as num?)?.toDouble(),
   );
 
-  bool get isUpcoming => status == 'upcoming';
-  bool get isVideo => type == 'video';
+  bool get isUpcoming  => status == 'upcoming';
+  bool get isVideo     => type == 'video';
+  bool get isVaccine   => type == 'vaccine';
+  bool get isTest      => type == 'test';
+  bool get isPaid      => paymentStatus == 'paid';
 }
 
 // ─── Medication ──────────────────────────────────────────────────────────────
@@ -84,11 +243,7 @@ class Medication {
   final String dosage;
   final String duration;
 
-  Medication({
-    required this.name,
-    required this.dosage,
-    required this.duration,
-  });
+  Medication({required this.name, required this.dosage, required this.duration});
 
   factory Medication.fromJson(Map<String, dynamic> json) => Medication(
     name: json['name'] ?? '',
@@ -107,7 +262,7 @@ class Prescription {
   final String diagnosis;
   final String notes;
   final String qrCodeData;
-  final String status; // active | completed
+  final String status;
 
   Prescription({
     required this.id,
@@ -140,11 +295,11 @@ class Prescription {
 class ClinicalDocument {
   final String id;
   final String title;
-  final String type; // lab_result | consultation_summary
+  final String type;
   final String date;
   final String doctorName;
   final String summary;
-  final String status; // available
+  final String status;
 
   ClinicalDocument({
     required this.id,
@@ -156,25 +311,24 @@ class ClinicalDocument {
     required this.status,
   });
 
-  factory ClinicalDocument.fromJson(Map<String, dynamic> json) =>
-      ClinicalDocument(
-        id: json['id'] ?? '',
-        title: json['title'] ?? '',
-        type: json['type'] ?? '',
-        date: json['date'] ?? '',
-        doctorName: json['doctor_name'] ?? '',
-        summary: json['summary'] ?? '',
-        status: json['status'] ?? '',
-      );
+  factory ClinicalDocument.fromJson(Map<String, dynamic> json) => ClinicalDocument(
+    id: json['id'] ?? '',
+    title: json['title'] ?? '',
+    type: json['type'] ?? '',
+    date: json['date'] ?? '',
+    doctorName: json['doctor_name'] ?? '',
+    summary: json['summary'] ?? '',
+    status: json['status'] ?? '',
+  );
 }
 
 // ─── SignatureDocument ─────────────────────────────────────────────────────────
 class SignatureDocument {
   final String id;
   final String title;
-  final String type; // privacy_policy | consent_form | treatment_agreement
+  final String type;
   final String date;
-  final String status; // pending | signed
+  final String status;
   final String contentPreview;
 
   SignatureDocument({
@@ -186,15 +340,14 @@ class SignatureDocument {
     required this.contentPreview,
   });
 
-  factory SignatureDocument.fromJson(Map<String, dynamic> json) =>
-      SignatureDocument(
-        id: json['id'] ?? '',
-        title: json['title'] ?? '',
-        type: json['type'] ?? '',
-        date: json['date'] ?? '',
-        status: json['status'] ?? 'pending',
-        contentPreview: json['content_preview'] ?? '',
-      );
+  factory SignatureDocument.fromJson(Map<String, dynamic> json) => SignatureDocument(
+    id: json['id'] ?? '',
+    title: json['title'] ?? '',
+    type: json['type'] ?? '',
+    date: json['date'] ?? '',
+    status: json['status'] ?? 'pending',
+    contentPreview: json['content_preview'] ?? '',
+  );
 
   bool get isPending => status == 'pending';
 }
@@ -234,12 +387,7 @@ class VitalSign {
   final String date;
   final String iconKey;
 
-  VitalSign({
-    required this.label,
-    required this.value,
-    required this.date,
-    required this.iconKey,
-  });
+  VitalSign({required this.label, required this.value, required this.date, required this.iconKey});
 
   factory VitalSign.fromJson(Map<String, dynamic> json) => VitalSign(
     label: json['label'] ?? '',
@@ -289,7 +437,7 @@ class UserProfile {
     bloodType: json['blood_type'] ?? '',
     weight: json['weight'] ?? '',
     height: json['height'] ?? '',
-    allergies: List<String>.from(json['allergies'] ?? []),
+    allergies: _parseStringList(json['allergies']),
     avatarUrl: json['avatar_url'] ?? '',
     vitalSigns: (json['vital_signs'] as List<dynamic>? ?? [])
         .map((v) => VitalSign.fromJson(v))
@@ -301,10 +449,10 @@ class UserProfile {
 class RecentActivityItem {
   final String id;
   final String title;
-  final String? subtitle;  // null si no aplica
+  final String? subtitle;
   final String date;
-  final String status;     // 'pending_payment' | 'dispensed' | 'completed'
-  final String type;       // 'vaccine' | 'prescription' | 'test'
+  final String status;
+  final String type;
 
   RecentActivityItem({
     required this.id,
@@ -315,15 +463,14 @@ class RecentActivityItem {
     required this.type,
   });
 
-  factory RecentActivityItem.fromJson(Map<String, dynamic> json) =>
-      RecentActivityItem(
-        id: json['id'] ?? '',
-        title: json['title'] ?? '',
-        subtitle: json['subtitle'],
-        date: json['date'] ?? '',
-        status: json['status'] ?? '',
-        type: json['type'] ?? 'prescription',
-      );
+  factory RecentActivityItem.fromJson(Map<String, dynamic> json) => RecentActivityItem(
+    id: json['id'] ?? '',
+    title: json['title'] ?? '',
+    subtitle: json['subtitle'],
+    date: json['date'] ?? '',
+    status: json['status'] ?? '',
+    type: json['type'] ?? 'prescription',
+  );
 }
 
 // ─── HomeData ─────────────────────────────────────────────────────────────────
@@ -348,4 +495,22 @@ class HomeData {
         .map((p) => Promotion.fromJson(p))
         .toList(),
   );
+}
+
+// ─── PaymentResult ────────────────────────────────────────────────────────────
+class PaymentResult {
+  final String status;
+  final String message;
+  final double? amount;
+
+  PaymentResult({required this.status, required this.message, this.amount});
+
+  factory PaymentResult.fromJson(Map<String, dynamic> json) => PaymentResult(
+    status: json['status'] ?? '',
+    message: json['message'] ?? '',
+    amount: (json['amount'] as num?)?.toDouble(),
+  );
+
+  bool get isApproved => status == 'approved';
+  bool get isDeclined => status == 'declined';
 }

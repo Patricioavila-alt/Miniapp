@@ -99,15 +99,13 @@
       }
     ]
   },
-  "instructions_to_main_agent": [
-    "Since this is a React Native Expo application, strictly use React Native primitives (View, Text, ScrollView, TouchableOpacity, Image) or NativeWind for styling. Do NOT use HTML elements like div, span, or section.",
-    "Navigation must be implemented using React Navigation (e.g., @react-navigation/bottom-tabs and @react-navigation/native-stack).",
-    "Implement bottom tabs: Home | My Appointments | Health Record | My Account.",
-    "For the QR Code feature in 'Digital Prescription', use a library like 'react-native-qrcode-svg' instead of an image if possible. Otherwise, construct a dummy UI with a mocked square barcode.",
-    "Include 'testID' attributes (the React Native equivalent of data-testid) for all interactive elements to support testing.",
-    "The UI should look calm, organic, and trustworthy. Use generous paddings (`p-6` on containers) and the specified warm color palette.",
-    "The Home dashboard should have dynamic widgets. E.g., if there's an upcoming appointment, show the dark green (#2A433A) contextual widget at the top.",
-    "No real authentication is needed, build a mock flow or just a simulated splash/welcome screen that automatically navigates to the Home tab.",
-    "Ensure 'Outfit' and 'Manrope' fonts are loaded via Expo Font, or fallback to system sans-serif if you cannot load custom fonts."
+  "instructions": [
+    "This is a Flutter application using go_router for navigation and Provider for state management.",
+    "Bottom tabs: Home | My Appointments | Health Record | My Account.",
+    "For QR codes in prescriptions, use the qr_flutter package.",
+    "The UI should look calm, organic, and trustworthy — use generous padding (24px on containers) and the specified warm color palette.",
+    "The Home dashboard has a dynamic smart widget: if there is an upcoming appointment, show the dark green (#2A433A) contextual card at the top; otherwise show the welcome card.",
+    "Fonts: Outfit (headings) and Manrope (body) loaded via google_fonts package.",
+    "No real authentication — splash screen auto-navigates to Home."
   ]
 }

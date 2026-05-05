@@ -27,7 +27,10 @@ class _PrescriptionDetailScreenState extends State<PrescriptionDetailScreen> {
   Future<void> _load() async {
     try {
       final rx = await ApiService.getPrescription(widget.prescriptionId);
-      setState(() { _prescription = rx; _isLoading = false; });
+      setState(() {
+        _prescription = rx;
+        _isLoading = false;
+      });
     } catch (_) {
       setState(() => _isLoading = false);
     }
@@ -45,9 +48,11 @@ class _PrescriptionDetailScreenState extends State<PrescriptionDetailScreen> {
         ),
       ),
       body: _isLoading
-          ? const Center(child: CircularProgressIndicator(color: AppTheme.primary))
+          ? const Center(
+              child: CircularProgressIndicator(color: AppTheme.primary))
           : _prescription == null
-              ? Center(child: Text('Receta no encontrada', style: AppTheme.body()))
+              ? Center(
+                  child: Text('Receta no encontrada', style: AppTheme.body()))
               : _buildContent(),
     );
   }
@@ -88,37 +93,40 @@ class _PrescriptionDetailScreenState extends State<PrescriptionDetailScreen> {
           Text('Medicamentos', style: AppTheme.heading3()),
           const SizedBox(height: 16),
           ...rx.medications.map((med) => Container(
-            margin: const EdgeInsets.only(bottom: 12),
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: AppTheme.surface,
-              borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-              border: Border.all(color: AppTheme.border),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: 40, height: 40,
-                  decoration: BoxDecoration(
-                    color: AppTheme.primaryLight, shape: BoxShape.circle),
-                  child: const Icon(Icons.medication_rounded, color: AppTheme.primary, size: 20),
+                margin: const EdgeInsets.only(bottom: 12),
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: AppTheme.surface,
+                  borderRadius: BorderRadius.circular(AppTheme.radiusMd),
+                  border: Border.all(color: AppTheme.border),
                 ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(med.name, style: AppTheme.bodyBold()),
-                      Text(med.dosage, style: AppTheme.caption()),
-                      Text('Duración: ${med.duration}',
-                          style: AppTheme.caption().copyWith(color: AppTheme.primary)),
-                    ],
-                  ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: const BoxDecoration(
+                          color: AppTheme.primaryLight, shape: BoxShape.circle),
+                      child: const Icon(Icons.medication_rounded,
+                          color: AppTheme.primary, size: 20),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(med.name, style: AppTheme.bodyBold()),
+                          Text(med.dosage, style: AppTheme.caption()),
+                          Text('Duración: ${med.duration}',
+                              style: AppTheme.caption()
+                                  .copyWith(color: AppTheme.primary)),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          )),
+              )),
 
           // Notas
           if (rx.notes.isNotEmpty) ...[
@@ -136,9 +144,12 @@ class _PrescriptionDetailScreenState extends State<PrescriptionDetailScreen> {
                 children: [
                   Row(
                     children: [
-                      const Icon(Icons.info_outline_rounded, color: AppTheme.secondary, size: 18),
+                      const Icon(Icons.info_outline_rounded,
+                          color: AppTheme.secondary, size: 18),
                       const SizedBox(width: 8),
-                      Text('Indicaciones', style: AppTheme.bodyBold().copyWith(color: AppTheme.secondary)),
+                      Text('Indicaciones',
+                          style: AppTheme.bodyBold()
+                              .copyWith(color: AppTheme.secondary)),
                     ],
                   ),
                   const SizedBox(height: 8),
@@ -150,7 +161,7 @@ class _PrescriptionDetailScreenState extends State<PrescriptionDetailScreen> {
 
           // QR Code
           const SizedBox(height: AppTheme.gap),
-          Text('Código QR de Receta', style: AppTheme.heading3()),
+          Text('Código QR de verificación', style: AppTheme.heading3()),
           const SizedBox(height: 16),
           Center(
             child: Container(

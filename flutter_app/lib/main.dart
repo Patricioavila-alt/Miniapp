@@ -9,12 +9,37 @@ import 'core/routes/app_routes.dart';
 import 'features/home/home_screen.dart';
 import 'features/appointments/appointments_screen.dart';
 import 'features/appointments/appointment_detail_screen.dart';
+import 'features/appointments/schedule_type_screen.dart';
 import 'features/appointments/schedule_screen.dart';
+import 'features/appointments/consult_symptoms_screen.dart';
+import 'features/appointments/consult_branch_screen.dart';
+import 'features/appointments/consult_datetime_screen.dart';
+import 'features/appointments/consult_patient_info_screen.dart';
+import 'features/appointments/consult_confirmation_screen.dart';
+import 'features/appointments/consult_success_screen.dart';
+import 'features/appointments/test_appointment_screen.dart';
+import 'features/appointments/vaccine_type_screen.dart';
+import 'features/appointments/vaccine_questionnaire_screen.dart';
+import 'features/appointments/vaccine_branch_screen.dart';
+import 'features/appointments/vaccine_datetime_screen.dart';
+import 'features/appointments/vaccine_patient_info_screen.dart';
+import 'features/appointments/vaccine_confirmation_screen.dart';
+import 'features/appointments/vaccine_success_screen.dart';
+import 'features/appointments/vaccine_pay_in_branch_screen.dart';
+import 'features/appointments/test_type_screen.dart';
+import 'features/appointments/test_branch_screen.dart';
+import 'features/appointments/test_datetime_screen.dart';
+import 'features/appointments/test_patient_info_screen.dart';
+import 'features/appointments/test_confirmation_screen.dart';
+import 'features/appointments/test_success_screen.dart';
+import 'features/appointments/test_result_validating_screen.dart';
 import 'features/health_record/health_record_screen.dart';
 import 'features/health_record/prescription_detail_screen.dart';
 import 'features/health_record/prescriptions_screen.dart';
 import 'features/health_record/document_detail_screen.dart';
 import 'features/health_record/clinical_documents_screen.dart';
+import 'features/prescription_scan/prescription_scan_screen.dart';
+import 'features/prescription_scan/prescription_delivery_note_screen.dart';
 import 'features/sign_document/sign_document_screen.dart';
 import 'features/video_call/video_call_screen.dart';
 import 'features/account/account_screen.dart';
@@ -69,6 +94,130 @@ final GoRouter _router = GoRouter(
 
     // Rutas secundarias (stack — sin bottom nav)
     GoRoute(
+      path: '/appointments/schedule-type',
+      pageBuilder: (context, state) =>
+          _slideTransition(state, const ScheduleTypeScreen()),
+    ),
+    GoRoute(
+      path: AppRoutes.schedule,
+      pageBuilder: (context, state) =>
+          _slideTransition(state, const ScheduleScreen()),
+    ),
+    GoRoute(
+      path: '/appointments/schedule-tests',
+      pageBuilder: (context, state) {
+        final extra = state.extra as Map<String, dynamic>? ?? {};
+        final type = extra['type'] as String? ?? 'test';
+        return _slideTransition(
+            state, TestAppointmentScreen(type: type));
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.consultSymptoms,
+      pageBuilder: (context, state) =>
+          _slideTransition(state, const ConsultSymptomsScreen()),
+    ),
+    GoRoute(
+      path: AppRoutes.consultBranch,
+      pageBuilder: (context, state) =>
+          _slideTransition(state, const ConsultBranchScreen()),
+    ),
+    GoRoute(
+      path: AppRoutes.consultDateTime,
+      pageBuilder: (context, state) =>
+          _slideTransition(state, const ConsultDateTimeScreen()),
+    ),
+    GoRoute(
+      path: AppRoutes.consultPatientInfo,
+      pageBuilder: (context, state) =>
+          _slideTransition(state, const ConsultPatientInfoScreen()),
+    ),
+    GoRoute(
+      path: AppRoutes.consultConfirmation,
+      pageBuilder: (context, state) =>
+          _slideTransition(state, const ConsultConfirmationScreen()),
+    ),
+    GoRoute(
+      path: AppRoutes.consultSuccess,
+      pageBuilder: (context, state) =>
+          _slideTransition(state, const ConsultSuccessScreen()),
+    ),
+    GoRoute(
+      path: AppRoutes.vaccineType,
+      pageBuilder: (context, state) =>
+          _slideTransition(state, const VaccineTypeScreen()),
+    ),
+    GoRoute(
+      path: AppRoutes.vaccineQuestionnaire,
+      pageBuilder: (context, state) =>
+          _slideTransition(state, const VaccineQuestionnaireScreen()),
+    ),
+    GoRoute(
+      path: AppRoutes.vaccineBranch,
+      pageBuilder: (context, state) =>
+          _slideTransition(state, const VaccineBranchScreen()),
+    ),
+    GoRoute(
+      path: AppRoutes.vaccineDateTime,
+      pageBuilder: (context, state) =>
+          _slideTransition(state, const VaccineDateTimeScreen()),
+    ),
+    GoRoute(
+      path: AppRoutes.vaccinePatientInfo,
+      pageBuilder: (context, state) =>
+          _slideTransition(state, const VaccinePatientInfoScreen()),
+    ),
+    GoRoute(
+      path: AppRoutes.vaccineConfirmation,
+      pageBuilder: (context, state) =>
+          _slideTransition(state, const VaccineConfirmationScreen()),
+    ),
+    GoRoute(
+      path: AppRoutes.vaccineSuccess,
+      pageBuilder: (context, state) =>
+          _slideTransition(state, const VaccineSuccessScreen()),
+    ),
+    GoRoute(
+      path: AppRoutes.vaccinePayInBranch,
+      pageBuilder: (context, state) =>
+          _slideTransition(state, const VaccinePayInBranchScreen()),
+    ),
+    GoRoute(
+      path: AppRoutes.testType,
+      pageBuilder: (context, state) =>
+          _slideTransition(state, const TestTypeScreen()),
+    ),
+    GoRoute(
+      path: AppRoutes.testBranch,
+      pageBuilder: (context, state) =>
+          _slideTransition(state, const TestBranchScreen()),
+    ),
+    GoRoute(
+      path: AppRoutes.testDateTime,
+      pageBuilder: (context, state) =>
+          _slideTransition(state, const TestDateTimeScreen()),
+    ),
+    GoRoute(
+      path: AppRoutes.testPatientInfo,
+      pageBuilder: (context, state) =>
+          _slideTransition(state, const TestPatientInfoScreen()),
+    ),
+    GoRoute(
+      path: AppRoutes.testConfirmation,
+      pageBuilder: (context, state) =>
+          _slideTransition(state, const TestConfirmationScreen()),
+    ),
+    GoRoute(
+      path: AppRoutes.testSuccess,
+      pageBuilder: (context, state) =>
+          _slideTransition(state, const TestSuccessScreen()),
+    ),
+    GoRoute(
+      path: AppRoutes.testValidating,
+      pageBuilder: (context, state) =>
+          _slideTransition(state, const TestResultValidatingScreen()),
+    ),
+    GoRoute(
       path: '/appointments/:id',
       pageBuilder: (context, state) {
         final id = state.pathParameters['id']!;
@@ -76,9 +225,18 @@ final GoRouter _router = GoRouter(
       },
     ),
     GoRoute(
-      path: AppRoutes.schedule,
+      path: AppRoutes.prescriptionScan,
       pageBuilder: (context, state) =>
-          _slideTransition(state, const ScheduleScreen()),
+          _slideTransition(state, const PrescriptionScanScreen()),
+    ),
+    GoRoute(
+      path: AppRoutes.prescriptionDeliveryNote,
+      pageBuilder: (context, state) {
+        final extra = state.extra as Map<String, dynamic>;
+        final meds = (extra['meds'] as List).cast<Map<String, dynamic>>();
+        return _slideTransition(
+            state, PrescriptionDeliveryNoteScreen(meds: meds));
+      },
     ),
     GoRoute(
       path: '/health-record/prescriptions',

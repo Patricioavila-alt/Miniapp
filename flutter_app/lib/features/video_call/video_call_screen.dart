@@ -16,7 +16,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1A2B25),
+      backgroundColor: AppTheme.videoCallBg,
       body: SafeArea(
         child: Stack(
           children: [
@@ -28,11 +28,12 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                   Container(
                     width: 120,
                     height: 120,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF2A433A),
+                    decoration: const BoxDecoration(
+                      color: AppTheme.secondary,
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.person_rounded, color: Colors.white60, size: 64),
+                    child: const Icon(Icons.person_rounded,
+                        color: Colors.white60, size: 64),
                   ),
                   const SizedBox(height: 20),
                   Text(
@@ -47,7 +48,8 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                   const SizedBox(height: 12),
                   // Timer simulado
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                     decoration: BoxDecoration(
                       color: Colors.white.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(20),
@@ -73,7 +75,8 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                   borderRadius: BorderRadius.circular(AppTheme.radiusMd),
                   border: Border.all(color: Colors.white24),
                 ),
-                child: const Icon(Icons.person_rounded, color: Colors.white38, size: 40),
+                child: const Icon(Icons.person_rounded,
+                    color: Colors.white38, size: 40),
               ),
             ),
 
@@ -112,12 +115,15 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                         color: AppTheme.error,
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(Icons.call_end_rounded, color: Colors.white, size: 28),
+                      child: const Icon(Icons.call_end_rounded,
+                          color: Colors.white, size: 28),
                     ),
                   ),
                   const SizedBox(width: 16),
                   _CallButton(
-                    icon: _isCameraOff ? Icons.videocam_off_rounded : Icons.videocam_rounded,
+                    icon: _isCameraOff
+                        ? Icons.videocam_off_rounded
+                        : Icons.videocam_rounded,
                     label: _isCameraOff ? 'Cámara off' : 'Cámara',
                     onTap: () => setState(() => _isCameraOff = !_isCameraOff),
                     active: !_isCameraOff,
@@ -164,7 +170,8 @@ class _CallButton extends StatelessWidget {
             child: Icon(icon, color: Colors.white, size: 24),
           ),
           const SizedBox(height: 6),
-          Text(label, style: const TextStyle(color: Colors.white60, fontSize: 11)),
+          Text(label,
+              style: const TextStyle(color: Colors.white60, fontSize: 11)),
         ],
       ),
     );

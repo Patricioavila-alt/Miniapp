@@ -37,7 +37,7 @@ class _ClinicalDocumentsScreenState extends State<ClinicalDocumentsScreen> {
           onPressed: () => context.pop(),
         ),
         title: const Text(
-          'Resultados de pruebas',
+          'Resultados de laboratorio',
           style: TextStyle(
             color: Color(0xFF1A1A1A),
             fontSize: 17,
@@ -160,7 +160,7 @@ class _DocumentCard extends StatelessWidget {
                           color: AppTheme.blue.withOpacity(0.08),
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        child: Text(
+                        child: const Text(
                           'Disponible',
                           style: TextStyle(
                             fontSize: 10,

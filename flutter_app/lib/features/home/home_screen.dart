@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/routes/app_routes.dart';
 import '../../shared/widgets/skeleton_loader.dart';
@@ -59,7 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // ── 1. Barra superior (logo + dirección + íconos) ─────────
-                  _TopBar(firstName: firstName),
+                  _TopBar(
+                    firstName: firstName,
+                    address: provider.currentAddress,
+                  ),
 
                   const _SectionDivider(),
 
@@ -98,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: _SurteRecetaCard(
-                      onTap: () => context.go(AppRoutes.healthRecord),
+                      onTap: () => context.push(AppRoutes.prescriptionScan),
                     ),
                   ),
 
@@ -117,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
       case 'video':
         context.push(AppRoutes.videoCall);
       case 'schedule':
-        context.push(AppRoutes.schedule);
+        context.push(AppRoutes.scheduleType);
       case 'prescription':
       case 'expediente':
         context.go(AppRoutes.healthRecord);
@@ -130,7 +135,8 @@ class _HomeScreenState extends State<HomeScreen> {
 // ─────────────────────────────────────────────────────────────────────────────
 class _TopBar extends StatelessWidget {
   final String firstName;
-  const _TopBar({required this.firstName});
+  final String address;
+  const _TopBar({required this.firstName, required this.address});
 
   @override
   Widget build(BuildContext context) {
@@ -138,25 +144,11 @@ class _TopBar extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
       child: Row(
         children: [
-          // Logo "A"
-          Container(
+          // Logo "A" -> "FA"
+          SvgPicture.asset(
+            'assets/icons/FALogoMni.svg',
             width: 40,
             height: 40,
-            decoration: const BoxDecoration(
-              color: AppTheme.primary,
-              shape: BoxShape.circle,
-            ),
-            child: const Center(
-              child: Text(
-                'A',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w800,
-                  height: 1,
-                ),
-              ),
-            ),
           ),
           const SizedBox(width: 10),
 
@@ -174,19 +166,24 @@ class _TopBar extends StatelessWidget {
                   ),
                 ),
                 Row(
-                  children: const [
-                    Icon(Icons.location_on_rounded, size: 12, color: Color(0xFF555555)),
-                    SizedBox(width: 2),
-                    Text(
-                      'Tulipán 111, 66635, CDMX',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF222222),
+                  children: [
+                    const Icon(Icons.location_on_rounded,
+                        size: 12, color: Color(0xFF555555)),
+                    const SizedBox(width: 2),
+                    Expanded(
+                      child: Text(
+                        address,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF222222),
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    SizedBox(width: 2),
-                    Icon(Icons.keyboard_arrow_down_rounded,
+                    const SizedBox(width: 2),
+                    const Icon(Icons.keyboard_arrow_down_rounded,
                         size: 15, color: Color(0xFF222222)),
                   ],
                 ),
@@ -195,10 +192,18 @@ class _TopBar extends StatelessWidget {
           ),
 
           // WhatsApp
-          _CircleIconBtn(
-            color: const Color(0xFF25D366),
-            icon: Icons.chat_rounded,
-            onTap: () {},
+          GestureDetector(
+            onTap: () async {
+              final url = Uri.parse('https://api.whatsapp.com/send/?phone=5218007112222&text=Hola');
+              if (await canLaunchUrl(url)) {
+                await launchUrl(url);
+              }
+            },
+            child: SvgPicture.asset(
+              'assets/icons/WALogo.svg',
+              width: 36,
+              height: 36,
+            ),
           ),
           const SizedBox(width: 10),
 
@@ -283,27 +288,22 @@ class _GreetingRow extends StatelessWidget {
         children: [
           Text(
             '$greeting $firstName',
-            style: const TextStyle(
-              fontSize: 26,
-              fontWeight: FontWeight.w700,
-              color: Color(0xFF1A1A1A),
-            ),
+            style: AppTheme.heading3(),
           ),
-          // Avatar con ring azul
+          // Avatar JPG con borde azul
           Container(
             width: 54,
             height: 54,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(color: AppTheme.blue, width: 2.5),
+              border: Border.all(color: const Color(0xFF233BC1), width: 2),
             ),
-            child: ClipOval(
-              child: Container(
-                color: AppTheme.primaryLight,
-                child: const Icon(
-                  Icons.person_rounded,
-                  color: AppTheme.primary,
-                  size: 32,
+            child: Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: ClipOval(
+                child: Image.asset(
+                  'assets/icons/ProfilePic.jpg',
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
@@ -322,38 +322,12 @@ class _QuickActionsRow extends StatelessWidget {
   final void Function(String id) onActionTap;
   const _QuickActionsRow({required this.actions, required this.onActionTap});
 
-  static const _styles = <String, _ActionStyle>{
-    'expediente': _ActionStyle(
-      icon: Icons.folder_special_rounded,
-      bg: Color(0xFFFFF0EE),
-      iconColor: AppTheme.primary,
-    ),
-    'videocam': _ActionStyle(
-      icon: Icons.videocam_rounded,
-      bg: Color(0xFFEEF4FF),
-      iconColor: AppTheme.blue,
-    ),
-    'calendar': _ActionStyle(
-      icon: Icons.calendar_today_rounded,
-      bg: Color(0xFFEEFFF4),
-      iconColor: Color(0xFF22C55E),
-    ),
-    'medical': _ActionStyle(
-      icon: Icons.document_scanner_rounded,
-      bg: Color(0xFFF5F0FF),
-      iconColor: Color(0xFF8B5CF6),
-    ),
-    'medkit': _ActionStyle(
-      icon: Icons.local_pharmacy_rounded,
-      bg: Color(0xFFFFF7ED),
-      iconColor: Color(0xFFF97316),
-    ),
-  };
+
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 116,
+      height: 124,
       child: ListView.separated(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         scrollDirection: Axis.horizontal,
@@ -364,44 +338,39 @@ class _QuickActionsRow extends StatelessWidget {
           final id = action['id'] as String;
           final iconKey = action['icon'] as String;
           final label = (action['label'] as String).replaceAll(r'\n', '\n');
-          final style = _styles[iconKey] ?? _styles['videocam']!;
 
           return GestureDetector(
             onTap: () => onActionTap(id),
-            child: Container(
+            child: SizedBox(
               width: 88,
-              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 10),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: const Color(0xFFEEEEEE)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 8,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    width: 50,
-                    height: 50,
+                    width: 72,
+                    height: 72,
                     decoration: BoxDecoration(
-                      color: style.bg,
-                      borderRadius: BorderRadius.circular(14),
+                      color: const Color(0xFFF7FAFF),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: const Color(0xFFDCE7FD)),
                     ),
-                    child: Icon(style.icon, color: style.iconColor, size: 26),
+                    child: Center(
+                      child: Image.asset(
+                        'assets/icons/$iconKey.png',
+                        width: 46,
+                        height: 46,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
                   ),
-                  const SizedBox(height: 6),
+                  const SizedBox(height: 8),
                   Text(
                     label,
                     style: const TextStyle(
                       fontSize: 10,
-                      color: Color(0xFF444444),
-                      height: 1.3,
+                      color: Color(0xFF333333),
+                      height: 1.2,
                     ),
                     textAlign: TextAlign.center,
                     maxLines: 2,
@@ -470,7 +439,9 @@ class _PromoBannerSection extends StatelessWidget {
                       child: CachedNetworkImage(
                         imageUrl: promo.imageUrl,
                         fit: BoxFit.cover,
-                        errorWidget: (_, __, ___) => const SizedBox(),
+                        errorWidget: (context, url, error) => const Center(
+                          child: Icon(Icons.image_not_supported, color: Colors.white54, size: 40),
+                        ),
                       ),
                     ),
                     // Gradiente de transición imagen → color
@@ -480,8 +451,8 @@ class _PromoBannerSection extends StatelessWidget {
                           gradient: LinearGradient(
                             begin: Alignment.centerLeft,
                             end: Alignment.centerRight,
-                            stops: const [0.35, 0.55],
-                            colors: [Colors.transparent, bg],
+                            stops: const [0.35, 0.65],
+                            colors: [bg.withOpacity(0.0), bg],
                           ),
                         ),
                       ),
@@ -516,24 +487,29 @@ class _PromoBannerSection extends StatelessWidget {
                               ),
                               maxLines: 3,
                             ),
-                            const SizedBox(height: 14),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 8),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Text(
-                                promo.ctaText,
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color(0xFF222222),
-                                ),
-                              ),
-                            ),
+                            const Spacer(),
                           ],
+                        ),
+                      ),
+                    ),
+                    // Botón "Ver más" en la esquina inferior derecha
+                    Positioned(
+                      right: 16,
+                      bottom: 16,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(
+                          promo.ctaText,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFF3B82F6), // Using a blue text for the button to make it pop, or just dark grey. Let's use blue as per typical primary CTA
+                          ),
                         ),
                       ),
                     ),
@@ -558,9 +534,8 @@ class _PromoBannerSection extends StatelessWidget {
               width: i == currentPage ? 20 : 6,
               height: 6,
               decoration: BoxDecoration(
-                color: i == currentPage
-                    ? AppTheme.blue
-                    : const Color(0xFFCCCCCC),
+                color:
+                    i == currentPage ? AppTheme.blue : const Color(0xFFCCCCCC),
                 borderRadius: BorderRadius.circular(3),
               ),
             ),
@@ -583,34 +558,38 @@ class _SurteRecetaCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         decoration: BoxDecoration(
-          color: const Color(0xFFEEF4FF),
-          borderRadius: BorderRadius.circular(16),
+          color: const Color(0xFFF2F7FF),
+          borderRadius: BorderRadius.circular(20),
         ),
         child: Row(
           children: [
-            // Ícono Rx
             Container(
-              width: 52,
-              height: 52,
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.white.withOpacity(0.5),
+                    blurRadius: 10,
+                    spreadRadius: 5,
+                  ),
+                ],
               ),
-              child: const Icon(
-                Icons.medication_rounded,
-                color: AppTheme.primary,
-                size: 28,
+              child: Image.asset(
+                'assets/icons/RecetaIA.png',
+                width: 60,
+                height: 60,
+                fit: BoxFit.contain,
               ),
             ),
-            const SizedBox(width: 14),
-
+            const SizedBox(width: 16),
             // Texto
-            const Expanded(
+            Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: const [
                   Text(
                     'Surte tu receta',
                     style: TextStyle(
@@ -619,23 +598,31 @@ class _SurteRecetaCard extends StatelessWidget {
                       color: Color(0xFF1A1A1A),
                     ),
                   ),
-                  SizedBox(height: 3),
+                  SizedBox(height: 4),
                   Text(
                     'Agiliza tu compra con el escaneo inteligente',
                     style: TextStyle(
                       fontSize: 12,
                       color: Color(0xFF666666),
-                      height: 1.4,
+                      height: 1.3,
                     ),
                   ),
                 ],
               ),
             ),
-
-            const Icon(
-              Icons.chevron_right_rounded,
-              color: Color(0xFF999999),
-              size: 24,
+            const SizedBox(width: 12),
+            Container(
+              width: 32,
+              height: 32,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.chevron_right_rounded,
+                color: AppTheme.blue,
+                size: 20,
+              ),
             ),
           ],
         ),

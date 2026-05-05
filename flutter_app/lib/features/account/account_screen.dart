@@ -76,7 +76,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 Text('Información Médica', style: AppTheme.heading3()),
                 const SizedBox(height: 16),
                 _InfoCard(items: [
-                  _InfoRow(label: 'Tipo de Sangre', value: profile.bloodType),
+                  _InfoRow(label: 'Grupo sanguíneo', value: profile.bloodType),
                   _InfoRow(
                     label: 'Alergias',
                     value: profile.allergies.isEmpty
@@ -100,17 +100,23 @@ class _AccountScreenState extends State<AccountScreen> {
                       _OptionTile(
                         icon: Icons.notifications_outlined,
                         label: 'Notificaciones',
-                        onTap: () {},
+                        onTap: () => ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Notificaciones próximamente.')),
+                        ),
                       ),
                       _OptionTile(
                         icon: Icons.privacy_tip_outlined,
                         label: 'Privacidad',
-                        onTap: () {},
+                        onTap: () => ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Aviso de privacidad próximamente.')),
+                        ),
                       ),
                       _OptionTile(
                         icon: Icons.help_outline_rounded,
                         label: 'Ayuda y Soporte',
-                        onTap: () {},
+                        onTap: () => ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Ayuda y soporte próximamente.')),
+                        ),
                         showDivider: false,
                       ),
                     ],

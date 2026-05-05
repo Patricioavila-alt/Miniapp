@@ -106,6 +106,7 @@ class HealthRecordProvider extends ChangeNotifier {
   List<RecentActivityItem> _recentActivity = [];
   bool _isLoading = false;
   String? _error;
+  bool _disposed = false;
 
   List<Prescription> get prescriptions => _prescriptions;
   List<ClinicalDocument> get documents => _documents;
@@ -115,25 +116,34 @@ class HealthRecordProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get error => _error;
 
+  @override
+  void dispose() {
+    _disposed = true;
+    super.dispose();
+  }
+
+  void _notify() {
+    if (!_disposed) notifyListeners();
+  }
+
   Future<void> fetchAll() async {
     _isLoading = true;
     _error = null;
-    notifyListeners();
+    _notify();
     try {
       _prescriptions = await ApiService.getPrescriptions();
       _documents = await ApiService.getDocuments();
       _signatureDocs = await ApiService.getSignatureDocuments();
-      // TODO: reemplazar con ApiService.getRecentActivity() cuando esté disponible
-      _recentActivity = [];
-    } catch (_) {
-      // Backend no disponible → datos de demo
+      _recentActivity = await ApiService.getRecentActivity();
+    } catch (e, st) {
+      debugPrint('[HealthRecordProvider] fetchAll: $e\n$st');
       _prescriptions = _mockPrescriptions;
       _documents = _mockDocuments;
       _signatureDocs = _mockSignatureDocs;
       _recentActivity = _mockRecentActivity;
     } finally {
       _isLoading = false;
-      notifyListeners();
+      _notify();
     }
   }
 
@@ -143,7 +153,7 @@ class HealthRecordProvider extends ChangeNotifier {
       await fetchAll();
     } catch (e) {
       _error = e.toString();
-      notifyListeners();
+      _notify();
     }
   }
 }

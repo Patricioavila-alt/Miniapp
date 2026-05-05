@@ -33,8 +33,10 @@ class _SignDocumentScreenState extends State<SignDocumentScreen> {
         (d) => d.id == widget.documentId,
         orElse: () => throw Exception('Not found'),
       );
+      if (!mounted) return;
       setState(() { _document = doc; _isLoading = false; });
     } catch (_) {
+      if (!mounted) return;
       setState(() => _isLoading = false);
     }
   }

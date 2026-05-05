@@ -1,5 +1,6 @@
 {
-  "env_image_name": "expo_mongo_base_image_cloud_arm:release-13042026-1",
+  "stack": "flutter_fastapi_mongo",
   "job_id": "00136c59-88ed-450a-8c90-61c43594ad58",
-  "created_at": "2026-04-16T17:15:35.442151+00:00Z"
+  "created_at": "2026-04-16T17:15:35.442151+00:00Z",
+  "migrated_to_flutter": "2026-04-27"
 }

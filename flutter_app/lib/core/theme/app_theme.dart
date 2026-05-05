@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   // ─── Paleta de colores (Organic & Earthy) ──────────────────────────────────
-  static const Color background    = Color(0xFFF9F8F6);
+  static const Color background    = Color(0xFFFFFFFF);
   static const Color surface       = Color(0xFFFFFFFF);
   static const Color primary       = Color(0xFFE07A5F); // Terracota (CTAs)
   static const Color primaryLight  = Color(0xFFF2B8A7);
@@ -15,6 +15,9 @@ class AppTheme {
   static const Color success       = Color(0xFF4CAF50);
   static const Color error         = Color(0xFFE53935);
   static const Color blue          = Color(0xFF3B82F6); // Azul FDA (avatar ring, acento)
+  static const Color brandBlue     = Color(0xFF13299D); // Azul corporativo FDA (CTAs de confirmación)
+  static const Color warning       = Color(0xFFD97706); // Ámbar (pagos pendientes)
+  static const Color videoCallBg   = Color(0xFF1A2B25); // Fondo oscuro videollamada
 
   // ─── Radios de borde ───────────────────────────────────────────────────────
   static const double radiusSm  = 12.0;
@@ -23,17 +26,17 @@ class AppTheme {
   static const double radiusXl  = 32.0;
 
   // ─── Sombras ───────────────────────────────────────────────────────────────
-  static List<BoxShadow> get shadowSoft => [
+  static final List<BoxShadow> shadowSoft = [
     BoxShadow(
-      color: const Color(0xFF2A433A).withValues(alpha: 0.06),
+      color: secondary.withValues(alpha: 0.06),
       blurRadius: 20,
       offset: const Offset(0, 4),
     ),
   ];
 
-  static List<BoxShadow> get shadowFloating => [
+  static final List<BoxShadow> shadowFloating = [
     BoxShadow(
-      color: const Color(0xFF2A433A).withValues(alpha: 0.10),
+      color: secondary.withValues(alpha: 0.10),
       blurRadius: 32,
       offset: const Offset(0, 8),
     ),
@@ -45,56 +48,56 @@ class AppTheme {
   static const EdgeInsets cardPadding = EdgeInsets.all(24);
   static const double gap = 24.0;
 
-  // ─── Tipografías ───────────────────────────────────────────────────────────
-  static TextStyle heading1() => GoogleFonts.outfit(
-    fontSize: 32,
-    fontWeight: FontWeight.w700,
-    color: textPrimary,
-    letterSpacing: -0.5,
+  // ─── Caché de tipografías (creadas una sola vez) ──────────────────────────
+  static final TextStyle _heading1 = GoogleFonts.outfit(
+    fontSize: 32, fontWeight: FontWeight.w700, color: textPrimary, letterSpacing: -0.5,
+  );
+  static final TextStyle _heading2 = GoogleFonts.outfit(
+    fontSize: 24, fontWeight: FontWeight.w600, color: textPrimary, letterSpacing: -0.3,
+  );
+  static final TextStyle _heading3 = GoogleFonts.outfit(
+    fontSize: 18, fontWeight: FontWeight.w600, color: textPrimary,
+  );
+  static final TextStyle _body = GoogleFonts.manrope(
+    fontSize: 15, fontWeight: FontWeight.w400, color: textSecondary, height: 1.6,
+  );
+  static final TextStyle _bodyBold = GoogleFonts.manrope(
+    fontSize: 15, fontWeight: FontWeight.w600, color: textPrimary,
+  );
+  static final TextStyle _label = GoogleFonts.manrope(
+    fontSize: 12, fontWeight: FontWeight.w500, color: accent, letterSpacing: 0.8,
+  );
+  static final TextStyle _caption = GoogleFonts.manrope(
+    fontSize: 13, fontWeight: FontWeight.w400, color: textSecondary,
   );
 
-  static TextStyle heading2() => GoogleFonts.outfit(
-    fontSize: 24,
-    fontWeight: FontWeight.w600,
-    color: textPrimary,
-    letterSpacing: -0.3,
-  );
-
-  static TextStyle heading3() => GoogleFonts.outfit(
-    fontSize: 18,
-    fontWeight: FontWeight.w600,
-    color: textPrimary,
-  );
-
-  static TextStyle body() => GoogleFonts.manrope(
-    fontSize: 15,
-    fontWeight: FontWeight.w400,
-    color: textSecondary,
-    height: 1.6,
-  );
-
-  static TextStyle bodyBold() => GoogleFonts.manrope(
-    fontSize: 15,
-    fontWeight: FontWeight.w600,
-    color: textPrimary,
-  );
-
-  static TextStyle label() => GoogleFonts.manrope(
-    fontSize: 12,
-    fontWeight: FontWeight.w500,
-    color: accent,
-    letterSpacing: 0.8,
-  );
-
-  static TextStyle caption() => GoogleFonts.manrope(
-    fontSize: 13,
-    fontWeight: FontWeight.w400,
-    color: textSecondary,
-  );
+  // ─── Tipografías (API pública — devuelven la instancia cacheada) ───────────
+  static TextStyle heading1() => _heading1;
+  static TextStyle heading2() => _heading2;
+  static TextStyle heading3() => _heading3;
+  static TextStyle body()     => _body;
+  static TextStyle bodyBold() => _bodyBold;
+  static TextStyle label()    => _label;
+  static TextStyle caption()  => _caption;
 
   // ─── ThemeData de MaterialApp ──────────────────────────────────────────────
-  static ThemeData get theme => ThemeData(
+  static final ThemeData theme = ThemeData(
     useMaterial3: true,
+    fontFamily: GoogleFonts.manrope().fontFamily,
+    textTheme: GoogleFonts.manropeTextTheme().copyWith(
+      displayLarge: _heading1,
+      displayMedium: _heading2,
+      displaySmall: _heading3,
+      headlineLarge: _heading1,
+      headlineMedium: _heading2,
+      headlineSmall: _heading3,
+      titleLarge: _heading2,
+      titleMedium: _heading3,
+      bodyLarge: _body,
+      bodyMedium: _body,
+      bodySmall: _caption,
+      labelLarge: _label,
+    ),
     scaffoldBackgroundColor: background,
     colorScheme: const ColorScheme.light(
       primary: primary,

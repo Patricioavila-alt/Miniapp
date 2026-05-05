@@ -78,7 +78,7 @@ class AppointmentCardSkeleton extends StatelessWidget {
         border: Border.all(color: AppTheme.border),
         boxShadow: AppTheme.shadowSoft,
       ),
-      child: Row(
+      child: const Row(
         children: [
           // Avatar placeholder
           _ShimmerBox(
@@ -86,16 +86,16 @@ class AppointmentCardSkeleton extends StatelessWidget {
             height: 52,
             radius: 26,
           ),
-          const SizedBox(width: 14),
+          SizedBox(width: 14),
           // Text lines
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _ShimmerBox(height: 14, width: 160),
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 _ShimmerBox(height: 12, width: 100),
-                const SizedBox(height: 10),
+                SizedBox(height: 10),
                 _ShimmerBox(height: 24, width: 130, radius: 20),
               ],
             ),
@@ -120,14 +120,14 @@ class HomeScreenSkeleton extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Header
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _ShimmerBox(height: 22, width: 160),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
                     _ShimmerBox(height: 14, width: 120),
                   ],
                 ),
@@ -137,34 +137,39 @@ class HomeScreenSkeleton extends StatelessWidget {
             const SizedBox(height: AppTheme.gap),
 
             // Contextual widget
-            _ShimmerBox(height: 180, radius: AppTheme.radiusXl),
+            const _ShimmerBox(height: 180, radius: AppTheme.radiusXl),
             const SizedBox(height: AppTheme.gap),
 
             // Quick actions label
-            _ShimmerBox(height: 16, width: 120),
+            const _ShimmerBox(height: 16, width: 120),
             const SizedBox(height: 16),
 
             // Quick actions grid
             Row(
-              children: List.generate(4, (i) => Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(right: i < 3 ? 12 : 0),
-                  child: const _ShimmerBox(height: 80, radius: AppTheme.radiusMd),
-                ),
-              )),
+              children: List.generate(
+                  4,
+                  (i) => Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.only(right: i < 3 ? 12 : 0),
+                          child: const _ShimmerBox(
+                              height: 80, radius: AppTheme.radiusMd),
+                        ),
+                      )),
             ),
             const SizedBox(height: AppTheme.gap),
 
             // Promociones label
-            _ShimmerBox(height: 16, width: 100),
+            const _ShimmerBox(height: 16, width: 100),
             const SizedBox(height: 16),
 
             // Promo banners
-            Row(
+            const Row(
               children: [
-                Expanded(child: _ShimmerBox(height: 160, radius: AppTheme.radiusLg)),
-                const SizedBox(width: 16),
-                Expanded(child: _ShimmerBox(height: 160, radius: AppTheme.radiusLg)),
+                Expanded(
+                    child: _ShimmerBox(height: 160, radius: AppTheme.radiusLg)),
+                SizedBox(width: 16),
+                Expanded(
+                    child: _ShimmerBox(height: 160, radius: AppTheme.radiusLg)),
               ],
             ),
           ],
@@ -216,7 +221,8 @@ class ErrorBanner extends StatelessWidget {
                 color: AppTheme.primary.withOpacity(0.08),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.wifi_off_rounded, size: 36, color: AppTheme.primary),
+              child: const Icon(Icons.wifi_off_rounded,
+                  size: 36, color: AppTheme.primary),
             ),
             const SizedBox(height: 20),
             Text(
