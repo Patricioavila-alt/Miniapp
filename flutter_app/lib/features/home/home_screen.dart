@@ -7,6 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/routes/app_routes.dart';
 import '../../shared/widgets/skeleton_loader.dart';
+import '../../shared/widgets/in_app_webview_screen.dart';
 import 'providers/home_provider.dart';
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -120,10 +121,18 @@ class _HomeScreenState extends State<HomeScreen> {
   void _onActionTap(BuildContext context, String id) {
     switch (id) {
       case 'video':
-        context.push(AppRoutes.videoCall);
+        openWebPortal(
+          context,
+          url: 'https://www.orientacionenlinea.com/',
+          title: 'Orientación en Línea',
+        );
       case 'schedule':
         context.push(AppRoutes.scheduleType);
       case 'prescription':
+        context.push(AppRoutes.prescriptionScan);
+      case 'tests':
+        context.push(AppRoutes.testType);
+      case 'records':
       case 'expediente':
         context.go(AppRoutes.healthRecord);
     }

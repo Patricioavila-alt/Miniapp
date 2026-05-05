@@ -48,6 +48,11 @@ dependencies:
 
   # URL Launcher
   url_launcher: ^6.2.6
+
+  # WebView (mobile + web via iframe)
+  webview_flutter: ^4.10.0
+  webview_flutter_web: ^0.2.3+4
+
   google_maps_flutter: ^2.17.0
   geolocator: ^14.0.2
 

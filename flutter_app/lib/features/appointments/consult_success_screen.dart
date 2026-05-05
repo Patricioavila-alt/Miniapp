@@ -62,7 +62,7 @@ class ConsultSuccessScreen extends StatelessWidget {
                               child: const Icon(
                                 Icons.calendar_month_rounded,
                                 size: 50,
-                                color: Color(0xFFE0E0E0),
+                                color: Color(0xFF13299D),
                               ),
                             ),
                             // Checkmark verde
@@ -92,18 +92,18 @@ class ConsultSuccessScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 48),
+                    const SizedBox(height: 32),
 
                     Text(
-                      'Tu cita médica se agendó con éxito',
+                      '¡Tu cita está confirmada! 🎉',
                       style: AppTheme.heading2().copyWith(fontSize: 22),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 12),
                     Text(
                       'Hemos registrado tu consulta. Tu folio es:',
                       style: AppTheme.body().copyWith(fontSize: 14),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 12),
                     Text(
                       'FAM248',
                       style: AppTheme.heading1().copyWith(
@@ -112,39 +112,72 @@ class ConsultSuccessScreen extends StatelessWidget {
                         letterSpacing: 2,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 24),
 
-                    // Estado de pago
+                    // Card: servicio gratuito
                     Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 8),
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFFFF7ED),
-                        borderRadius: BorderRadius.circular(8),
+                        gradient: const LinearGradient(
+                          colors: [Color(0xFFEFF5F3), Color(0xFFE8F0FE)],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
+                          color: const Color(0xFF13299D).withOpacity(0.1),
+                        ),
                       ),
                       child: Row(
-                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Icon(Icons.schedule_rounded,
-                              color: Color(0xFFF59E0B), size: 16),
-                          const SizedBox(width: 8),
-                          Text(
-                            'Pendiente de pago',
-                            style: AppTheme.bodyBold().copyWith(
-                              color: const Color(0xFFD97706),
-                              fontSize: 13,
+                          Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF13299D),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: const Icon(
+                              Icons.volunteer_activism_rounded,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                          ),
+                          const SizedBox(width: 14),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Sin costo para ti',
+                                  style: AppTheme.bodyBold().copyWith(
+                                    color: const Color(0xFF13299D),
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  'Nuestra orientación médica en sucursal es completamente gratuita. Tu salud es nuestra prioridad — ¡te esperamos con gusto!',
+                                  style: AppTheme.body().copyWith(
+                                    color: const Color(0xFF2A433A),
+                                    fontSize: 13,
+                                    height: 1.45,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 20),
 
                     Text(
                       'Recuerda llegar con anticipación y llevar una identificación oficial.',
                       style: AppTheme.body().copyWith(
-                        color: AppTheme.textPrimary,
-                        fontSize: 14,
+                        color: AppTheme.textSecondary,
+                        fontSize: 13,
                         height: 1.4,
                       ),
                     ),
@@ -152,56 +185,30 @@ class ConsultSuccessScreen extends StatelessWidget {
                 ),
               ),
             ),
+
+            // Botón único — sin pago
             Container(
               padding: const EdgeInsets.all(24),
-              child: Column(
-                children: [
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () => context.go('/'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF13299D),
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(AppTheme.radiusMd),
-                        ),
-                      ),
-                      child: const Text(
-                        'Pagar en línea',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                        ),
-                      ),
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () => context.go('/'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF13299D),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(AppTheme.radiusMd),
                     ),
                   ),
-                  const SizedBox(height: 12),
-                  SizedBox(
-                    width: double.infinity,
-                    child: OutlinedButton(
-                      onPressed: () => context.go('/'),
-                      style: OutlinedButton.styleFrom(
-                        side: const BorderSide(color: Color(0xFF13299D)),
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(AppTheme.radiusMd),
-                        ),
-                      ),
-                      child: const Text(
-                        'Volver al inicio',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xFF13299D),
-                        ),
-                      ),
+                  child: const Text(
+                    'Ir al inicio',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
                     ),
                   ),
-                ],
+                ),
               ),
             ),
           ],
