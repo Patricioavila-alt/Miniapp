@@ -130,13 +130,13 @@ class PrescriptionDeliveryNoteScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(AppTheme.radiusSm),
                 border: Border.all(color: AppTheme.warning.withOpacity(0.30)),
               ),
-              child: Row(
+              child: const Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Icon(Icons.info_outline_rounded,
+                  Icon(Icons.info_outline_rounded,
                       size: 18, color: AppTheme.warning),
-                  const SizedBox(width: 10),
-                  const Expanded(
+                  SizedBox(width: 10),
+                  Expanded(
                     child: Text(
                       'Por disposición de la COFEPRIS, la entrega de estos '
                       'medicamentos requiere la presentación de la receta '
@@ -254,13 +254,11 @@ class _MedRequirementRow extends StatelessWidget {
               ),
               const SizedBox(height: 3),
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
                 decoration: BoxDecoration(
                   color: badgeColor.withOpacity(0.08),
                   borderRadius: BorderRadius.circular(6),
-                  border:
-                      Border.all(color: badgeColor.withOpacity(0.35)),
+                  border: Border.all(color: badgeColor.withOpacity(0.35)),
                 ),
                 child: Text(
                   badgeLabel,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/routes/app_routes.dart';
@@ -357,76 +358,11 @@ class _VaccineConfirmationScreenState extends State<VaccineConfirmationScreen> {
   }
 
   Widget _buildCustomStepper() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        _buildStepItem(Icons.check, 'Tipo\nde vacuna', true, false,
-            isCompleted: true),
-        _buildDivider(true),
-        _buildStepItem(Icons.check, 'Sucursal,\nfecha y hora', true, false,
-            isCompleted: true),
-        _buildDivider(true),
-        _buildStepItem(Icons.check, 'Información\ndel paciente', true, false,
-            isCompleted: true),
-        _buildDivider(true),
-        _buildStepItem(
-            Icons.event_available_outlined, 'Confirmar\ncita', true, true),
-      ],
-    );
-  }
-
-  Widget _buildStepItem(IconData icon, String label, bool isActive, bool isLast,
-      {bool isCompleted = false}) {
-    final color = isCompleted
-        ? const Color(0xFF13299D)
-        : (isActive ? const Color(0xFF3B82F6) : AppTheme.accent);
-    final bgColor = isCompleted ? const Color(0xFF13299D) : Colors.transparent;
-    final iconColor = isCompleted ? Colors.white : color;
-
-    return Expanded(
-      flex: 2,
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: bgColor,
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: color,
-                width: 1.5,
-              ),
-            ),
-            child: Icon(
-              icon,
-              color: iconColor,
-              size: 20,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            label,
-            textAlign: TextAlign.center,
-            style: AppTheme.label().copyWith(
-              color: color,
-              fontSize: 10,
-              height: 1.2,
-              fontWeight:
-                  isActive || isCompleted ? FontWeight.w600 : FontWeight.w500,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDivider(bool isActive) {
-    return Expanded(
-      flex: 1,
-      child: Container(
-        height: 1.5,
-        color: isActive ? const Color(0xFF13299D) : AppTheme.border,
-        margin: const EdgeInsets.only(bottom: 24),
+    return SizedBox(
+      width: double.infinity,
+      child: SvgPicture.asset(
+        'assets/icons/StepperVacunas.svg',
+        fit: BoxFit.contain,
       ),
     );
   }
@@ -449,12 +385,12 @@ class _CollapsibleSection extends StatefulWidget {
 }
 
 class _CollapsibleSectionState extends State<_CollapsibleSection> {
-  late bool _isExpanded;
+  late bool isExpanded;
 
   @override
   void initState() {
     super.initState();
-    _isExpanded = widget.initiallyExpanded;
+    isExpanded = widget.initiallyExpanded;
   }
 
   @override
@@ -470,10 +406,10 @@ class _CollapsibleSectionState extends State<_CollapsibleSection> {
           InkWell(
             onTap: () {
               setState(() {
-                _isExpanded = !_isExpanded;
+                isExpanded = !isExpanded;
               });
             },
-            borderRadius: _isExpanded
+            borderRadius: isExpanded
                 ? const BorderRadius.vertical(top: Radius.circular(12))
                 : BorderRadius.circular(12),
             child: Padding(
@@ -486,7 +422,7 @@ class _CollapsibleSectionState extends State<_CollapsibleSection> {
                     style: AppTheme.heading2().copyWith(fontSize: 16),
                   ),
                   Icon(
-                    _isExpanded
+                    isExpanded
                         ? Icons.keyboard_arrow_up_rounded
                         : Icons.keyboard_arrow_down_rounded,
                     color: AppTheme.textPrimary,
@@ -495,7 +431,7 @@ class _CollapsibleSectionState extends State<_CollapsibleSection> {
               ),
             ),
           ),
-          if (_isExpanded)
+          if (isExpanded)
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
               child: widget.child,
@@ -505,3 +441,4 @@ class _CollapsibleSectionState extends State<_CollapsibleSection> {
     );
   }
 }
+

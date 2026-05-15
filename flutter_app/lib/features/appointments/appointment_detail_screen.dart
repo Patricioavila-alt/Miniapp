@@ -8,17 +8,19 @@ import '../../core/routes/app_routes.dart';
 import '../../core/api/api_service.dart';
 import '../../core/models/models.dart';
 
-final _mxnFormat = NumberFormat.currency(locale: 'es_MX', symbol: '\$', decimalDigits: 2);
-const double _priceVideo   = 850.0;
+final _mxnFormat =
+    NumberFormat.currency(locale: 'es_MX', symbol: '\$', decimalDigits: 2);
+const double _priceVideo = 850.0;
 const double _priceVaccine = 3470.0;
-const double _priceTest    = 1000.0;
+const double _priceTest = 1000.0;
 
 class AppointmentDetailScreen extends StatefulWidget {
   final String appointmentId;
   const AppointmentDetailScreen({super.key, required this.appointmentId});
 
   @override
-  State<AppointmentDetailScreen> createState() => _AppointmentDetailScreenState();
+  State<AppointmentDetailScreen> createState() =>
+      _AppointmentDetailScreenState();
 }
 
 class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
@@ -30,7 +32,8 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
   String _localStatus = 'pending_payment';
 
   // Motivo de cancelación — vendrá del API en producción
-  final String _cancellationReason = 'Cancelado voluntariamente por el usuario.';
+  final String _cancellationReason =
+      'Cancelado voluntariamente por el usuario.';
 
   @override
   void initState() {
@@ -43,7 +46,8 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
       final apt = await ApiService.getAppointment(widget.appointmentId);
       setState(() {
         _appointment = apt;
-        _localStatus = apt.paymentStatus == 'pending' ? 'pending_payment' : 'paid';
+        _localStatus =
+            apt.paymentStatus == 'pending' ? 'pending_payment' : 'paid';
         _isLoading = false;
       });
     } catch (_) {
@@ -59,10 +63,19 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
 
   /// No mostrar "Cancelar cita" si ya está cancelada, validando o no asistió
   bool get _showCancelLink =>
-      _localStatus != 'cancelled' && _localStatus != 'no_show' && _localStatus != 'validating';
+      _localStatus != 'cancelled' &&
+      _localStatus != 'no_show' &&
+      _localStatus != 'validating';
 
   void _cycleStatus() {
-    const cycle = ['pending_payment', 'paid', 'confirmed', 'validating', 'no_show', 'cancelled'];
+    const cycle = [
+      'pending_payment',
+      'paid',
+      'confirmed',
+      'validating',
+      'no_show',
+      'cancelled'
+    ];
     final idx = cycle.indexOf(_localStatus);
     setState(() => _localStatus = cycle[(idx + 1) % cycle.length]);
   }
@@ -70,14 +83,20 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
-      return const Scaffold(body: Center(child: CircularProgressIndicator(color: AppTheme.primary)));
+      return const Scaffold(
+          body: Center(
+              child: CircularProgressIndicator(color: AppTheme.primary)));
     }
 
     final apt = _appointment;
     final isTest = apt?.isTest == true;
     final isVaccine = apt?.isVaccine == true;
-    final payLabel = isTest ? 'Pagar prueba' : (isVaccine ? 'Pagar vacuna' : 'Pagar consulta');
-    final paidLabel = isTest ? 'Prueba pagada' : (isVaccine ? 'Vacuna pagada' : 'Consulta pagada');
+    final payLabel = isTest
+        ? 'Pagar prueba'
+        : (isVaccine ? 'Pagar vacuna' : 'Pagar consulta');
+    final paidLabel = isTest
+        ? 'Prueba pagada'
+        : (isVaccine ? 'Vacuna pagada' : 'Consulta pagada');
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -85,18 +104,23 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: AppTheme.textPrimary, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new_rounded,
+              color: AppTheme.textPrimary, size: 20),
           onPressed: () => context.pop(),
         ),
-        title: Text('Detalle de la cita', style: AppTheme.heading2().copyWith(fontSize: 17)),
+        title: Text('Detalle de la cita',
+            style: AppTheme.heading2().copyWith(fontSize: 17)),
         centerTitle: true,
         actions: [
           if (kDebugMode)
             GestureDetector(
               onTap: _cycleStatus,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                child: Text('Sim.', style: TextStyle(color: Colors.grey.shade400, fontSize: 11)),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                child: Text('Sim.',
+                    style:
+                        TextStyle(color: Colors.grey.shade400, fontSize: 11)),
               ),
             ),
         ],
@@ -147,7 +171,11 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                     child: Column(
                       children: [
                         _CollapsibleSection(
-                          title: isTest ? 'Tipo de prueba' : (isVaccine ? 'Tipo de vacuna' : 'Tipo de consulta'),
+                          title: isTest
+                              ? 'Tipo de prueba'
+                              : (isVaccine
+                                  ? 'Tipo de vacuna'
+                                  : 'Tipo de consulta'),
                           initiallyExpanded: true,
                           child: _buildTypeSummary(apt),
                         ),
@@ -189,11 +217,16 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppTheme.brandBlue,
                         padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppTheme.radiusMd)),
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(AppTheme.radiusMd)),
                         elevation: 0,
                       ),
                       child: const Text('Reagendar',
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white)),
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white)),
                     ),
                   ),
                 if (_canReschedule) const SizedBox(height: 12),
@@ -201,7 +234,9 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                 if (_showCancelLink)
                   GestureDetector(
                     onTap: () => ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('La cancelación estará disponible próximamente.')),
+                      const SnackBar(
+                          content: Text(
+                              'La cancelación estará disponible próximamente.')),
                     ),
                     child: Text(
                       'Cancelar cita',
@@ -224,28 +259,35 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
   Widget _buildStatusBadge(String paidLabel) {
     switch (_localStatus) {
       case 'paid':
-        return _badge(Icons.check_circle_rounded, paidLabel, AppTheme.success, const Color(0xFFECFDF5));
+        return _badge(Icons.check_circle_rounded, paidLabel, AppTheme.success,
+            const Color(0xFFECFDF5));
       case 'confirmed':
-        return _badge(Icons.check_circle_rounded, 'Asistencia confirmada', AppTheme.success, const Color(0xFFECFDF5));
+        return _badge(Icons.check_circle_rounded, 'Asistencia confirmada',
+            AppTheme.success, const Color(0xFFECFDF5));
       case 'validating':
-        return _badge(Icons.biotech_rounded, 'Validando resultado', const Color(0xFF1D4ED8), const Color(0xFFEFF6FF));
+        return _badge(Icons.biotech_rounded, 'Validando resultado',
+            const Color(0xFF1D4ED8), const Color(0xFFEFF6FF));
       case 'no_show':
-        return _badge(Icons.cancel_outlined, 'No asistió', AppTheme.textSecondary, const Color(0xFFF3F4F6));
+        return _badge(Icons.cancel_outlined, 'No asistió',
+            AppTheme.textSecondary, const Color(0xFFF3F4F6));
       case 'cancelled':
         return _badgeCancelled();
       default: // pending_payment
-        return _badge(Icons.schedule_rounded, 'Pendiente de pago', AppTheme.warning, const Color(0xFFFEF9C3));
+        return _badge(Icons.schedule_rounded, 'Pendiente de pago',
+            AppTheme.warning, const Color(0xFFFEF9C3));
     }
   }
 
   Widget _badge(IconData icon, String label, Color color, Color bg) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
-      decoration: BoxDecoration(color: bg, borderRadius: BorderRadius.circular(20)),
+      decoration:
+          BoxDecoration(color: bg, borderRadius: BorderRadius.circular(20)),
       child: Row(mainAxisSize: MainAxisSize.min, children: [
         Icon(icon, color: color, size: 16),
         const SizedBox(width: 6),
-        Text(label, style: AppTheme.bodyBold().copyWith(color: color, fontSize: 13)),
+        Text(label,
+            style: AppTheme.bodyBold().copyWith(color: color, fontSize: 13)),
       ]),
     );
   }
@@ -265,7 +307,8 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
             const Icon(Icons.close_rounded, color: AppTheme.error, size: 16),
             const SizedBox(width: 6),
             Text('Cancelada',
-                style: AppTheme.bodyBold().copyWith(color: AppTheme.error, fontSize: 13)),
+                style: AppTheme.bodyBold()
+                    .copyWith(color: AppTheme.error, fontSize: 13)),
           ]),
         ),
         const SizedBox(height: 10),
@@ -278,18 +321,27 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
             border: Border.all(color: const Color(0xFFFECACA)),
           ),
           child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Icon(Icons.info_outline_rounded, color: AppTheme.error, size: 16),
+            const Icon(Icons.info_outline_rounded,
+                color: AppTheme.error, size: 16),
             const SizedBox(width: 8),
             Expanded(
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text('Motivo de cancelación',
-                    style: GoogleFonts.manrope(fontSize: 11, fontWeight: FontWeight.w700, color: const Color(0xFF9B1C1C))),
-                const SizedBox(height: 2),
-                Text(
-                  _cancellationReason,
-                  style: GoogleFonts.manrope(fontSize: 12, color: const Color(0xFF9B1C1C), height: 1.4),
-                ),
-              ]),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Motivo de cancelación',
+                        style: GoogleFonts.manrope(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w700,
+                            color: const Color(0xFF9B1C1C))),
+                    const SizedBox(height: 2),
+                    Text(
+                      _cancellationReason,
+                      style: GoogleFonts.manrope(
+                          fontSize: 12,
+                          color: const Color(0xFF9B1C1C),
+                          height: 1.4),
+                    ),
+                  ]),
             ),
           ]),
         ),
@@ -306,9 +358,12 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
         final i = e.key;
         final step = e.value;
         final isLast = i == steps.length - 1;
-        return _TimelineRow(step: step, isLast: isLast, onPay: () {
-          setState(() => _localStatus = 'paid');
-        });
+        return _TimelineRow(
+            step: step,
+            isLast: isLast,
+            onPay: () {
+              setState(() => _localStatus = 'paid');
+            });
       }).toList(),
     );
   }
@@ -317,51 +372,63 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
     switch (_localStatus) {
       case 'pending_payment':
         return [
-          _StepData(label: 'Cita agendada', state: _StepState.completed),
+          const _StepData(label: 'Cita agendada', state: _StepState.completed),
           _StepData(
             label: payLabel,
             state: _StepState.active,
-            description: 'Completa el pago para asegurar tu cita y bloquear el horario en la sucursal.',
+            description:
+                'Completa el pago para asegurar tu cita y bloquear el horario en la sucursal.',
             showPayButton: true,
             payButtonLabel: payLabel,
           ),
         ];
       case 'paid':
         return [
-          _StepData(label: 'Cita agendada', state: _StepState.completed),
+          const _StepData(label: 'Cita agendada', state: _StepState.completed),
           _StepData(label: paidLabel, state: _StepState.completed),
-          _StepData(label: 'Asistencia confirmada', state: _StepState.active,
-              description: 'Tu pago fue registrado. Preséntate en la sucursal a la hora indicada.'),
+          const _StepData(
+              label: 'Asistencia confirmada',
+              state: _StepState.active,
+              description:
+                  'Tu pago fue registrado. Preséntate en la sucursal a la hora indicada.'),
         ];
       case 'confirmed':
         return [
-          _StepData(label: 'Cita agendada', state: _StepState.completed),
+          const _StepData(label: 'Cita agendada', state: _StepState.completed),
           _StepData(label: paidLabel, state: _StepState.completed),
-          _StepData(label: 'Asistencia confirmada', state: _StepState.completed),
+          const _StepData(
+              label: 'Asistencia confirmada', state: _StepState.completed),
         ];
       case 'validating':
         return [
-          _StepData(label: 'Cita agendada', state: _StepState.completed),
+          const _StepData(label: 'Cita agendada', state: _StepState.completed),
           _StepData(label: paidLabel, state: _StepState.completed),
-          _StepData(label: 'Asistencia confirmada', state: _StepState.completed),
-          _StepData(label: 'Validando resultado', state: _StepState.active,
-              description: 'Estamos validando tu resultado con el equipo médico.'),
+          const _StepData(
+              label: 'Asistencia confirmada', state: _StepState.completed),
+          const _StepData(
+              label: 'Validando resultado',
+              state: _StepState.active,
+              description:
+                  'Estamos validando tu resultado con el equipo médico.'),
         ];
       case 'no_show':
         return [
-          _StepData(label: 'Cita agendada', state: _StepState.completed),
+          const _StepData(label: 'Cita agendada', state: _StepState.completed),
           _StepData(label: paidLabel, state: _StepState.completed),
-          _StepData(label: 'Asistencia confirmada', state: _StepState.completed),
-          _StepData(label: 'No asistió', state: _StepState.noShow),
+          const _StepData(
+              label: 'Asistencia confirmada', state: _StepState.completed),
+          const _StepData(label: 'No asistió', state: _StepState.noShow),
         ];
       case 'cancelled':
         return [
-          _StepData(label: 'Cita agendada', state: _StepState.completed),
+          const _StepData(label: 'Cita agendada', state: _StepState.completed),
           _StepData(label: paidLabel, state: _StepState.completed),
-          _StepData(label: 'Cita cancelada', state: _StepState.cancelled),
+          const _StepData(label: 'Cita cancelada', state: _StepState.cancelled),
         ];
       default:
-        return [_StepData(label: 'Cita agendada', state: _StepState.completed)];
+        return [
+          const _StepData(label: 'Cita agendada', state: _StepState.completed)
+        ];
     }
   }
 
@@ -383,7 +450,12 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
     // Nombre desde doctorSpecialty, descripción desde notes
     final String itemName = apt?.doctorSpecialty ?? '—';
     final String itemDesc = apt?.notes ?? '';
-    final double amount = apt?.price ?? (isTest ? _priceTest : isVaccine ? _priceVaccine : _priceVideo);
+    final double amount = apt?.price ??
+        (isTest
+            ? _priceTest
+            : isVaccine
+                ? _priceVaccine
+                : _priceVideo);
     final String price = _mxnFormat.format(amount);
 
     return Container(
@@ -395,25 +467,40 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
       ),
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Container(
-          width: 42, height: 42,
-          decoration: BoxDecoration(color: iconBg, borderRadius: BorderRadius.circular(10)),
+          width: 42,
+          height: 42,
+          decoration: BoxDecoration(
+              color: iconBg, borderRadius: BorderRadius.circular(10)),
           child: Icon(typeIcon, color: iconColor, size: 24),
         ),
         const SizedBox(width: 14),
-        Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Expanded(
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(itemName,
-              style: GoogleFonts.outfit(fontSize: 15, fontWeight: FontWeight.w600, color: AppTheme.textPrimary)),
+              style: GoogleFonts.outfit(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                  color: AppTheme.textPrimary)),
           if (itemDesc.isNotEmpty) ...[
             const SizedBox(height: 4),
             Text(itemDesc,
-                style: GoogleFonts.manrope(fontSize: 12, color: AppTheme.textSecondary, height: 1.4)),
+                style: GoogleFonts.manrope(
+                    fontSize: 12, color: AppTheme.textSecondary, height: 1.4)),
           ],
           const SizedBox(height: 8),
-          RichText(text: TextSpan(children: [
-            TextSpan(text: price,
-                style: GoogleFonts.outfit(fontSize: 15, fontWeight: FontWeight.w700, color: AppTheme.textPrimary)),
-            TextSpan(text: ' MXN',
-                style: GoogleFonts.manrope(fontSize: 10, color: AppTheme.textSecondary)),
+          RichText(
+              text: TextSpan(children: [
+            TextSpan(
+                text: price,
+                style: GoogleFonts.outfit(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                    color: AppTheme.textPrimary)),
+            TextSpan(
+                text: ' MXN',
+                style: GoogleFonts.manrope(
+                    fontSize: 10, color: AppTheme.textSecondary)),
           ])),
         ])),
       ]),
@@ -422,14 +509,19 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
 
   Widget _buildPatientSummary() {
     return Row(children: [
-      const Icon(Icons.account_circle_outlined, color: AppTheme.textSecondary, size: 24),
+      const Icon(Icons.account_circle_outlined,
+          color: AppTheme.textSecondary, size: 24),
       const SizedBox(width: 12),
       Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text('Alejandra Valverde Salgado',
-            style: GoogleFonts.manrope(fontSize: 14, fontWeight: FontWeight.w600, color: AppTheme.textPrimary)),
+            style: GoogleFonts.manrope(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: AppTheme.textPrimary)),
         const SizedBox(height: 4),
         Text('01/Agosto/1990',
-            style: GoogleFonts.manrope(fontSize: 12, color: AppTheme.textSecondary)),
+            style: GoogleFonts.manrope(
+                fontSize: 12, color: AppTheme.textSecondary)),
       ]),
     ]);
   }
@@ -437,26 +529,39 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
   Widget _buildApplicationSummary(Appointment? apt) {
     return Column(children: [
       Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        const Icon(Icons.storefront_outlined, color: AppTheme.textSecondary, size: 22),
+        const Icon(Icons.storefront_outlined,
+            color: AppTheme.textSecondary, size: 22),
         const SizedBox(width: 12),
-        Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Expanded(
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text('México Centro, Xola',
-              style: GoogleFonts.manrope(fontSize: 14, fontWeight: FontWeight.w600, color: AppTheme.textPrimary)),
+              style: GoogleFonts.manrope(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: AppTheme.textPrimary)),
           const SizedBox(height: 4),
-          Text('XOLA 1001 COL: NARVARTE PONIENTE\nCIUDAD DE MEXICO, CIUDAD DE MEXICO MX',
-              style: GoogleFonts.manrope(fontSize: 11, color: AppTheme.textSecondary, height: 1.4)),
+          Text(
+              'XOLA 1001 COL: NARVARTE PONIENTE\nCIUDAD DE MEXICO, CIUDAD DE MEXICO MX',
+              style: GoogleFonts.manrope(
+                  fontSize: 11, color: AppTheme.textSecondary, height: 1.4)),
         ])),
       ]),
       const SizedBox(height: 20),
       Row(children: [
-        const Icon(Icons.calendar_today_outlined, color: AppTheme.textSecondary, size: 22),
+        const Icon(Icons.calendar_today_outlined,
+            color: AppTheme.textSecondary, size: 22),
         const SizedBox(width: 12),
         Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(apt?.date ?? '—',
-              style: GoogleFonts.manrope(fontSize: 14, fontWeight: FontWeight.w600, color: AppTheme.textPrimary)),
+              style: GoogleFonts.manrope(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: AppTheme.textPrimary)),
           const SizedBox(height: 4),
           Text(apt?.time ?? '—',
-              style: GoogleFonts.manrope(fontSize: 12, color: AppTheme.textSecondary)),
+              style: GoogleFonts.manrope(
+                  fontSize: 12, color: AppTheme.textSecondary)),
         ]),
       ]),
     ]);
@@ -486,7 +591,8 @@ class _TimelineRow extends StatelessWidget {
   final _StepData step;
   final bool isLast;
   final VoidCallback onPay;
-  const _TimelineRow({required this.step, required this.isLast, required this.onPay});
+  const _TimelineRow(
+      {required this.step, required this.isLast, required this.onPay});
 
   @override
   Widget build(BuildContext context) {
@@ -530,7 +636,8 @@ class _TimelineRow extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                  width: 14, height: 14,
+                  width: 14,
+                  height: 14,
                   margin: const EdgeInsets.only(top: 2),
                   decoration: BoxDecoration(
                     color: dotFilled ? dotColor : Colors.white,
@@ -581,13 +688,17 @@ class _TimelineRow extends StatelessWidget {
                         onPressed: onPay,
                         style: OutlinedButton.styleFrom(
                           foregroundColor: AppTheme.brandBlue,
-                          side: const BorderSide(color: AppTheme.brandBlue, width: 1.5),
+                          side: const BorderSide(
+                              color: AppTheme.brandBlue, width: 1.5),
                           backgroundColor: const Color(0xFFEFF4FF),
                           padding: const EdgeInsets.symmetric(vertical: 13),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppTheme.radiusMd)),
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(AppTheme.radiusMd)),
                         ),
                         child: Text(step.payButtonLabel ?? 'Pagar',
-                            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
+                            style: const TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.w600)),
                       ),
                     ),
                   ],
@@ -606,7 +717,10 @@ class _CollapsibleSection extends StatefulWidget {
   final String title;
   final Widget child;
   final bool initiallyExpanded;
-  const _CollapsibleSection({required this.title, required this.child, this.initiallyExpanded = true});
+  const _CollapsibleSection(
+      {required this.title,
+      required this.child,
+      this.initiallyExpanded = true});
   @override
   State<_CollapsibleSection> createState() => _CollapsibleSectionState();
 }
@@ -614,24 +728,43 @@ class _CollapsibleSection extends StatefulWidget {
 class _CollapsibleSectionState extends State<_CollapsibleSection> {
   late bool _isExpanded;
   @override
-  void initState() { super.initState(); _isExpanded = widget.initiallyExpanded; }
+  void initState() {
+    super.initState();
+    _isExpanded = widget.initiallyExpanded;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12), border: Border.all(color: AppTheme.border)),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: AppTheme.border)),
       child: Column(children: [
         InkWell(
           onTap: () => setState(() => _isExpanded = !_isExpanded),
-          borderRadius: _isExpanded ? const BorderRadius.vertical(top: Radius.circular(12)) : BorderRadius.circular(12),
+          borderRadius: _isExpanded
+              ? const BorderRadius.vertical(top: Radius.circular(12))
+              : BorderRadius.circular(12),
           child: Padding(
             padding: const EdgeInsets.all(20),
-            child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Text(widget.title, style: AppTheme.heading2().copyWith(fontSize: 16)),
-              Icon(_isExpanded ? Icons.keyboard_arrow_up_rounded : Icons.keyboard_arrow_down_rounded, color: AppTheme.textPrimary),
-            ]),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(widget.title,
+                      style: AppTheme.heading2().copyWith(fontSize: 16)),
+                  Icon(
+                      _isExpanded
+                          ? Icons.keyboard_arrow_up_rounded
+                          : Icons.keyboard_arrow_down_rounded,
+                      color: AppTheme.textPrimary),
+                ]),
           ),
         ),
-        if (_isExpanded) Padding(padding: const EdgeInsets.fromLTRB(20, 0, 20, 20), child: widget.child),
+        if (_isExpanded)
+          Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+              child: widget.child),
       ]),
     );
   }

@@ -81,8 +81,8 @@ class _InAppWebViewScreenState extends State<InAppWebViewScreen> {
           const SizedBox(width: 4),
         ],
         bottom: _isLoading
-            ? PreferredSize(
-                preferredSize: const Size.fromHeight(3),
+            ? const PreferredSize(
+                preferredSize: Size.fromHeight(3),
                 child: LinearProgressIndicator(
                   backgroundColor: Colors.transparent,
                   valueColor: AlwaysStoppedAnimation<Color>(AppTheme.blue),

@@ -9,8 +9,8 @@ import '../../core/theme/app_theme.dart';
 // ─── Medication data model (mutable — edited by the user) ────────────────────
 class _EditableMed {
   String name;
-  String strength;      // gramaje seleccionado, e.g. "500mg"
-  String dosage;        // instrucción de toma, e.g. "1 cápsula"
+  String strength; // gramaje seleccionado, e.g. "500mg"
+  String dosage; // instrucción de toma, e.g. "1 cápsula"
   String frequency;
   String duration;
   int quantity;
@@ -143,8 +143,7 @@ class _PrescriptionScanScreenState extends State<PrescriptionScanScreen> {
         .toList();
 
     if (requiring.isNotEmpty) {
-      ctx.push(AppRoutes.prescriptionDeliveryNote,
-          extra: {'meds': requiring});
+      ctx.push(AppRoutes.prescriptionDeliveryNote, extra: {'meds': requiring});
     } else {
       ScaffoldMessenger.of(ctx).showSnackBar(
         const SnackBar(
@@ -270,8 +269,7 @@ class _InitialView extends StatelessWidget {
           const Text(
             'Tus datos son procesados de forma\nsegura y confidencial.',
             textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 12, color: AppTheme.accent, height: 1.5),
+            style: TextStyle(fontSize: 12, color: AppTheme.accent, height: 1.5),
           ),
         ],
       ),
@@ -417,8 +415,7 @@ class _EditableSuccessViewState extends State<_EditableSuccessView> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: const Text('Eliminar medicamento'),
         content: Text(
             '¿Eliminar "${_meds[index].name} ${_meds[index].strength}" de tu receta?'),
@@ -430,8 +427,8 @@ class _EditableSuccessViewState extends State<_EditableSuccessView> {
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Eliminar',
-                style: TextStyle(color: AppTheme.error)),
+            child:
+                const Text('Eliminar', style: TextStyle(color: AppTheme.error)),
           ),
         ],
       ),
@@ -449,12 +446,12 @@ class _EditableSuccessViewState extends State<_EditableSuccessView> {
             builder: (ctx) => AlertDialog(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
-              title: Row(
+              title: const Row(
                 children: [
                   Icon(Icons.warning_amber_rounded,
                       color: AppTheme.error, size: 22),
-                  const SizedBox(width: 8),
-                  const Expanded(
+                  SizedBox(width: 8),
+                  Expanded(
                     child: Text(
                       'Medicamento psicotrópico',
                       style: TextStyle(fontSize: 16),
@@ -492,8 +489,8 @@ class _EditableSuccessViewState extends State<_EditableSuccessView> {
     return await showDialog<bool>(
           context: context,
           builder: (ctx) => AlertDialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             title: const Text('Cambio de concentración'),
             content: const Text(
               'Cambiar la dosis sin consultar a tu médico puede ser riesgoso. '
@@ -886,9 +883,8 @@ class _EditableMedCard extends StatelessWidget {
                               : AppTheme.textSecondary,
                         ),
                         side: BorderSide(
-                          color: isSelected
-                              ? AppTheme.primary
-                              : AppTheme.border,
+                          color:
+                              isSelected ? AppTheme.primary : AppTheme.border,
                         ),
                         backgroundColor: AppTheme.surface,
                         shape: RoundedRectangleBorder(
@@ -992,8 +988,8 @@ class _DetailRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(label,
-            style: const TextStyle(
-                fontSize: 13, color: AppTheme.textSecondary)),
+            style:
+                const TextStyle(fontSize: 13, color: AppTheme.textSecondary)),
         Flexible(
           child: Text(
             value,
@@ -1015,9 +1011,8 @@ class _DetailRow extends StatelessWidget {
 // ─────────────────────────────────────────────────────────────────────────────
 class _EditMedSheet extends StatefulWidget {
   final _EditableMed med;
-  final void Function(
-      String name, String strength, String dosage, String frequency,
-      String duration) onSave;
+  final void Function(String name, String strength, String dosage,
+      String frequency, String duration) onSave;
 
   const _EditMedSheet({required this.med, required this.onSave});
 
@@ -1106,20 +1101,16 @@ class _EditMedSheetState extends State<_EditMedSheet> {
                 return ChoiceChip(
                   label: Text(s),
                   selected: isSelected,
-                  onSelected: (_) =>
-                      setState(() => _selectedStrength = s),
+                  onSelected: (_) => setState(() => _selectedStrength = s),
                   selectedColor: AppTheme.primary.withOpacity(0.12),
                   labelStyle: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
-                    color: isSelected
-                        ? AppTheme.primary
-                        : AppTheme.textSecondary,
+                    color:
+                        isSelected ? AppTheme.primary : AppTheme.textSecondary,
                   ),
                   side: BorderSide(
-                      color: isSelected
-                          ? AppTheme.primary
-                          : AppTheme.border),
+                      color: isSelected ? AppTheme.primary : AppTheme.border),
                   backgroundColor: AppTheme.surface,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8)),
@@ -1155,14 +1146,12 @@ class _EditMedSheetState extends State<_EditMedSheet> {
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(AppTheme.radiusMd)),
+                    borderRadius: BorderRadius.circular(AppTheme.radiusMd)),
                 elevation: 0,
               ),
               child: const Text(
                 'Guardar cambios',
-                style:
-                    TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
               ),
             ),
           ),
@@ -1408,14 +1397,12 @@ class _ErrorView extends StatelessWidget {
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(AppTheme.radiusMd)),
+                      borderRadius: BorderRadius.circular(AppTheme.radiusMd)),
                   elevation: 0,
                 ),
                 child: const Text(
                   'Intentar de nuevo',
-                  style:
-                      TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
                 ),
               ),
             ),

@@ -136,25 +136,25 @@ class _AppointmentCard extends StatelessWidget {
   /// Devuelve ícono, colores de fondo y acento según el tipo de cita
   _TypeStyle _typeStyle() {
     if (appointment.isVaccine) {
-      return _TypeStyle(
+      return const _TypeStyle(
         icon: Icons.vaccines_rounded,
-        bgColor: const Color(0xFFE8F5E9),
-        iconColor: const Color(0xFF2E7D32),
+        bgColor: Color(0xFFE8F5E9),
+        iconColor: Color(0xFF2E7D32),
         label: 'Vacunación',
-        labelColor: const Color(0xFF2E7D32),
-        labelBg: const Color(0xFFE8F5E9),
+        labelColor: Color(0xFF2E7D32),
+        labelBg: Color(0xFFE8F5E9),
       );
     } else if (appointment.isTest) {
-      return _TypeStyle(
+      return const _TypeStyle(
         icon: Icons.biotech_rounded,
-        bgColor: const Color(0xFFEFF6FF),
-        iconColor: const Color(0xFF1D4ED8),
+        bgColor: Color(0xFFEFF6FF),
+        iconColor: Color(0xFF1D4ED8),
         label: 'Estudio',
-        labelColor: const Color(0xFF1D4ED8),
-        labelBg: const Color(0xFFEFF6FF),
+        labelColor: Color(0xFF1D4ED8),
+        labelBg: Color(0xFFEFF6FF),
       );
     } else if (appointment.isVideo) {
-      return _TypeStyle(
+      return const _TypeStyle(
         icon: Icons.videocam_rounded,
         bgColor: AppTheme.primaryLight,
         iconColor: AppTheme.primary,
@@ -163,13 +163,13 @@ class _AppointmentCard extends StatelessWidget {
         labelBg: AppTheme.primaryLight,
       );
     } else {
-      return _TypeStyle(
+      return const _TypeStyle(
         icon: Icons.local_hospital_rounded,
-        bgColor: const Color(0xFFFFF3E0),
-        iconColor: const Color(0xFFE65100),
+        bgColor: Color(0xFFFFF3E0),
+        iconColor: Color(0xFFE65100),
         label: 'Presencial',
-        labelColor: const Color(0xFFE65100),
-        labelBg: const Color(0xFFFFF3E0),
+        labelColor: Color(0xFFE65100),
+        labelBg: Color(0xFFFFF3E0),
       );
     }
   }

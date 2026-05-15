@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/routes/app_routes.dart';
@@ -381,76 +382,11 @@ class _VaccineTypeScreenState extends State<VaccineTypeScreen> {
   }
 
   Widget _buildCustomStepper() {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 8),
-      decoration: BoxDecoration(
-        color: AppTheme.surface,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppTheme.border),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _buildStepItem(Icons.vaccines, 'Tipo\nde vacuna', true, false),
-          _buildDivider(false),
-          _buildStepItem(Icons.storefront_outlined, 'Sucursal,\nfecha y hora',
-              false, false),
-          _buildDivider(false),
-          _buildStepItem(
-              Icons.person_outline, 'Información\ndel paciente', false, false),
-          _buildDivider(false),
-          _buildStepItem(
-              Icons.event_available_outlined, 'Confirmar\ncita', false, true),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildStepItem(
-      IconData icon, String label, bool isActive, bool isLast) {
-    return Expanded(
-      flex: 2,
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: isActive ? AppTheme.blue : AppTheme.border,
-                width: 1.5,
-              ),
-            ),
-            child: Icon(
-              icon,
-              color: isActive ? AppTheme.blue : AppTheme.accent,
-              size: 20,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            label,
-            textAlign: TextAlign.center,
-            style: AppTheme.label().copyWith(
-              color: isActive ? AppTheme.blue : AppTheme.accent,
-              fontSize: 10,
-              height: 1.2,
-              fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDivider(bool isActive) {
-    return Expanded(
-      flex: 1,
-      child: Container(
-        height: 1.5,
-        color: isActive ? AppTheme.blue : AppTheme.border,
-        margin: const EdgeInsets.only(
-            bottom: 24), // Para alinearlo con los círculos
+    return SizedBox(
+      width: double.infinity,
+      child: SvgPicture.asset(
+        'assets/icons/StepperVacunas.svg',
+        fit: BoxFit.contain,
       ),
     );
   }

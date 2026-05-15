@@ -6,10 +6,12 @@ import '../../core/theme/app_theme.dart';
 class TestResultValidatingScreen extends StatefulWidget {
   const TestResultValidatingScreen({super.key});
   @override
-  State<TestResultValidatingScreen> createState() => _TestResultValidatingScreenState();
+  State<TestResultValidatingScreen> createState() =>
+      _TestResultValidatingScreenState();
 }
 
-class _TestResultValidatingScreenState extends State<TestResultValidatingScreen> {
+class _TestResultValidatingScreenState
+    extends State<TestResultValidatingScreen> {
   // Para el MVP, alternamos entre los estados posibles
   // 'validating' = Validando resultado | 'no_show' = No asistió
   String _status = 'validating';
@@ -23,34 +25,50 @@ class _TestResultValidatingScreenState extends State<TestResultValidatingScreen>
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: AppTheme.textPrimary, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new_rounded,
+              color: AppTheme.textPrimary, size: 20),
           onPressed: () => context.pop(),
         ),
-        title: Text('Detalle de la cita', style: AppTheme.heading2().copyWith(fontSize: 17)),
+        title: Text('Detalle de la cita',
+            style: AppTheme.heading2().copyWith(fontSize: 17)),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           // Folio
-          Text('FAV382', style: AppTheme.heading1().copyWith(color: const Color(0xFF13299D), fontSize: 24, letterSpacing: 1.5)),
+          Text('FAV382',
+              style: AppTheme.heading1().copyWith(
+                  color: const Color(0xFF13299D),
+                  fontSize: 24,
+                  letterSpacing: 1.5)),
           const SizedBox(height: 10),
 
           // Badge de estado
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
-              color: isValidating ? const Color(0xFFEFF4FF) : const Color(0xFFFEF2F2),
+              color: isValidating
+                  ? const Color(0xFFEFF4FF)
+                  : const Color(0xFFFEF2F2),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Row(mainAxisSize: MainAxisSize.min, children: [
-              Icon(isValidating ? Icons.biotech_rounded : Icons.do_not_disturb_rounded,
-                  size: 14, color: isValidating ? const Color(0xFF13299D) : const Color(0xFFDC2626)),
+              Icon(
+                  isValidating
+                      ? Icons.biotech_rounded
+                      : Icons.do_not_disturb_rounded,
+                  size: 14,
+                  color: isValidating
+                      ? const Color(0xFF13299D)
+                      : const Color(0xFFDC2626)),
               const SizedBox(width: 6),
               Text(isValidating ? 'Validando resultado' : 'No asistió',
                   style: AppTheme.bodyBold().copyWith(
                       fontSize: 12,
-                      color: isValidating ? const Color(0xFF13299D) : const Color(0xFFDC2626))),
+                      color: isValidating
+                          ? const Color(0xFF13299D)
+                          : const Color(0xFFDC2626))),
             ]),
           ),
           const SizedBox(height: 24),
@@ -60,9 +78,11 @@ class _TestResultValidatingScreenState extends State<TestResultValidatingScreen>
             alignment: Alignment.centerRight,
             child: TextButton.icon(
               icon: const Icon(Icons.bug_report, size: 16, color: Colors.grey),
-              label: Text(isValidating ? 'Simular no asistió' : 'Simular validando',
+              label: Text(
+                  isValidating ? 'Simular no asistió' : 'Simular validando',
                   style: const TextStyle(color: Colors.grey, fontSize: 12)),
-              onPressed: () => setState(() => _status = isValidating ? 'no_show' : 'validating'),
+              onPressed: () => setState(
+                  () => _status = isValidating ? 'no_show' : 'validating'),
             ),
           ),
 
@@ -80,9 +100,12 @@ class _TestResultValidatingScreenState extends State<TestResultValidatingScreen>
                   foregroundColor: const Color(0xFF13299D),
                   side: const BorderSide(color: Color(0xFF13299D)),
                   padding: const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppTheme.radiusMd)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(AppTheme.radiusMd)),
                 ),
-                child: const Text('Reagendar', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
+                child: const Text('Reagendar',
+                    style:
+                        TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
               ),
             ),
 
@@ -101,40 +124,63 @@ class _TestResultValidatingScreenState extends State<TestResultValidatingScreen>
 
   Widget _buildTimeline(bool isValidating) {
     final steps = [
-      _TimelineStep(label: 'Cita agendada', done: true),
-      _TimelineStep(label: 'Prueba pagada', done: true),
-      _TimelineStep(label: 'Asistencia confirmada', done: true),
+      const _TimelineStep(label: 'Cita agendada', done: true),
+      const _TimelineStep(label: 'Prueba pagada', done: true),
+      const _TimelineStep(label: 'Asistencia confirmada', done: true),
       _TimelineStep(
         label: isValidating ? 'Validando resultado' : 'No asistió',
         done: true,
         isCurrent: isValidating,
         isWarning: !isValidating,
-        description: isValidating ? 'Estamos validando tu resultado con el equipo médico.' : null,
+        description: isValidating
+            ? 'Estamos validando tu resultado con el equipo médico.'
+            : null,
       ),
     ];
 
-    return Column(children: steps.map((s) {
+    return Column(
+        children: steps.map((s) {
       final isLast = s == steps.last;
       return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Column(children: [
           Container(
-            width: 14, height: 14,
+            width: 14,
+            height: 14,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: s.isWarning ? const Color(0xFFDC2626) : (s.done ? const Color(0xFF13299D) : const Color(0xFFCCCCCC)),
+              color: s.isWarning
+                  ? const Color(0xFFDC2626)
+                  : (s.done
+                      ? const Color(0xFF13299D)
+                      : const Color(0xFFCCCCCC)),
             ),
           ),
-          if (!isLast) Container(width: 2, height: 36, color: s.done ? const Color(0xFF13299D) : const Color(0xFFE0E0E0)),
+          if (!isLast)
+            Container(
+                width: 2,
+                height: 36,
+                color:
+                    s.done ? const Color(0xFF13299D) : const Color(0xFFE0E0E0)),
         ]),
         const SizedBox(width: 14),
         Expanded(
           child: Padding(
             padding: const EdgeInsets.only(bottom: 8),
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(s.label, style: AppTheme.bodyBold().copyWith(fontSize: 14, color: s.isWarning ? const Color(0xFFDC2626) : AppTheme.textPrimary)),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(s.label,
+                  style: AppTheme.bodyBold().copyWith(
+                      fontSize: 14,
+                      color: s.isWarning
+                          ? const Color(0xFFDC2626)
+                          : AppTheme.textPrimary)),
               if (s.description != null) ...[
                 const SizedBox(height: 4),
-                Text(s.description!, style: AppTheme.body().copyWith(color: AppTheme.textSecondary, fontSize: 12, height: 1.4)),
+                Text(s.description!,
+                    style: AppTheme.body().copyWith(
+                        color: AppTheme.textSecondary,
+                        fontSize: 12,
+                        height: 1.4)),
               ],
             ]),
           ),
@@ -146,20 +192,40 @@ class _TestResultValidatingScreenState extends State<TestResultValidatingScreen>
   Widget _buildTestSummary() {
     return Container(
       padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), border: Border.all(color: AppTheme.border)),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: AppTheme.border)),
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Container(width: 40, height: 40, decoration: BoxDecoration(color: const Color(0xFFEFF6FF), borderRadius: BorderRadius.circular(8)),
-            child: const Icon(Icons.biotech_rounded, color: Color(0xFF2563EB), size: 24)),
+        Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+                color: const Color(0xFFEFF6FF),
+                borderRadius: BorderRadius.circular(8)),
+            child: const Icon(Icons.biotech_rounded,
+                color: Color(0xFF2563EB), size: 24)),
         const SizedBox(width: 14),
-        Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('Antígeno COVID-19', style: AppTheme.heading3().copyWith(fontSize: 14)),
+        Expanded(
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text('Antígeno COVID-19',
+              style: AppTheme.heading3().copyWith(fontSize: 14)),
           const SizedBox(height: 3),
-          Text('Detecta presencia activa del virus SARS-CoV-2.\nA partir de 2 años.',
-              style: AppTheme.body().copyWith(color: AppTheme.textSecondary, fontSize: 11, height: 1.3)),
+          Text(
+              'Detecta presencia activa del virus SARS-CoV-2.\nA partir de 2 años.',
+              style: AppTheme.body().copyWith(
+                  color: AppTheme.textSecondary, fontSize: 11, height: 1.3)),
           const SizedBox(height: 6),
-          RichText(text: TextSpan(children: [
-            TextSpan(text: '\$1,000.00', style: AppTheme.heading3().copyWith(fontSize: 14)),
-            TextSpan(text: 'MXN', style: AppTheme.body().copyWith(fontSize: 10, color: AppTheme.textSecondary)),
+          RichText(
+              text: TextSpan(children: [
+            TextSpan(
+                text: '\$1,000.00',
+                style: AppTheme.heading3().copyWith(fontSize: 14)),
+            TextSpan(
+                text: 'MXN',
+                style: AppTheme.body()
+                    .copyWith(fontSize: 10, color: AppTheme.textSecondary)),
           ])),
         ])),
       ]),
@@ -168,12 +234,16 @@ class _TestResultValidatingScreenState extends State<TestResultValidatingScreen>
 
   Widget _buildPatientSummary() {
     return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const Icon(Icons.account_circle_outlined, color: AppTheme.textSecondary, size: 22),
+      const Icon(Icons.account_circle_outlined,
+          color: AppTheme.textSecondary, size: 22),
       const SizedBox(width: 10),
       Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text('Alejandra Valverde Salgado', style: AppTheme.bodyBold().copyWith(fontSize: 14)),
+        Text('Alejandra Valverde Salgado',
+            style: AppTheme.bodyBold().copyWith(fontSize: 14)),
         const SizedBox(height: 3),
-        Text('01/Agosto/1990', style: AppTheme.body().copyWith(color: AppTheme.textSecondary, fontSize: 12)),
+        Text('01/Agosto/1990',
+            style: AppTheme.body()
+                .copyWith(color: AppTheme.textSecondary, fontSize: 12)),
       ]),
     ]);
   }
@@ -181,23 +251,33 @@ class _TestResultValidatingScreenState extends State<TestResultValidatingScreen>
   Widget _buildAppSummary() {
     return Column(children: [
       Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        const Icon(Icons.storefront_outlined, color: AppTheme.textSecondary, size: 22),
+        const Icon(Icons.storefront_outlined,
+            color: AppTheme.textSecondary, size: 22),
         const SizedBox(width: 10),
-        Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('México Centro, Xola', style: AppTheme.bodyBold().copyWith(fontSize: 14)),
+        Expanded(
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text('México Centro, Xola',
+              style: AppTheme.bodyBold().copyWith(fontSize: 14)),
           const SizedBox(height: 3),
-          Text('XOLA 1001 COL: NARVARTE PONIENTE CIUDAD DE MEXICO, CIUDAD DE MEXICO MX',
-              style: AppTheme.body().copyWith(color: AppTheme.textSecondary, fontSize: 11, height: 1.3)),
+          Text(
+              'XOLA 1001 COL: NARVARTE PONIENTE CIUDAD DE MEXICO, CIUDAD DE MEXICO MX',
+              style: AppTheme.body().copyWith(
+                  color: AppTheme.textSecondary, fontSize: 11, height: 1.3)),
         ])),
       ]),
       const SizedBox(height: 16),
       Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        const Icon(Icons.calendar_today_outlined, color: AppTheme.textSecondary, size: 22),
+        const Icon(Icons.calendar_today_outlined,
+            color: AppTheme.textSecondary, size: 22),
         const SizedBox(width: 10),
         Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('Viernes, 20 de noviembre', style: AppTheme.bodyBold().copyWith(fontSize: 14)),
+          Text('Viernes, 20 de noviembre',
+              style: AppTheme.bodyBold().copyWith(fontSize: 14)),
           const SizedBox(height: 3),
-          Text('09:45 am', style: AppTheme.body().copyWith(color: AppTheme.textSecondary, fontSize: 12)),
+          Text('09:45 am',
+              style: AppTheme.body()
+                  .copyWith(color: AppTheme.textSecondary, fontSize: 12)),
         ]),
       ]),
     ]);
@@ -210,7 +290,12 @@ class _TimelineStep {
   final bool isCurrent;
   final bool isWarning;
   final String? description;
-  const _TimelineStep({required this.label, required this.done, this.isCurrent = false, this.isWarning = false, this.description});
+  const _TimelineStep(
+      {required this.label,
+      required this.done,
+      this.isCurrent = false,
+      this.isWarning = false,
+      this.description});
 }
 
 class _Section extends StatefulWidget {
@@ -226,17 +311,32 @@ class _SectionState extends State<_Section> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12), border: Border.all(color: AppTheme.border)),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: AppTheme.border)),
       child: Column(children: [
         InkWell(
           onTap: () => setState(() => _expanded = !_expanded),
-          borderRadius: _expanded ? const BorderRadius.vertical(top: Radius.circular(12)) : BorderRadius.circular(12),
-          child: Padding(padding: const EdgeInsets.all(18), child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text(widget.title, style: AppTheme.heading2().copyWith(fontSize: 15)),
-            Icon(_expanded ? Icons.keyboard_arrow_up_rounded : Icons.keyboard_arrow_down_rounded),
-          ])),
+          borderRadius: _expanded
+              ? const BorderRadius.vertical(top: Radius.circular(12))
+              : BorderRadius.circular(12),
+          child: Padding(
+              padding: const EdgeInsets.all(18),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(widget.title,
+                        style: AppTheme.heading2().copyWith(fontSize: 15)),
+                    Icon(_expanded
+                        ? Icons.keyboard_arrow_up_rounded
+                        : Icons.keyboard_arrow_down_rounded),
+                  ])),
         ),
-        if (_expanded) Padding(padding: const EdgeInsets.fromLTRB(18, 0, 18, 18), child: widget.child),
+        if (_expanded)
+          Padding(
+              padding: const EdgeInsets.fromLTRB(18, 0, 18, 18),
+              child: widget.child),
       ]),
     );
   }

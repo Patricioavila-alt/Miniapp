@@ -56,8 +56,9 @@ class LocationService {
           List<String> parts = [];
           if (street.isNotEmpty) parts.add('$street $houseNumber'.trim());
           if (postcode.isNotEmpty) parts.add(postcode);
-          if (city.isNotEmpty) parts.add(city);
-          else if (state.isNotEmpty) parts.add(state);
+          if (city.isNotEmpty) {
+            parts.add(city);
+          } else if (state.isNotEmpty) parts.add(state);
           
           final finalAddress = parts.join(', ');
           return finalAddress.isNotEmpty ? finalAddress : 'Ubicación desconocida';

@@ -79,7 +79,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   const SizedBox(height: 4),
 
-                  // ── 4. Quick Actions (scroll horizontal) ──────────────────
+                  // ── 4. Quick Actions grid ─────────────────────────────────
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                    child: Text(
+                      '¿Qué necesitas hoy?',
+                      style: AppTheme.heading2().copyWith(fontSize: 16),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
                   _QuickActionsRow(
                     actions: data.quickActions,
                     onActionTap: (id) => _onActionTap(context, id),
@@ -87,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   const SizedBox(height: 24),
 
-                  // ── 5. Banner de Promociones (PageView) ───────────────────
+                  // -- 5. Banner de Promociones (PageView) --
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: _PromoBannerSection(
@@ -126,12 +134,31 @@ class _HomeScreenState extends State<HomeScreen> {
           url: 'https://www.orientacionenlinea.com/',
           title: 'Orientación en Línea',
         );
-      case 'schedule':
-        context.push(AppRoutes.scheduleType);
-      case 'prescription':
-        context.push(AppRoutes.prescriptionScan);
+      case 'vaccine':
+        context.push(AppRoutes.vaccineType);
       case 'tests':
         context.push(AppRoutes.testType);
+      case 'medicoGeneral':
+        openWebPortal(context, url: 'https://app.nimbo-x.com/', title: 'Médico General');
+        break;
+      case 'pediatra':
+        openWebPortal(context, url: 'https://app.nimbo-x.com/', title: 'Pediatra');
+        break;
+      case 'dermatologia':
+        openWebPortal(context, url: 'https://app.nimbo-x.com/', title: 'Dermatología');
+        break;
+      case 'diabetes':
+        openWebPortal(context, url: 'https://app.nimbo-x.com/', title: 'Nutriólogo');
+        break;
+      case 'saludMental':
+        openWebPortal(context, url: 'https://app.nimbo-x.com/', title: 'Salud Mental');
+        break;
+      case 'redmedica':
+        break;
+      case 'prescription':
+        context.push(AppRoutes.prescriptionScan);
+      case 'schedule':
+        context.push(AppRoutes.scheduleType);
       case 'records':
       case 'expediente':
         context.go(AppRoutes.healthRecord);
@@ -203,9 +230,13 @@ class _TopBar extends StatelessWidget {
           // WhatsApp
           GestureDetector(
             onTap: () async {
-              final url = Uri.parse('https://api.whatsapp.com/send/?phone=5218007112222&text=Hola');
-              if (await canLaunchUrl(url)) {
-                await launchUrl(url);
+              final url = Uri.parse(
+                'https://api.whatsapp.com/send/?phone=5218007112222&text=Hola',
+              );
+              try {
+                await launchUrl(url, mode: LaunchMode.externalApplication);
+              } catch (_) {
+                await launchUrl(url, mode: LaunchMode.platformDefault);
               }
             },
             child: SvgPicture.asset(
@@ -324,24 +355,26 @@ class _GreetingRow extends StatelessWidget {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// _QuickActionsRow — scroll horizontal con tarjetas de acción
-// ─────────────────────────────────────────────────────────────────────────────
+// _QuickActionsRow -- grid 2 columnas, tarjetas horizontales
 class _QuickActionsRow extends StatelessWidget {
   final List<Map<String, dynamic>> actions;
   final void Function(String id) onActionTap;
   const _QuickActionsRow({required this.actions, required this.onActionTap});
 
-
-
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 124,
-      child: ListView.separated(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        scrollDirection: Axis.horizontal,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 12,
+          mainAxisSpacing: 12,
+          childAspectRatio: 2.5,
+        ),
         itemCount: actions.length,
-        separatorBuilder: (_, __) => const SizedBox(width: 10),
         itemBuilder: (context, i) {
           final action = actions[i];
           final id = action['id'] as String;
@@ -350,40 +383,43 @@ class _QuickActionsRow extends StatelessWidget {
 
           return GestureDetector(
             onTap: () => onActionTap(id),
-            child: SizedBox(
-              width: 88,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 72,
-                    height: 72,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFF7FAFF),
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: const Color(0xFFDCE7FD)),
-                    ),
-                    child: Center(
-                      child: Image.asset(
-                        'assets/icons/$iconKey.png',
-                        width: 46,
-                        height: 46,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Color(0xFFFFFFFF), Color(0xFFEAF8FA)],
+                ),
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 6,
+                    offset: const Offset(0, 2),
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    label,
-                    style: const TextStyle(
-                      fontSize: 10,
-                      color: Color(0xFF333333),
-                      height: 1.2,
+                ],
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+              child: Row(
+                children: [
+                  Image.asset(
+                    'assets/icons/$iconKey.png',
+                    width: 48,
+                    height: 48,
+                    fit: BoxFit.contain,
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      label,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFF222222),
+                        height: 1.3,
+                      ),
+                      maxLines: 2,
                     ),
-                    textAlign: TextAlign.center,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
@@ -394,6 +430,9 @@ class _QuickActionsRow extends StatelessWidget {
     );
   }
 }
+
+
+
 
 // ─────────────────────────────────────────────────────────────────────────────
 // _PromoBannerSection — PageView con imagen + texto + dots
@@ -412,25 +451,52 @@ class _PromoBannerSection extends StatelessWidget {
   });
 
   static const _bgColors = [
-    Color(0xFFF4A17B), // Salmon — promo 1
-    Color(0xFF7BBCF4), // Azul — promo 2
+    Color(0xFFF4A17B),
+    Color(0xFF7BBCF4),
+    Color(0xFFF4A17B), // fallback for extra promos
   ];
+
+  // Determina si el slide es un asset local (prefix 'asset:')
+  static bool _isAsset(String url) => url.startsWith('asset:');
+  static String _assetPath(String url) =>
+      'assets/icons/${url.substring('asset:'.length)}';
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // Banner cards
-        SizedBox(
-          height: 178,
+        AspectRatio(
+          aspectRatio: 2046 / 544,
           child: PageView.builder(
             controller: controller,
             itemCount: promotions.length,
             onPageChanged: onPageChanged,
             itemBuilder: (context, i) {
               final promo = promotions[i];
+              final isAsset = _isAsset(promo.imageUrl);
+
+              // ── Slide full-bleed (imagen local diseñada) ─────────────────
+              if (isAsset) {
+                return Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 1),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.grey.shade200,
+                  ),
+                  clipBehavior: Clip.antiAlias,
+                  child: Image.asset(
+                    _assetPath(promo.imageUrl),
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: double.infinity,
+                  ),
+                );
+              }
+
+              // ── Slide con imagen de red + texto overlay ──────────────────
               final bg = _bgColors[i % _bgColors.length];
-              final titleColor = i == 0 ? AppTheme.primary : const Color(0xFF1A4B8C);
+              final titleColor =
+                  i == 0 ? AppTheme.primary : const Color(0xFF1A4B8C);
 
               return Container(
                 margin: const EdgeInsets.symmetric(horizontal: 1),
@@ -442,18 +508,19 @@ class _PromoBannerSection extends StatelessWidget {
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
-                    // Imagen de fondo lado izquierdo
+                    // Imagen lado izquierdo
                     Positioned(
                       left: 0, top: 0, bottom: 0, width: 140,
                       child: CachedNetworkImage(
                         imageUrl: promo.imageUrl,
                         fit: BoxFit.cover,
-                        errorWidget: (context, url, error) => const Center(
-                          child: Icon(Icons.image_not_supported, color: Colors.white54, size: 40),
+                        errorWidget: (_, __, ___) => const Center(
+                          child: Icon(Icons.image_not_supported,
+                              color: Colors.white54, size: 40),
                         ),
                       ),
                     ),
-                    // Gradiente de transición imagen → color
+                    // Gradiente imagen → color
                     Positioned.fill(
                       child: DecoratedBox(
                         decoration: BoxDecoration(
@@ -466,11 +533,11 @@ class _PromoBannerSection extends StatelessWidget {
                         ),
                       ),
                     ),
-                    // Texto siempre visible en la derecha
+                    // Texto derecha
                     Positioned(
                       right: 0, top: 0, bottom: 0, width: 210,
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(12, 20, 18, 20),
+                        padding: const EdgeInsets.fromLTRB(12, 8, 18, 8),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -479,49 +546,50 @@ class _PromoBannerSection extends StatelessWidget {
                               promo.title.toUpperCase(),
                               style: TextStyle(
                                 fontWeight: FontWeight.w800,
-                                fontSize: 17,
+                                fontSize: 13,
                                 color: titleColor,
                                 letterSpacing: 0.3,
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            const SizedBox(height: 6),
+                            const SizedBox(height: 4),
                             Text(
                               promo.description,
                               style: const TextStyle(
                                 fontSize: 11,
                                 color: Color(0xFF333333),
-                                height: 1.45,
+                                height: 1.3,
                               ),
-                              maxLines: 3,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            const Spacer(),
                           ],
                         ),
                       ),
                     ),
-                    // Botón "Ver más" en la esquina inferior derecha
-                    Positioned(
-                      right: 16,
-                      bottom: 16,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 8),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Text(
-                          promo.ctaText,
-                          style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: Color(0xFF3B82F6), // Using a blue text for the button to make it pop, or just dark grey. Let's use blue as per typical primary CTA
+                    // Botón "Ver más" esquina inferior derecha
+                    if (promo.ctaText.isNotEmpty)
+                      Positioned(
+                        right: 16,
+                        bottom: 16,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 8),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Text(
+                            promo.ctaText,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xFF3B82F6),
+                            ),
                           ),
                         ),
                       ),
-                    ),
                   ],
                 ),
               );
@@ -531,7 +599,7 @@ class _PromoBannerSection extends StatelessWidget {
 
         const SizedBox(height: 10),
 
-        // Dots de página — el activo es azul y más ancho
+        // Dots de paginación
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(
@@ -543,8 +611,9 @@ class _PromoBannerSection extends StatelessWidget {
               width: i == currentPage ? 20 : 6,
               height: 6,
               decoration: BoxDecoration(
-                color:
-                    i == currentPage ? AppTheme.blue : const Color(0xFFCCCCCC),
+                color: i == currentPage
+                    ? AppTheme.blue
+                    : const Color(0xFFCCCCCC),
                 borderRadius: BorderRadius.circular(3),
               ),
             ),
@@ -595,10 +664,10 @@ class _SurteRecetaCard extends StatelessWidget {
             ),
             const SizedBox(width: 16),
             // Texto
-            Expanded(
+            const Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
                     'Surte tu receta',
                     style: TextStyle(

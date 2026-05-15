@@ -41,7 +41,9 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   Future<void> _schedule() async {
     if (_selectedDoctor == null ||
         _selectedDate == null ||
-        _selectedTime == null) return;
+        _selectedTime == null) {
+      return;
+    }
     setState(() => _isSaving = true);
     try {
       await ApiService.createAppointment({

@@ -32,8 +32,9 @@ class ApiService {
     final response = await http
         .get(Uri.parse('$_baseUrl$path'), headers: _headers)
         .timeout(_timeout);
-    if (response.statusCode == 200)
+    if (response.statusCode == 200) {
       return jsonDecode(utf8.decode(response.bodyBytes));
+    }
     throw Exception('Error ${response.statusCode} en GET $path');
   }
 
@@ -42,8 +43,9 @@ class ApiService {
         .post(Uri.parse('$_baseUrl$path'),
             headers: _headers, body: jsonEncode(body))
         .timeout(_timeout);
-    if (response.statusCode == 200 || response.statusCode == 201)
+    if (response.statusCode == 200 || response.statusCode == 201) {
       return jsonDecode(utf8.decode(response.bodyBytes));
+    }
     final detail = _parseError(response.body);
     throw Exception(detail);
   }
@@ -53,8 +55,9 @@ class ApiService {
         .put(Uri.parse('$_baseUrl$path'),
             headers: _headers, body: jsonEncode(body))
         .timeout(_timeout);
-    if (response.statusCode == 200)
+    if (response.statusCode == 200) {
       return jsonDecode(utf8.decode(response.bodyBytes));
+    }
     throw Exception('Error ${response.statusCode} en PUT $path');
   }
 

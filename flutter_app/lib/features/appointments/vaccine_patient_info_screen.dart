@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/theme/app_theme.dart';
 // ignore: unused_import
@@ -43,7 +44,11 @@ class _VaccinePatientInfoScreenState extends State<VaccinePatientInfoScreen> {
     'Chihuahua',
     'Ciudad de México'
   ];
-  final List<String> _municipalities = ['Benito Juárez', 'Cuauhtémoc', 'Coyoacán'];
+  final List<String> _municipalities = [
+    'Benito Juárez',
+    'Cuauhtémoc',
+    'Coyoacán'
+  ];
   final List<String> _colonias = ['Narvarte Poniente', 'Del Valle', 'Roma'];
 
   @override
@@ -120,7 +125,8 @@ class _VaccinePatientInfoScreenState extends State<VaccinePatientInfoScreen> {
   }
 
   bool get _isCurpValid => _curpController.text.length >= 18;
-  bool get _isEmailValid => RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(_emailController.text);
+  bool get _isEmailValid =>
+      RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(_emailController.text);
   bool get _isPhoneValid => _phoneController.text.length == 10;
 
   bool _isFormValid() {
@@ -261,8 +267,10 @@ class _VaccinePatientInfoScreenState extends State<VaccinePatientInfoScreen> {
                     ),
                   ),
                   child: const Text('Siguiente',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white)),
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white)),
                 ),
               ),
             ),
@@ -297,13 +305,16 @@ class _VaccinePatientInfoScreenState extends State<VaccinePatientInfoScreen> {
               Icon(
                 icon,
                 size: 18,
-                color: isSelected ? const Color(0xFF13299D) : AppTheme.textPrimary,
+                color:
+                    isSelected ? const Color(0xFF13299D) : AppTheme.textPrimary,
               ),
               const SizedBox(width: 8),
               Text(
                 title,
                 style: AppTheme.bodyBold().copyWith(
-                  color: isSelected ? const Color(0xFF13299D) : AppTheme.textPrimary,
+                  color: isSelected
+                      ? const Color(0xFF13299D)
+                      : AppTheme.textPrimary,
                   fontSize: 13,
                 ),
               ),
@@ -316,30 +327,41 @@ class _VaccinePatientInfoScreenState extends State<VaccinePatientInfoScreen> {
 
   Widget _buildPersonalInfoForm() {
     final bool isReadOnly = _isForMe;
-    
-    String? nameError = (_hasAttemptedSubmit && _nameController.text.isEmpty) ? 'Este campo es requerido' : null;
+
+    String? nameError = (_hasAttemptedSubmit && _nameController.text.isEmpty)
+        ? 'Este campo es requerido'
+        : null;
     String? dobError;
     if (_hasAttemptedSubmit) {
-      if (!_isDateFilled) dobError = 'Este campo es requerido';
-      else if (_isUnderage) dobError = 'Ingresa una fecha válida.';
+      if (!_isDateFilled) {
+        dobError = 'Este campo es requerido';
+      } else if (_isUnderage) dobError = 'Ingresa una fecha válida.';
     }
     String? curpError;
     if (_hasAttemptedSubmit) {
-      if (_curpController.text.isEmpty) curpError = 'Este campo es requerido';
-      else if (!_isCurpValid) curpError = 'Ingresa una CURP válida.';
+      if (_curpController.text.isEmpty) {
+        curpError = 'Este campo es requerido';
+      } else if (!_isCurpValid) curpError = 'Ingresa una CURP válida.';
     }
     String? emailError;
     if (_hasAttemptedSubmit) {
-      if (_emailController.text.isEmpty) emailError = 'Este campo es requerido';
-      else if (!_isEmailValid) emailError = 'Revisa que tu correo tenga un formato válido';
+      if (_emailController.text.isEmpty) {
+        emailError = 'Este campo es requerido';
+      } else if (!_isEmailValid)
+        emailError = 'Revisa que tu correo tenga un formato válido';
     }
     String? phoneError;
     if (_hasAttemptedSubmit) {
-      if (_phoneController.text.isEmpty) phoneError = 'Este campo es requerido';
-      else if (!_isPhoneValid) phoneError = 'Ingresa un número de 10 dígitos';
+      if (_phoneController.text.isEmpty) {
+        phoneError = 'Este campo es requerido';
+      } else if (!_isPhoneValid) phoneError = 'Ingresa un número de 10 dígitos';
     }
-    String? genderError = (_hasAttemptedSubmit && _gender == null) ? 'Este campo es requerido' : null;
-    String? stateError = (_hasAttemptedSubmit && _birthState == null) ? 'Este campo es requerido' : null;
+    String? genderError = (_hasAttemptedSubmit && _gender == null)
+        ? 'Este campo es requerido'
+        : null;
+    String? stateError = (_hasAttemptedSubmit && _birthState == null)
+        ? 'Este campo es requerido'
+        : null;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -363,28 +385,37 @@ class _VaccinePatientInfoScreenState extends State<VaccinePatientInfoScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Edad fuera del rango permitido',
-                          style: AppTheme.bodyBold().copyWith(color: const Color(0xFF991B1B))),
+                          style: AppTheme.bodyBold()
+                              .copyWith(color: const Color(0xFF991B1B))),
                       const SizedBox(height: 4),
-                      Text('Esta vacuna no se puede aplicar para la edad del paciente. Puedes revisar los datos ingresados o elegir otra.',
-                          style: AppTheme.body().copyWith(color: const Color(0xFF7F1D1D))),
+                      Text(
+                          'Esta vacuna no se puede aplicar para la edad del paciente. Puedes revisar los datos ingresados o elegir otra.',
+                          style: AppTheme.body()
+                              .copyWith(color: const Color(0xFF7F1D1D))),
                     ],
                   ),
                 ),
-                const Icon(Icons.close, color: AppTheme.textSecondary, size: 20),
+                const Icon(Icons.close,
+                    color: AppTheme.textSecondary, size: 20),
               ],
             ),
           ),
-        _buildTextField('Nombre completo *', _nameController, readOnly: isReadOnly, errorText: nameError),
+        _buildTextField('Nombre completo *', _nameController,
+            readOnly: isReadOnly, errorText: nameError),
         _buildTextField('Fecha de nacimiento *', _dobController,
-            readOnly: isReadOnly, prefixIcon: Icons.calendar_today_outlined, errorText: dobError),
+            readOnly: isReadOnly,
+            prefixIcon: Icons.calendar_today_outlined,
+            errorText: dobError),
         _buildDropdown('¿Cuál es tu género? *', _gender, _genders, (val) {
           if (!isReadOnly) setState(() => _gender = val);
         }, readOnly: isReadOnly, errorText: genderError),
         _buildDropdown('Estado de nacimiento *', _birthState, _states, (val) {
           if (!isReadOnly) setState(() => _birthState = val);
         }, readOnly: isReadOnly, errorText: stateError),
-        _buildTextField('CURP *', _curpController, readOnly: isReadOnly, errorText: curpError),
-        _buildTextField('Correo electrónico *', _emailController, readOnly: false, errorText: emailError),
+        _buildTextField('CURP *', _curpController,
+            readOnly: isReadOnly, errorText: curpError),
+        _buildTextField('Correo electrónico *', _emailController,
+            readOnly: false, errorText: emailError),
         _buildPhoneField('Teléfono *', _phoneController, errorText: phoneError),
       ],
     );
@@ -392,7 +423,9 @@ class _VaccinePatientInfoScreenState extends State<VaccinePatientInfoScreen> {
 
   Widget _buildAddressForm() {
     String? getError(TextEditingController ctrl) =>
-        (_hasAttemptedSubmit && ctrl.text.isEmpty) ? 'Este campo es requerido' : null;
+        (_hasAttemptedSubmit && ctrl.text.isEmpty)
+            ? 'Este campo es requerido'
+            : null;
     String? getDropdownError(String? val) =>
         (_hasAttemptedSubmit && val == null) ? 'Este campo es requerido' : null;
 
@@ -403,7 +436,8 @@ class _VaccinePatientInfoScreenState extends State<VaccinePatientInfoScreen> {
           onTap: () {},
           child: Row(
             children: [
-              const Icon(Icons.location_on_outlined, color: Color(0xFF3B82F6), size: 20),
+              const Icon(Icons.location_on_outlined,
+                  color: Color(0xFF3B82F6), size: 20),
               const SizedBox(width: 8),
               Text(
                 'Usar mi ubicación',
@@ -417,7 +451,8 @@ class _VaccinePatientInfoScreenState extends State<VaccinePatientInfoScreen> {
           ),
         ),
         const SizedBox(height: 24),
-        _buildTextField('Código postal *', _cpController, errorText: getError(_cpController)),
+        _buildTextField('Código postal *', _cpController,
+            errorText: getError(_cpController)),
         _buildDropdown('Estado *', _addressState, _states, (val) {
           setState(() => _addressState = val);
         }, errorText: getDropdownError(_addressState)),
@@ -427,8 +462,10 @@ class _VaccinePatientInfoScreenState extends State<VaccinePatientInfoScreen> {
         _buildDropdown('Colonia *', _colonia, _colonias, (val) {
           setState(() => _colonia = val);
         }, errorText: getDropdownError(_colonia)),
-        _buildTextField('Calle *', _streetController, errorText: getError(_streetController)),
-        _buildTextField('Número exterior *', _extNumController, errorText: getError(_extNumController)),
+        _buildTextField('Calle *', _streetController,
+            errorText: getError(_streetController)),
+        _buildTextField('Número exterior *', _extNumController,
+            errorText: getError(_extNumController)),
         _buildTextField('Número interior', _intNumController),
       ],
     );
@@ -445,7 +482,8 @@ class _VaccinePatientInfoScreenState extends State<VaccinePatientInfoScreen> {
           Text(
             label,
             style: AppTheme.body().copyWith(
-              color: hasError ? const Color(0xFFEF4444) : AppTheme.textSecondary,
+              color:
+                  hasError ? const Color(0xFFEF4444) : AppTheme.textSecondary,
               fontSize: 13,
             ),
           ),
@@ -463,24 +501,36 @@ class _VaccinePatientInfoScreenState extends State<VaccinePatientInfoScreen> {
             decoration: InputDecoration(
               filled: true,
               fillColor: hasError ? const Color(0xFFFDE8E8) : Colors.white,
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               prefixIcon: prefixIcon != null
-                  ? Icon(prefixIcon, color: hasError ? const Color(0xFFEF4444) : AppTheme.textSecondary, size: 20)
+                  ? Icon(prefixIcon,
+                      color: hasError
+                          ? const Color(0xFFEF4444)
+                          : AppTheme.textSecondary,
+                      size: 20)
                   : null,
               suffixIcon: hasError
                   ? const Icon(Icons.cancel, color: Color(0xFFEF4444), size: 20)
                   : null,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: hasError ? const Color(0xFFEF4444) : AppTheme.border),
+                borderSide: BorderSide(
+                    color:
+                        hasError ? const Color(0xFFEF4444) : AppTheme.border),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: hasError ? const Color(0xFFEF4444) : AppTheme.border),
+                borderSide: BorderSide(
+                    color:
+                        hasError ? const Color(0xFFEF4444) : AppTheme.border),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: hasError ? const Color(0xFFEF4444) : const Color(0xFF13299D)),
+                borderSide: BorderSide(
+                    color: hasError
+                        ? const Color(0xFFEF4444)
+                        : const Color(0xFF13299D)),
               ),
             ),
           ),
@@ -489,9 +539,12 @@ class _VaccinePatientInfoScreenState extends State<VaccinePatientInfoScreen> {
               padding: const EdgeInsets.only(top: 4, left: 4),
               child: Row(
                 children: [
-                  const Icon(Icons.error_outline, color: Color(0xFFEF4444), size: 14),
+                  const Icon(Icons.error_outline,
+                      color: Color(0xFFEF4444), size: 14),
                   const SizedBox(width: 4),
-                  Text(errorText, style: const TextStyle(color: Color(0xFFEF4444), fontSize: 12)),
+                  Text(errorText,
+                      style: const TextStyle(
+                          color: Color(0xFFEF4444), fontSize: 12)),
                 ],
               ),
             ),
@@ -500,7 +553,8 @@ class _VaccinePatientInfoScreenState extends State<VaccinePatientInfoScreen> {
     );
   }
 
-  Widget _buildPhoneField(String label, TextEditingController controller, {String? errorText}) {
+  Widget _buildPhoneField(String label, TextEditingController controller,
+      {String? errorText}) {
     final bool hasError = errorText != null;
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
@@ -510,7 +564,8 @@ class _VaccinePatientInfoScreenState extends State<VaccinePatientInfoScreen> {
           Text(
             label,
             style: AppTheme.body().copyWith(
-              color: hasError ? const Color(0xFFEF4444) : AppTheme.textSecondary,
+              color:
+                  hasError ? const Color(0xFFEF4444) : AppTheme.textSecondary,
               fontSize: 13,
             ),
           ),
@@ -518,7 +573,8 @@ class _VaccinePatientInfoScreenState extends State<VaccinePatientInfoScreen> {
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border.all(color: AppTheme.border),
@@ -531,12 +587,14 @@ class _VaccinePatientInfoScreenState extends State<VaccinePatientInfoScreen> {
                       height: 16,
                       color: Colors.green,
                       child: const Center(
-                          child: Icon(Icons.flag, size: 12, color: Colors.white)),
+                          child:
+                              Icon(Icons.flag, size: 12, color: Colors.white)),
                     ),
                     const SizedBox(width: 8),
                     Text('+52', style: AppTheme.body().copyWith(fontSize: 14)),
                     const SizedBox(width: 4),
-                    const Icon(Icons.arrow_drop_down, color: AppTheme.textSecondary),
+                    const Icon(Icons.arrow_drop_down,
+                        color: AppTheme.textSecondary),
                   ],
                 ),
               ),
@@ -551,22 +609,34 @@ class _VaccinePatientInfoScreenState extends State<VaccinePatientInfoScreen> {
                   style: AppTheme.body().copyWith(fontSize: 14),
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: hasError ? const Color(0xFFFDE8E8) : Colors.white,
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                    fillColor:
+                        hasError ? const Color(0xFFFDE8E8) : Colors.white,
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 14),
                     suffixIcon: hasError
-                        ? const Icon(Icons.cancel, color: Color(0xFFEF4444), size: 20)
+                        ? const Icon(Icons.cancel,
+                            color: Color(0xFFEF4444), size: 20)
                         : null,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(color: hasError ? const Color(0xFFEF4444) : AppTheme.border),
+                      borderSide: BorderSide(
+                          color: hasError
+                              ? const Color(0xFFEF4444)
+                              : AppTheme.border),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(color: hasError ? const Color(0xFFEF4444) : AppTheme.border),
+                      borderSide: BorderSide(
+                          color: hasError
+                              ? const Color(0xFFEF4444)
+                              : AppTheme.border),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(color: hasError ? const Color(0xFFEF4444) : const Color(0xFF13299D)),
+                      borderSide: BorderSide(
+                          color: hasError
+                              ? const Color(0xFFEF4444)
+                              : const Color(0xFF13299D)),
                     ),
                   ),
                 ),
@@ -578,9 +648,12 @@ class _VaccinePatientInfoScreenState extends State<VaccinePatientInfoScreen> {
               padding: const EdgeInsets.only(top: 4, left: 4),
               child: Row(
                 children: [
-                  const Icon(Icons.error_outline, color: Color(0xFFEF4444), size: 14),
+                  const Icon(Icons.error_outline,
+                      color: Color(0xFFEF4444), size: 14),
                   const SizedBox(width: 4),
-                  Text(errorText, style: const TextStyle(color: Color(0xFFEF4444), fontSize: 12)),
+                  Text(errorText,
+                      style: const TextStyle(
+                          color: Color(0xFFEF4444), fontSize: 12)),
                 ],
               ),
             ),
@@ -601,7 +674,8 @@ class _VaccinePatientInfoScreenState extends State<VaccinePatientInfoScreen> {
           Text(
             label,
             style: AppTheme.body().copyWith(
-              color: hasError ? const Color(0xFFEF4444) : AppTheme.textSecondary,
+              color:
+                  hasError ? const Color(0xFFEF4444) : AppTheme.textSecondary,
               fontSize: 13,
             ),
           ),
@@ -611,7 +685,8 @@ class _VaccinePatientInfoScreenState extends State<VaccinePatientInfoScreen> {
             decoration: BoxDecoration(
               color: hasError ? const Color(0xFFFDE8E8) : Colors.white,
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: hasError ? const Color(0xFFEF4444) : AppTheme.border),
+              border: Border.all(
+                  color: hasError ? const Color(0xFFEF4444) : AppTheme.border),
             ),
             child: DropdownButtonHideUnderline(
               child: DropdownButton<String>(
@@ -619,12 +694,16 @@ class _VaccinePatientInfoScreenState extends State<VaccinePatientInfoScreen> {
                 isExpanded: true,
                 hint: Text(
                   'Selecciona una opción',
-                  style: AppTheme.body().copyWith(
-                      color: AppTheme.textSecondary, fontSize: 14),
+                  style: AppTheme.body()
+                      .copyWith(color: AppTheme.textSecondary, fontSize: 14),
                 ),
-                icon: Icon(Icons.arrow_drop_down, color: hasError ? const Color(0xFFEF4444) : AppTheme.textSecondary),
+                icon: Icon(Icons.arrow_drop_down,
+                    color: hasError
+                        ? const Color(0xFFEF4444)
+                        : AppTheme.textSecondary),
                 style: AppTheme.body().copyWith(
-                  color: readOnly ? AppTheme.textSecondary : AppTheme.textPrimary,
+                  color:
+                      readOnly ? AppTheme.textSecondary : AppTheme.textPrimary,
                   fontSize: 14,
                 ),
                 items: items.map((item) {
@@ -633,10 +712,12 @@ class _VaccinePatientInfoScreenState extends State<VaccinePatientInfoScreen> {
                     child: Text(item),
                   );
                 }).toList(),
-                onChanged: readOnly ? null : (val) {
-                  onChanged(val);
-                  if (_hasAttemptedSubmit) setState(() {});
-                },
+                onChanged: readOnly
+                    ? null
+                    : (val) {
+                        onChanged(val);
+                        if (_hasAttemptedSubmit) setState(() {});
+                      },
               ),
             ),
           ),
@@ -645,9 +726,12 @@ class _VaccinePatientInfoScreenState extends State<VaccinePatientInfoScreen> {
               padding: const EdgeInsets.only(top: 4, left: 4),
               child: Row(
                 children: [
-                  const Icon(Icons.error_outline, color: Color(0xFFEF4444), size: 14),
+                  const Icon(Icons.error_outline,
+                      color: Color(0xFFEF4444), size: 14),
                   const SizedBox(width: 4),
-                  Text(errorText, style: const TextStyle(color: Color(0xFFEF4444), fontSize: 12)),
+                  Text(errorText,
+                      style: const TextStyle(
+                          color: Color(0xFFEF4444), fontSize: 12)),
                 ],
               ),
             ),
@@ -657,76 +741,11 @@ class _VaccinePatientInfoScreenState extends State<VaccinePatientInfoScreen> {
   }
 
   Widget _buildCustomStepper() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        _buildStepItem(Icons.check, 'Tipo\nde vacuna', true, false,
-            isCompleted: true),
-        _buildDivider(true),
-        _buildStepItem(Icons.check, 'Sucursal,\nfecha y hora', true, false,
-            isCompleted: true),
-        _buildDivider(true),
-        _buildStepItem(
-            Icons.person_outline, 'Información\ndel paciente', true, false),
-        _buildDivider(false),
-        _buildStepItem(
-            Icons.event_available_outlined, 'Confirmar\ncita', false, true),
-      ],
-    );
-  }
-
-  Widget _buildStepItem(IconData icon, String label, bool isActive, bool isLast,
-      {bool isCompleted = false}) {
-    final color = isCompleted
-        ? const Color(0xFF13299D)
-        : (isActive ? const Color(0xFF3B82F6) : AppTheme.accent);
-    final bgColor = isCompleted ? const Color(0xFF13299D) : Colors.transparent;
-    final iconColor = isCompleted ? Colors.white : color;
-
-    return Expanded(
-      flex: 2,
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: bgColor,
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: color,
-                width: 1.5,
-              ),
-            ),
-            child: Icon(
-              icon,
-              color: iconColor,
-              size: 20,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            label,
-            textAlign: TextAlign.center,
-            style: AppTheme.label().copyWith(
-              color: color,
-              fontSize: 10,
-              height: 1.2,
-              fontWeight:
-                  isActive || isCompleted ? FontWeight.w600 : FontWeight.w500,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDivider(bool isActive) {
-    return Expanded(
-      flex: 1,
-      child: Container(
-        height: 1.5,
-        color: isActive ? const Color(0xFF13299D) : AppTheme.border,
-        margin: const EdgeInsets.only(bottom: 24),
+    return SizedBox(
+      width: double.infinity,
+      child: SvgPicture.asset(
+        'assets/icons/StepperVacunas.svg',
+        fit: BoxFit.contain,
       ),
     );
   }
@@ -749,12 +768,12 @@ class _CollapsibleSection extends StatefulWidget {
 }
 
 class _CollapsibleSectionState extends State<_CollapsibleSection> {
-  late bool _isExpanded;
+  late bool isExpanded;
 
   @override
   void initState() {
     super.initState();
-    _isExpanded = widget.initiallyExpanded;
+    isExpanded = widget.initiallyExpanded;
   }
 
   @override
@@ -770,10 +789,10 @@ class _CollapsibleSectionState extends State<_CollapsibleSection> {
           InkWell(
             onTap: () {
               setState(() {
-                _isExpanded = !_isExpanded;
+                isExpanded = !isExpanded;
               });
             },
-            borderRadius: _isExpanded
+            borderRadius: isExpanded
                 ? const BorderRadius.vertical(top: Radius.circular(12))
                 : BorderRadius.circular(12),
             child: Padding(
@@ -786,7 +805,7 @@ class _CollapsibleSectionState extends State<_CollapsibleSection> {
                     style: AppTheme.heading2().copyWith(fontSize: 16),
                   ),
                   Icon(
-                    _isExpanded
+                    isExpanded
                         ? Icons.keyboard_arrow_up_rounded
                         : Icons.keyboard_arrow_down_rounded,
                     color: AppTheme.textPrimary,
@@ -795,7 +814,7 @@ class _CollapsibleSectionState extends State<_CollapsibleSection> {
               ),
             ),
           ),
-          if (_isExpanded)
+          if (isExpanded)
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
               child: widget.child,
@@ -805,3 +824,4 @@ class _CollapsibleSectionState extends State<_CollapsibleSection> {
     );
   }
 }
+

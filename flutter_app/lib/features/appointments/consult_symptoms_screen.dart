@@ -11,10 +11,14 @@ class ConsultSymptomsScreen extends StatefulWidget {
 }
 
 class _ConsultSymptomsScreenState extends State<ConsultSymptomsScreen> {
-  final _symptomsController = TextEditingController();
+  final _descController = TextEditingController();
   bool _hasAttemptedSubmit = false;
 
-  static const _quickSymptoms = [
+  // null = sin selección, true = primera vez, false = seguimiento
+  bool? _isFirstVisit;
+
+  // Chips rápidos — cambian según el tipo de visita
+  static const _firstVisitChips = [
     'Fiebre',
     'Dolor de cabeza',
     'Tos',
@@ -25,45 +29,83 @@ class _ConsultSymptomsScreenState extends State<ConsultSymptomsScreen> {
     'Mareos',
   ];
 
-  final Set<String> _selectedQuickSymptoms = {};
+  static const _followUpChips = [
+    'Mejoría parcial',
+    'Sin cambios',
+    'Empeoré',
+    'Efectos secundarios',
+    'Dudas sobre mi tratamiento',
+    'Revisión de estudios',
+    'Nueva molestia',
+  ];
 
-  bool get _isValid => _symptomsController.text.trim().length >= 10;
+  List<String> get _currentChips =>
+      _isFirstVisit == true ? _firstVisitChips : _followUpChips;
+
+  final Set<String> _selectedChips = {};
+
+  bool get _isTypeSelected => _isFirstVisit != null;
+  bool get _isDescValid => _descController.text.trim().length >= 10;
+  bool get _isValid => _isTypeSelected && _isDescValid;
 
   @override
   void dispose() {
-    _symptomsController.dispose();
+    _descController.dispose();
     super.dispose();
   }
 
-  void _toggleQuickSymptom(String symptom) {
+  void _onTypeSelected(bool isFirst) {
     setState(() {
-      if (_selectedQuickSymptoms.contains(symptom)) {
-        _selectedQuickSymptoms.remove(symptom);
-      } else {
-        _selectedQuickSymptoms.add(symptom);
-      }
-      _rebuildSymptomsText();
+      _isFirstVisit = isFirst;
+      _selectedChips.clear();
+      _descController.clear();
     });
   }
 
-  void _rebuildSymptomsText() {
-    if (_selectedQuickSymptoms.isEmpty) return;
-    final existing = _symptomsController.text.trim();
-    final chips = _selectedQuickSymptoms.join(', ');
-    if (existing.isEmpty) {
-      _symptomsController.text = chips;
-    } else {
-      // Actualiza solo si el texto actual coincide exactamente con los chips anteriores
-      _symptomsController.text = chips;
-    }
-    _symptomsController.selection = TextSelection.fromPosition(
-      TextPosition(offset: _symptomsController.text.length),
+  void _toggleChip(String chip) {
+    setState(() {
+      if (_selectedChips.contains(chip)) {
+        _selectedChips.remove(chip);
+      } else {
+        _selectedChips.add(chip);
+      }
+      _rebuildText();
+    });
+  }
+
+  void _rebuildText() {
+    final chips = _selectedChips.join(', ');
+    _descController.text = chips;
+    _descController.selection = TextSelection.fromPosition(
+      TextPosition(offset: _descController.text.length),
     );
   }
 
+  // ─── copy dinámico según tipo de visita ────────────────────────────────────
+  String get _title => _isFirstVisit == true
+      ? '¿Qué síntomas o molestias tienes?'
+      : '¿Cómo has evolucionado desde tu última consulta?';
+
+  String get _subtitle => _isFirstVisit == true
+      ? 'Cuéntanos brevemente qué está pasando para que el médico llegue bien preparado.'
+      : 'Cuéntanos si mejoraste, si tienes nuevas molestias o dudas sobre tu tratamiento.';
+
+  String get _chipsLabel => _isFirstVisit == true
+      ? 'Síntomas frecuentes'
+      : 'Estado de tu evolución';
+
+  String get _textLabel => _isFirstVisit == true
+      ? 'Describe tus síntomas *'
+      : 'Cuéntanos cómo te has sentido *';
+
+  String get _placeholder => _isFirstVisit == true
+      ? 'Ej. Llevo 3 días con fiebre de 38°C, dolor de cabeza intenso y mucho cansancio...'
+      : 'Ej. Mejoré los primeros días pero el dolor de cabeza regresó. También tengo dudas sobre si debo continuar con el antibiótico...';
+
   @override
   Widget build(BuildContext context) {
-    final hasError = _hasAttemptedSubmit && !_isValid;
+    final typeError = _hasAttemptedSubmit && !_isTypeSelected;
+    final descError = _hasAttemptedSubmit && !_isDescValid;
 
     return Scaffold(
       backgroundColor: const Color(0xFFF8F8F8),
@@ -106,152 +148,208 @@ class _ConsultSymptomsScreenState extends State<ConsultSymptomsScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          // ── Tipo de visita ──────────────────────────────
                           Text(
-                            '¿Cuáles son tus síntomas?',
-                            style: AppTheme.heading2().copyWith(fontSize: 20),
+                            '¿Es tu primera visita o es un seguimiento?',
+                            style: AppTheme.heading2().copyWith(fontSize: 18),
                           ),
-                          const SizedBox(height: 8),
+                          const SizedBox(height: 6),
                           Text(
-                            'Descríbelos para ayudarnos a preparar mejor tu consulta.',
+                            'Esto nos ayuda a preparar mejor tu atención.',
                             style: AppTheme.body().copyWith(
                               color: AppTheme.textSecondary,
-                              fontSize: 14,
-                            ),
-                          ),
-                          const SizedBox(height: 24),
-
-                          // Síntomas frecuentes
-                          Text(
-                            'Síntomas frecuentes',
-                            style: AppTheme.bodyBold().copyWith(
-                              fontSize: 14,
-                              color: AppTheme.textPrimary,
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          Wrap(
-                            spacing: 8,
-                            runSpacing: 8,
-                            children: _quickSymptoms.map((symptom) {
-                              final isSelected =
-                                  _selectedQuickSymptoms.contains(symptom);
-                              return GestureDetector(
-                                onTap: () => _toggleQuickSymptom(symptom),
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 14, vertical: 8),
-                                  decoration: BoxDecoration(
-                                    color: isSelected
-                                        ? const Color(0xFFEFF4FF)
-                                        : Colors.white,
-                                    borderRadius: BorderRadius.circular(20),
-                                    border: Border.all(
-                                      color: isSelected
-                                          ? const Color(0xFF3B82F6)
-                                          : AppTheme.border,
-                                      width: isSelected ? 1.5 : 1,
-                                    ),
-                                  ),
-                                  child: Text(
-                                    symptom,
-                                    style: AppTheme.body().copyWith(
-                                      fontSize: 13,
-                                      color: isSelected
-                                          ? const Color(0xFF3B82F6)
-                                          : AppTheme.textPrimary,
-                                      fontWeight: isSelected
-                                          ? FontWeight.w600
-                                          : FontWeight.w400,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                          const SizedBox(height: 24),
-
-                          // Área de texto
-                          Text(
-                            'Describe tus síntomas *',
-                            style: AppTheme.body().copyWith(
-                              color: hasError
-                                  ? const Color(0xFFEF4444)
-                                  : AppTheme.textSecondary,
                               fontSize: 13,
                             ),
                           ),
-                          const SizedBox(height: 8),
-                          TextFormField(
-                            controller: _symptomsController,
-                            maxLines: 6,
-                            maxLength: 500,
-                            onChanged: (_) {
-                              if (_hasAttemptedSubmit) setState(() {});
-                            },
-                            style: AppTheme.body().copyWith(
-                              fontSize: 14,
-                              color: AppTheme.textPrimary,
-                            ),
-                            decoration: InputDecoration(
-                              hintText:
-                                  'Ej. Llevo 3 días con fiebre de 38°C, dolor de cabeza intenso y cansancio general...',
-                              hintStyle: AppTheme.body().copyWith(
-                                color: AppTheme.textSecondary.withOpacity(0.6),
-                                fontSize: 13,
+                          const SizedBox(height: 16),
+                          Row(
+                            children: [
+                              _buildTypeButton(
+                                label: 'Primera vez',
+                                icon: Icons.person_add_alt_1_outlined,
+                                isSelected: _isFirstVisit == true,
+                                onTap: () => _onTypeSelected(true),
                               ),
-                              filled: true,
-                              fillColor: hasError
-                                  ? const Color(0xFFFDE8E8)
-                                  : const Color(0xFFF9F9F9),
-                              contentPadding: const EdgeInsets.all(16),
-                              alignLabelWithHint: true,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide(
-                                  color: hasError
-                                      ? const Color(0xFFEF4444)
-                                      : AppTheme.border,
-                                ),
+                              const SizedBox(width: 12),
+                              _buildTypeButton(
+                                label: 'Seguimiento',
+                                icon: Icons.update_rounded,
+                                isSelected: _isFirstVisit == false,
+                                onTap: () => _onTypeSelected(false),
                               ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide(
-                                  color: hasError
-                                      ? const Color(0xFFEF4444)
-                                      : AppTheme.border,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide(
-                                  color: hasError
-                                      ? const Color(0xFFEF4444)
-                                      : const Color(0xFF13299D),
-                                  width: 1.5,
-                                ),
-                              ),
-                              counterStyle: AppTheme.body().copyWith(
-                                fontSize: 12,
-                                color: AppTheme.textSecondary,
-                              ),
-                            ),
+                            ],
                           ),
-                          if (hasError)
+                          if (typeError)
                             const Padding(
-                              padding: EdgeInsets.only(top: 4, left: 4),
+                              padding: EdgeInsets.only(top: 8, left: 4),
                               child: Row(
                                 children: [
                                   Icon(Icons.error_outline,
                                       color: Color(0xFFEF4444), size: 14),
                                   SizedBox(width: 4),
                                   Text(
-                                    'Describe tus síntomas con al menos 10 caracteres.',
+                                    'Selecciona el tipo de cita para continuar.',
                                     style: TextStyle(
                                         color: Color(0xFFEF4444), fontSize: 12),
                                   ),
                                 ],
                               ),
                             ),
+
+                          // ── Contenido dinámico (solo visible tras seleccionar tipo) ──
+                          if (_isFirstVisit != null) ...[
+                            const SizedBox(height: 28),
+                            const Divider(height: 1),
+                            const SizedBox(height: 24),
+
+                            Text(
+                              _title,
+                              style:
+                                  AppTheme.heading2().copyWith(fontSize: 18),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              _subtitle,
+                              style: AppTheme.body().copyWith(
+                                color: AppTheme.textSecondary,
+                                fontSize: 14,
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+
+                            // Chips rápidos
+                            Text(
+                              _chipsLabel,
+                              style: AppTheme.bodyBold().copyWith(
+                                fontSize: 13,
+                                color: AppTheme.textPrimary,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Wrap(
+                              spacing: 8,
+                              runSpacing: 8,
+                              children: _currentChips.map((chip) {
+                                final isSelected = _selectedChips.contains(chip);
+                                return GestureDetector(
+                                  onTap: () => _toggleChip(chip),
+                                  child: AnimatedContainer(
+                                    duration: const Duration(milliseconds: 150),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 14, vertical: 8),
+                                    decoration: BoxDecoration(
+                                      color: isSelected
+                                          ? const Color(0xFFEFF4FF)
+                                          : Colors.white,
+                                      borderRadius: BorderRadius.circular(20),
+                                      border: Border.all(
+                                        color: isSelected
+                                            ? const Color(0xFF13299D)
+                                            : AppTheme.border,
+                                        width: isSelected ? 1.5 : 1,
+                                      ),
+                                    ),
+                                    child: Text(
+                                      chip,
+                                      style: AppTheme.body().copyWith(
+                                        fontSize: 13,
+                                        color: isSelected
+                                            ? const Color(0xFF13299D)
+                                            : AppTheme.textPrimary,
+                                        fontWeight: isSelected
+                                            ? FontWeight.w600
+                                            : FontWeight.w400,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                            const SizedBox(height: 24),
+
+                            // Área de texto
+                            Text(
+                              _textLabel,
+                              style: AppTheme.body().copyWith(
+                                color: descError
+                                    ? const Color(0xFFEF4444)
+                                    : AppTheme.textSecondary,
+                                fontSize: 13,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            TextFormField(
+                              controller: _descController,
+                              maxLines: 6,
+                              maxLength: 500,
+                              onChanged: (_) => setState(() {}),
+                              style: AppTheme.body().copyWith(
+                                fontSize: 14,
+                                color: AppTheme.textPrimary,
+                              ),
+                              decoration: InputDecoration(
+                                hintText: _placeholder,
+                                hintStyle: AppTheme.body().copyWith(
+                                  color: AppTheme.textSecondary.withOpacity(0.6),
+                                  fontSize: 13,
+                                ),
+                                filled: true,
+                                fillColor: descError
+                                    ? const Color(0xFFFDE8E8)
+                                    : const Color(0xFFF9F9F9),
+                                contentPadding: const EdgeInsets.all(16),
+                                alignLabelWithHint: true,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: BorderSide(
+                                    color: descError
+                                        ? const Color(0xFFEF4444)
+                                        : AppTheme.border,
+                                  ),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: BorderSide(
+                                    color: descError
+                                        ? const Color(0xFFEF4444)
+                                        : AppTheme.border,
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: BorderSide(
+                                    color: descError
+                                        ? const Color(0xFFEF4444)
+                                        : const Color(0xFF13299D),
+                                    width: 1.5,
+                                  ),
+                                ),
+                                counterStyle: AppTheme.body().copyWith(
+                                  fontSize: 12,
+                                  color: AppTheme.textSecondary,
+                                ),
+                              ),
+                            ),
+                            if (descError)
+                              const Padding(
+                                padding: EdgeInsets.only(top: 4, left: 4),
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.error_outline,
+                                        color: Color(0xFFEF4444), size: 14),
+                                    SizedBox(width: 4),
+                                    Expanded(
+                                      child: Text(
+                                        'Describe tu consulta con al menos 10 caracteres.',
+                                        style: TextStyle(
+                                            color: Color(0xFFEF4444),
+                                            fontSize: 12),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                          ],
                         ],
                       ),
                     ),
@@ -260,7 +358,7 @@ class _ConsultSymptomsScreenState extends State<ConsultSymptomsScreen> {
               ),
             ),
 
-            // Botón Siguiente
+            // Botón Siguiente — deshabilitado hasta que todo esté completo
             Container(
               padding: const EdgeInsets.all(24),
               decoration: const BoxDecoration(
@@ -271,32 +369,78 @@ class _ConsultSymptomsScreenState extends State<ConsultSymptomsScreen> {
               child: SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {
-                    setState(() => _hasAttemptedSubmit = true);
-                    if (_isValid) {
-                      context.push(AppRoutes.consultBranch);
-                    }
-                  },
+                  onPressed: _isValid
+                      ? () => context.push(AppRoutes.consultBranch)
+                      : () => setState(() => _hasAttemptedSubmit = true),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF13299D),
+                    backgroundColor: _isValid
+                        ? const Color(0xFF13299D)
+                        : const Color(0xFFE0E0E0),
                     disabledBackgroundColor: const Color(0xFFE0E0E0),
-                    disabledForegroundColor: const Color(0xFFAAAAAA),
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(AppTheme.radiusMd),
                     ),
                   ),
-                  child: const Text(
+                  child: Text(
                     'Siguiente',
                     style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: _isValid ? Colors.white : const Color(0xFFAAAAAA),
+                    ),
                   ),
                 ),
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTypeButton({
+    required String label,
+    required IconData icon,
+    required bool isSelected,
+    required VoidCallback onTap,
+  }) {
+    return Expanded(
+      child: GestureDetector(
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 150),
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          decoration: BoxDecoration(
+            color: isSelected ? const Color(0xFFEFF4FF) : Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: isSelected ? const Color(0xFF13299D) : AppTheme.border,
+              width: isSelected ? 2 : 1,
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                icon,
+                size: 28,
+                color: isSelected
+                    ? const Color(0xFF13299D)
+                    : AppTheme.textSecondary,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                label,
+                style: AppTheme.bodyBold().copyWith(
+                  fontSize: 14,
+                  color: isSelected
+                      ? const Color(0xFF13299D)
+                      : AppTheme.textPrimary,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

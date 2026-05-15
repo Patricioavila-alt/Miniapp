@@ -4,7 +4,8 @@ import '../../core/routes/app_routes.dart';
 import '../../core/theme/app_theme.dart';
 
 // ─────────────────────────────────────────────────────────────────────────────
-// ScheduleTypeScreen — ¿Qué te gustaría agendar?
+// ScheduleTypeScreen — Grid 2×4 de servicios de cita
+// Layout: 4 filas × 2 columnas con colores del proyecto
 // ─────────────────────────────────────────────────────────────────────────────
 class ScheduleTypeScreen extends StatelessWidget {
   const ScheduleTypeScreen({super.key});
@@ -14,162 +15,219 @@ class ScheduleTypeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppTheme.background,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppTheme.surface,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new_rounded,
-              color: Colors.black, size: 20),
+              color: AppTheme.textPrimary, size: 20),
           onPressed: () => context.pop(),
         ),
-        title: const Text(
+        title: Text(
           'Agendar cita',
-          style: TextStyle(
-            color: AppTheme.textPrimary,
-            fontSize: 17,
-            fontWeight: FontWeight.w600,
-          ),
+          style: AppTheme.heading2().copyWith(fontSize: 17),
         ),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 12),
-            const Text(
-              '¿Qué te gustaría agendar?',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.w700,
-                color: AppTheme.textPrimary,
+      body: Column(
+        children: [
+          // ── Fila 1: Vacuna | Prueba ───────────────────────────────────────
+          Expanded(
+            child: _GridRow(
+              left: _ServiceTile(
+                title: 'Vacuna',
+                subtitle: 'Agenda tu cita',
+                tag: 'Sucursal',
+                icon: Icons.vaccines_rounded,
+                onTap: () => context.push(AppRoutes.vaccineType),
+              ),
+              right: _ServiceTile(
+                title: 'Prueba',
+                subtitle: 'Agenda tu cita',
+                tag: 'Sucursal',
+                icon: Icons.biotech_rounded,
+                onTap: () => context.push(AppRoutes.testType),
               ),
             ),
-            const SizedBox(height: 8),
-            const Text(
-              'Selecciona el tipo de servicio que necesitas.',
-              style: TextStyle(fontSize: 14, color: AppTheme.textSecondary),
-            ),
-            const SizedBox(height: 32),
+          ),
+          const Divider(height: 1, color: AppTheme.border),
 
-            // Tarjeta: Orientación Médica
-            _ScheduleTypeCard(
-              icon: Icons.medical_services_rounded,
-              iconColor: const Color(0xFFE05C3D),
-              iconBg: const Color(0xFFFFF0EC),
-              title: 'Orientación Médica',
-              subtitle: 'Videoconsulta o presencial con nuestros especialistas.',
-              onTap: () => context.push(AppRoutes.consultSymptoms),
+          // ── Fila 2: Médico General | Pediatra ────────────────────────────
+          Expanded(
+            child: _GridRow(
+              left: _ServiceTile(
+                title: 'Médico General',
+                subtitle: 'Consulta ahora',
+                tag: 'On demand · Tercero',
+                useDoctorIcon: true,
+                onTap: () => context.push(AppRoutes.consultSymptoms),
+              ),
+              right: _ServiceTile(
+                title: 'Pediatra',
+                subtitle: 'Consulta ahora',
+                tag: 'On demand · Tercero',
+                useDoctorIcon: true,
+                onTap: () => context.push(AppRoutes.consultSymptoms),
+              ),
             ),
-            const SizedBox(height: 16),
+          ),
+          const Divider(height: 1, color: AppTheme.border),
 
-            // Tarjeta: Vacunas
-            _ScheduleTypeCard(
-              icon: Icons.vaccines_rounded,
-              iconColor: const Color(0xFF3B82F6),
-              iconBg: const Color(0xFFEFF6FF),
-              title: 'Vacunas',
-              subtitle: 'Programa tu esquema de vacunación en sucursal.',
-              onTap: () => context.push(AppRoutes.vaccineType),
+          // ── Fila 3: Dermatología | Control Diabetes ───────────────────────
+          Expanded(
+            child: _GridRow(
+              left: _ServiceTile(
+                title: 'Dermatología',
+                subtitle: 'Consulta ahora',
+                tag: 'On demand · Tercero',
+                useDoctorIcon: true,
+                onTap: () => context.push(AppRoutes.consultSymptoms),
+              ),
+              right: _ServiceTile(
+                title: 'Control Diabetes',
+                subtitle: 'Consulta ahora',
+                tag: 'On demand · Tercero',
+                useDoctorIcon: true,
+                onTap: () => context.push(AppRoutes.consultSymptoms),
+              ),
             ),
-            const SizedBox(height: 16),
+          ),
+          const Divider(height: 1, color: AppTheme.border),
 
-            // Tarjeta: Estudios diagnósticos
-            _ScheduleTypeCard(
-              icon: Icons.biotech_rounded,
-              iconColor: const Color(0xFF7C3AED),
-              iconBg: const Color(0xFFF5F3FF),
-              title: 'Estudios diagnósticos',
-              subtitle: 'Antígenos, influenza, COVID-19 y más en sucursal.',
-              onTap: () => context.push(AppRoutes.testType),
+          // ── Fila 4: Salud Mental | Red Médica ────────────────────────────
+          Expanded(
+            child: _GridRow(
+              left: _ServiceTile(
+                title: 'Salud Mental',
+                subtitle: 'Agenda tu cita',
+                tag: 'Cita programada · Tercero',
+                useDoctorIcon: true,
+                onTap: () => context.push(AppRoutes.consultSymptoms),
+              ),
+              right: _ServiceTile(
+                title: 'Red Médica',
+                subtitle: 'Encuentra tu sucursal',
+                tag: 'Mapa interactivo',
+                tagItalic: true,
+                icon: Icons.map_outlined,
+                onTap: () {},
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// _ScheduleTypeCard — Tarjeta de tipo de cita
+// _GridRow — par horizontal con divisor vertical
 // ─────────────────────────────────────────────────────────────────────────────
-class _ScheduleTypeCard extends StatelessWidget {
-  final IconData icon;
-  final Color iconColor;
-  final Color iconBg;
+class _GridRow extends StatelessWidget {
+  final Widget left;
+  final Widget right;
+  const _GridRow({required this.left, required this.right});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Expanded(child: left),
+        const VerticalDivider(width: 1, color: AppTheme.border),
+        Expanded(child: right),
+      ],
+    );
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// _ServiceTile — celda individual del grid
+// ─────────────────────────────────────────────────────────────────────────────
+class _ServiceTile extends StatelessWidget {
   final String title;
   final String subtitle;
+  final String tag;
+  final bool tagItalic;
+  final bool useDoctorIcon;
+  final IconData? icon;
   final VoidCallback onTap;
 
-  const _ScheduleTypeCard({
-    required this.icon,
-    required this.iconColor,
-    required this.iconBg,
+  const _ServiceTile({
     required this.title,
     required this.subtitle,
+    required this.tag,
     required this.onTap,
+    this.tagItalic = false,
+    this.useDoctorIcon = false,
+    this.icon,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: AppTheme.border),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.04),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Row(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Ícono
-            Container(
-              width: 52,
-              height: 52,
-              decoration: BoxDecoration(
-                color: iconBg,
-                borderRadius: BorderRadius.circular(14),
+            // ── Ícono ─────────────────────────────────────────────────────
+            if (useDoctorIcon)
+              Image.asset(
+                'assets/icons/DoctorGeneral.png',
+                width: 56,
+                height: 56,
+                fit: BoxFit.contain,
+                errorBuilder: (_, __, ___) => const Icon(
+                  Icons.person_rounded,
+                  size: 36,
+                  color: AppTheme.primary,
+                ),
+              )
+            else if (icon != null)
+              Container(
+                width: 56,
+                height: 56,
+                decoration: BoxDecoration(
+                  color: AppTheme.primaryLight.withValues(alpha: 0.25),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(icon, size: 28, color: AppTheme.primary),
               ),
-              child: Icon(icon, color: iconColor, size: 26),
-            ),
-            const SizedBox(width: 16),
+            const SizedBox(height: 10),
 
-            // Texto
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: AppTheme.textPrimary,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    subtitle,
-                    style: const TextStyle(
-                      fontSize: 13,
-                      color: AppTheme.textSecondary,
-                      height: 1.4,
-                    ),
-                  ),
-                ],
+            // ── Título ───────────────────────────────────────────────────
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: AppTheme.bodyBold().copyWith(
+                fontSize: 14,
+                color: AppTheme.brandBlue,
               ),
             ),
-            const SizedBox(width: 8),
-            const Icon(Icons.chevron_right_rounded,
-                color: AppTheme.border, size: 22),
+            const SizedBox(height: 3),
+
+            // ── Subtítulo ────────────────────────────────────────────────
+            Text(
+              subtitle,
+              textAlign: TextAlign.center,
+              style: AppTheme.body().copyWith(
+                fontSize: 12,
+                color: AppTheme.textPrimary,
+              ),
+            ),
+            const SizedBox(height: 2),
+
+            // ── Tag ──────────────────────────────────────────────────────
+            Text(
+              tag,
+              textAlign: TextAlign.center,
+              style: AppTheme.caption().copyWith(
+                fontSize: 11,
+                color: AppTheme.textSecondary,
+                fontStyle: tagItalic ? FontStyle.italic : FontStyle.normal,
+              ),
+            ),
           ],
         ),
       ),

@@ -198,26 +198,25 @@ class _ConsultPatientInfoScreenState extends State<ConsultPatientInfoScreen> {
               child: SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {
-                    setState(() => _hasAttemptedSubmit = true);
-                    if (_isFormValid()) {
-                      context.push(AppRoutes.consultConfirmation);
-                    }
-                  },
+                  onPressed: _isFormValid()
+                      ? () => context.push(AppRoutes.consultConfirmation)
+                      : () => setState(() => _hasAttemptedSubmit = true),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF13299D),
-                    disabledBackgroundColor: const Color(0xFFE0E0E0),
-                    disabledForegroundColor: const Color(0xFFAAAAAA),
+                    backgroundColor: _isFormValid()
+                        ? const Color(0xFF13299D)
+                        : const Color(0xFFE0E0E0),
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(AppTheme.radiusMd),
                     ),
                   ),
-                  child: const Text('Siguiente',
+                  child: Text('Siguiente',
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
-                          color: Colors.white)),
+                          color: _isFormValid()
+                              ? Colors.white
+                              : const Color(0xFFAAAAAA))),
                 ),
               ),
             ),
@@ -282,8 +281,9 @@ class _ConsultPatientInfoScreenState extends State<ConsultPatientInfoScreen> {
 
     String? dobError;
     if (_hasAttemptedSubmit) {
-      if (!_isDateFilled) dobError = 'Este campo es requerido';
-      else if (_isUnderage) dobError = 'El paciente debe ser mayor de edad.';
+      if (!_isDateFilled) {
+        dobError = 'Este campo es requerido';
+      } else if (_isUnderage) dobError = 'El paciente debe ser mayor de edad.';
     }
 
     final emailError = _hasAttemptedSubmit
